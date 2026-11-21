@@ -35,7 +35,12 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820lq-muzbuh1pperkb7",
    "https://cf.shopee.com.br/file/br-11134207-820lw-muzbuh1po07467",
    "https://cf.shopee.com.br/file/br-11134207-820l5-mvapyafrshs206"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {
+   "Letreiro 1": "assets/products/58272026676-op-letreiro-1.webp",
+   "Kit-1 Feliz Natal": "assets/products/58272026676-op-kit-1-feliz-natal.webp"
+  }
  },
  {
   "id": "58272024520",
@@ -70,7 +75,12 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820lj-muzk57wjrwg368",
    "https://cf.shopee.com.br/file/br-11134207-820l4-muzk57wjma6b7d",
    "https://cf.shopee.com.br/file/br-11134207-820lv-muzk57wjkvlv59"
-  ]
+  ],
+  "optionName": "Tamanho",
+  "optionImages": {
+   "10cm": "assets/products/58272024520-op-10cm.webp",
+   "15cm": "assets/products/58272024520-op-15cm.webp"
+  }
  },
  {
   "id": "58270466999",
@@ -135,7 +145,15 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820lp-muayjbr46ozk0b",
    "https://cf.shopee.com.br/file/br-11134207-820lw-muayjbr483k07e",
    "https://cf.shopee.com.br/file/br-11134207-820ly-muayjbr45af41e"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {
+   "Rosa": "assets/products/58270466999-op-rosa.webp",
+   "Preto": "assets/products/58270466999-op-preto.webp",
+   "Branco": "assets/products/58270466999-op-branco.webp",
+   "Lilás": "assets/products/58270466999-op-lilas.webp",
+   "Dourado": "assets/products/58270466999-op-dourado.webp"
+  }
  },
  {
   "id": "58268926676",
@@ -188,7 +206,14 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820lj-mtibkx1xyh370c",
    "https://cf.shopee.com.br/file/br-11134207-820mg-mtibkx1y1a8349",
    "https://cf.shopee.com.br/file/br-11134207-820md-mtibkx1xzvnne6"
-  ]
+  ],
+  "optionName": "Unidades por pacote",
+  "optionImages": {
+   "Kit Trio – 3 Modelos": "assets/products/58268926676-op-kit-trio-3-modelos.webp",
+   "Árvore Clássica": "assets/products/58268926676-op-arvore-classica.webp",
+   "Árvore Decorada": "assets/products/58268926676-op-arvore-decorada.webp",
+   "Árvore Ondulada": "assets/products/58268926676-op-arvore-ondulada.webp"
+  }
  },
  {
   "id": "58267654068",
@@ -223,7 +248,12 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820mc-mssrp9ydr18kaf",
    "https://cf.shopee.com.br/file/br-11134207-820l5-mssrp9ydpmo41e",
    "https://cf.shopee.com.br/file/br-11134207-820l6-mssrp9ydo83o36"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {
+   "Branco": "assets/products/58267654068-op-branco.webp",
+   "Preto": "assets/products/58267654068-op-preto.webp"
+  }
  },
  {
   "id": "58262885300",
@@ -308,7 +338,9 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820m3-mpokzgg6bk0103",
    "https://cf.shopee.com.br/file/br-11134207-820lc-mpokzgg6ed4x5e",
    "https://cf.shopee.com.br/file/br-11134207-820li-mpokzgg6cykh63"
-  ]
+  ],
+  "optionName": "Tamanho",
+  "optionImages": {}
  },
  {
   "id": "58262879250",
@@ -393,7 +425,9 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820m3-mpokzgg6bk0103",
    "https://cf.shopee.com.br/file/br-11134207-820lc-mpokzgg6ed4x5e",
    "https://cf.shopee.com.br/file/br-11134207-820li-mpokzgg6cykh63"
-  ]
+  ],
+  "optionName": "Tamanho",
+  "optionImages": {}
  },
  {
   "id": "58217656501",
@@ -508,7 +542,12 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820m4-mssrp9y0ya6d6d",
    "https://cf.shopee.com.br/file/br-11134207-820lb-mssrp9y113b9f2",
    "https://cf.shopee.com.br/file/br-11134207-820ly-mssrp9y0zoqte4"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {
+   "Branco": "assets/products/58217656501-op-branco.webp",
+   "Preto": "assets/products/58217656501-op-preto.webp"
+  }
  },
  {
   "id": "58217653083",
@@ -651,7 +690,15 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820lv-mssq4r2py613e4",
    "https://cf.shopee.com.br/file/br-11134207-820lx-mssq4r2q0z5z3b",
    "https://cf.shopee.com.br/file/br-11134207-820lu-mssq4r2q2dqfca"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {
+   "Branco": "assets/products/58217653083-op-branco.webp",
+   "Preto": "assets/products/58217653083-op-preto.webp",
+   "Dourado": "assets/products/58217653083-op-dourado.webp",
+   "Rosa": "assets/products/58217653083-op-rosa.webp",
+   "Sortido": "assets/products/58217653083-op-sortido.webp"
+  }
  },
  {
   "id": "58217646673",
@@ -900,7 +947,17 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820lj-mssnufgjad50d9",
    "https://cf.shopee.com.br/file/br-11134207-820lg-mssnufgj8ykkc6",
    "https://cf.shopee.com.br/file/br-11134207-820lm-mv0q7vw9xxc322"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {
+   "Azul": "assets/products/58217646673-op-azul.webp",
+   "Rosa": "assets/products/58217646673-op-rosa.webp",
+   "Verde": "assets/products/58217646673-op-verde.webp",
+   "Branco": "assets/products/58217646673-op-branco.webp",
+   "Lilás": "assets/products/58217646673-op-lilas.webp",
+   "Sortido": "assets/products/58217646673-op-sortido.webp",
+   "Azul Cristal": "assets/products/58217646673-op-azul-cristal.webp"
+  }
  },
  {
   "id": "58217460450",
@@ -927,7 +984,9 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820me-msndn5egcj5zb3",
    "https://cf.shopee.com.br/file/br-11134207-820le-msndn5etf3es0a",
    "https://cf.shopee.com.br/file/br-11134207-820ln-msndn5edgkcm4f"
-  ]
+  ],
+  "optionName": null,
+  "optionImages": {}
  },
  {
   "id": "58214701188",
@@ -982,7 +1041,9 @@ window.NP_PRODUCTS = [
   "featured": false,
   "shopeeImages": [
    "https://cf.shopee.com.br/file/br-11134207-820mb-mqxgo6r9f090f3"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {}
  },
  {
   "id": "58212882270",
@@ -1021,7 +1082,12 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820li-mpomge9r7k0304",
    "https://cf.shopee.com.br/file/br-11134207-820ld-mpomge9rn08z5d",
    "https://cf.shopee.com.br/file/br-11134207-820l5-mpomge9r65fn15"
-  ]
+  ],
+  "optionName": "Tipo",
+  "optionImages": {
+   "Sem Case": "assets/products/58212882270-op-sem-case.webp",
+   "Com Case": "assets/products/58212882270-op-com-case.webp"
+  }
  },
  {
   "id": "23899872009",
@@ -1064,7 +1130,13 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820mh-mvapyag4z9qba9",
    "https://cf.shopee.com.br/file/br-11134207-820m0-mvapyag4xv5vfd",
    "https://cf.shopee.com.br/file/br-11134207-820lw-mvapyag50oara7"
-  ]
+  ],
+  "optionName": "Variação",
+  "optionImages": {
+   "Árvore de Natal": "assets/products/23899872009-op-arvore-de-natal.webp",
+   "Kit 3 Renas": "assets/products/23899872009-op-kit-3-renas.webp",
+   "Kit 3 Renas + Árvore": "assets/products/23899872009-op-kit-3-renas-arvore.webp"
+  }
  },
  {
   "id": "23595162084",
@@ -1089,7 +1161,9 @@ window.NP_PRODUCTS = [
   "shopeeImages": [
    "https://cf.shopee.com.br/file/br-11134207-820l5-mqxgo6r9klqdd3",
    "https://cf.shopee.com.br/file/br-11134207-820ld-mqxgo6r9m0atda"
-  ]
+  ],
+  "optionName": null,
+  "optionImages": {}
  },
  {
   "id": "22999664480",
@@ -1232,7 +1306,15 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820l7-mv0q7vwa251fbc",
    "https://cf.shopee.com.br/file/br-11134207-820lu-mv0q7vwa0qgz4e",
    "https://cf.shopee.com.br/file/br-11134207-820lm-mv0q7vwa4y6b00"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {
+   "Azul": "assets/products/22999664480-op-azul.webp",
+   "Rosa": "assets/products/22999664480-op-rosa.webp",
+   "Verde": "assets/products/22999664480-op-verde.webp",
+   "Sortido": "assets/products/22999664480-op-sortido.webp",
+   "Branca": "assets/products/22999664480-op-branca.webp"
+  }
  },
  {
   "id": "22899680804",
@@ -1333,6 +1415,14 @@ window.NP_PRODUCTS = [
    "https://cf.shopee.com.br/file/br-11134207-820ly-msndn5enkdfqab",
    "https://cf.shopee.com.br/file/br-11134207-820l7-msndn5enls06bb",
    "https://cf.shopee.com.br/file/br-11134207-820lk-msndn5enn6kmd7"
-  ]
+  ],
+  "optionName": "Cor",
+  "optionImages": {
+   "Azul": "assets/products/22899680804-op-azul.webp",
+   "Rosa": "assets/products/22899680804-op-rosa.webp",
+   "Branco": "assets/products/22899680804-op-branco.webp",
+   "Preto": "assets/products/22899680804-op-preto.webp",
+   "Sortido": "assets/products/22899680804-op-sortido.webp"
+  }
  }
 ];

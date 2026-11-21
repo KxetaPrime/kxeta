@@ -99,13 +99,47 @@
     function renderCatalog(){let filtered=state.products.filter(p=>{const q=(p.title+' '+p.description+' '+p.category+' '+p.variants.map(v=>v.name).join(' ')).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),qq=query.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();return (currentFilter==='Todos'||p.category===currentFilter)&&q.includes(qq)&&(!onlyFav||favs.has(p.id))});filtered.sort((a,b)=>sort==='asc'?(minAvailable(a)??1e9)-(minAvailable(b)??1e9):sort==='desc'?(minAvailable(b)??0)-(minAvailable(a)??0):sort==='az'?a.title.localeCompare(b.title,'pt-BR'):Number(b.featured)-Number(a.featured)); $('productGrid').innerHTML=filtered.map(cardHTML).join('');document.querySelectorAll('.card-img').forEach(e=>{e.style.backgroundImage=`url("${FALLBACK}")`;e.style.backgroundPosition='center';e.style.backgroundSize='cover'});$('showingLabel').textContent=onlyFav?`${filtered.length} ${filtered.length===1?'favorito':'favoritos'}`:`Mostrando ${filtered.length} de ${state.products.length} produtos`; $('catalogCountLabel').textContent=`${filtered.length} produto${filtered.length!==1?'s':''}`;$('emptyResults').hidden=!!filtered.length;document.querySelectorAll('[data-detail]').forEach(b=>b.onclick=()=>openDetails(b.dataset.detail));document.querySelectorAll('[data-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFav(b.dataset.fav)}); }
     function openOverlay(id){document.querySelectorAll('.modal,.drawer').forEach(e=>{e.classList.remove('open');e.setAttribute('aria-hidden','true')});$('veil').classList.add('open');const el=$(id);el.classList.add('open');el.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
     function closeAll(){$('veil').classList.remove('open');document.querySelectorAll('.modal,.drawer').forEach(e=>{e.classList.remove('open');e.setAttribute('aria-hidden','true')});document.body.style.overflow='';}
-    function openDetails(id){const p=state.products.find(p=>p.id===id);if(!p)return;openProductId=id;activeGallery=0;qty=1;$('detailCat').textContent=p.category;$('detailTitle').textContent=p.title;$('detailDesc').textContent=p.description.slice(0,1000);$('detailExternal').innerHTML=`<a href="https://shopee.com.br/product/232207419/${encodeURIComponent(p.id)}/" target="_blank" rel="noopener noreferrer">Ver anúncio original na Shopee ↗</a>`;
-      $('detailImg').src=imgOf(p);$('detailImg').alt=p.title;$('detailImg').onerror=()=>{$('detailImg').onerror=null;$('detailImg').src=FALLBACK};$('detailThumbs').innerHTML=p.images.map((u,i)=>`<button type="button" data-thumb="${i}" class="${i===0?'selected':''}" aria-label="Foto ${i+1}"><img src="${esc(safeUrl(u)||FALLBACK)}" alt="Imagem ${i+1} de ${esc(p.title)}" onerror="this.onerror=null;this.src='${FALLBACK}'"></button>`).join('');document.querySelectorAll('[data-thumb]').forEach(b=>b.onclick=()=>{const i=Number(b.dataset.thumb);$('detailImg').src=safeUrl(p.images[i])||FALLBACK;document.querySelectorAll('[data-thumb]').forEach(q=>q.classList.toggle('selected',q===b))});
-      $('variantSelect').innerHTML=p.variants.map((v,i)=>`<option value="${i}" ${v.stock?'':'disabled'}>${esc(v.name)} — ${fmt(v.price)}${v.stock?'':' (esgotado)'}</option>`).join('');let ai=p.variants.findIndex(v=>v.stock>0);$('variantSelect').value=String(ai>=0?ai:0);$('qtyValue').textContent='1';updateDetails();openOverlay('productModal');}
-    function updateDetails(){const p=state.products.find(p=>p.id===openProductId);if(!p)return;const v=p.variants[Number($('variantSelect').value)]||p.variants[0];if(!v)return;qty=Math.max(1,Math.min(qty,Number(v.stock)||1));$('qtyValue').textContent=String(qty);const disc=discountDetails(v);$('detailOldPrice').innerHTML=disc?`De <s>${fmt(disc.old)}</s> · <b>${disc.pct}% OFF${disc.preview?' (prévia)':''}</b>`:'';$('detailPrice').textContent=fmt(v.price);$('detailStock').textContent=v.stock>0?`${v.stock} ${v.stock==1?'unidade':'unidades'} em estoque${v.stock<=10?' · últimas unidades':''}`: 'Esta variação está esgotada';$('detailAdd').disabled=v.stock<=0;}
-    function variantLabel(name){const parts=String(name).split(',');return {tone:parts[0].trim(),pack:parts.slice(1).join(',').trim()||'1 unidade'};}
-    function renderVariantPicker(){const p=state.products.find(x=>x.id===openProductId);if(!p)return;const selected=Number($('variantSelect').value)||0;$('variantPicker').innerHTML=p.variants.map((v,i)=>{const l=variantLabel(v.name);return `<button class="variantChoice ${i===selected?'selected':''}" type="button" data-variant="${i}" role="radio" aria-checked="${i===selected}" ${v.stock?'':'disabled'}><b>${esc(l.tone)}</b><small>${esc(l.pack)}</small></button>`}).join('');$('variantPhotoNote').textContent='A cor e a quantidade selecionadas serão incluídas no seu pedido.';document.querySelectorAll('[data-variant]').forEach(b=>b.onclick=()=>{$('variantSelect').value=b.dataset.variant;qty=1;updateDetails();renderVariantPicker()});}
-    new MutationObserver(()=>renderVariantPicker()).observe($('variantSelect'),{childList:true});
+    const normName=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
+    function variantLabel(name){const parts=String(name).split(',');return {tone:parts[0].trim(),pack:parts.slice(1).join(',').trim()}}
+    function optionGroups(p){const tones=[],packs=[];p.variants.forEach(v=>{const l=variantLabel(v.name);if(!tones.includes(l.tone))tones.push(l.tone);if(l.pack&&!packs.includes(l.pack))packs.push(l.pack)});
+      const n2=packs.length?(/bon/i.test(packs.join())?'Capacidade':/un|kit|unid/i.test(packs.join())?'Quantidade':'Tamanho'):null;
+      return {tones,packs,n1:p.optionName||'Opção',n2}}
+    const optImage=(p,tone)=>{const o=p.optionImages||{};const k=Object.keys(o).find(k=>normName(k)===normName(tone));return k?o[k]:null};
+    let pickTone='',pickPack='';
+    function setMainImg(src){const im=$('detailImg');if(im.getAttribute('src')===src)return;im.classList.remove('swap');void im.offsetWidth;im.classList.add('swap');im.src=src;im.onerror=()=>{im.onerror=null;im.src=FALLBACK}}
+    function openDetails(id){const p=state.products.find(p=>p.id===id);if(!p)return;openProductId=id;qty=1;
+      const name=String(p.title).split('|')[0].trim()||p.title;
+      $('detailCat').textContent=p.category;$('detailTitle').textContent=name;$('detailDesc').textContent=p.description;
+      $('detailExternal').innerHTML=`<a href="https://shopee.com.br/product/232207419/${encodeURIComponent(p.id)}/" target="_blank" rel="noopener noreferrer">Ver anúncio na Shopee</a>`;
+      document.querySelector('#productModal .pm-desc').open=false;
+      const gal=[...p.images.map(u=>safeUrl(u)).filter(Boolean)];
+      $('detailThumbs').innerHTML=gal.map((u,i)=>`<button type="button" data-thumb="${i}" class="${i===0?'selected':''}" aria-label="Foto ${i+1}"><img src="${esc(u)}" alt=""></button>`).join('');
+      document.querySelectorAll('[data-thumb]').forEach(b=>b.onclick=()=>{setMainImg(gal[Number(b.dataset.thumb)]);document.querySelectorAll('[data-thumb]').forEach(q=>q.classList.toggle('selected',q===b))});
+      $('detailImg').src=gal[0]||FALLBACK;$('detailImg').alt=name;
+      $('variantSelect').innerHTML=p.variants.map((v,i)=>`<option value="${i}">${esc(v.name)}</option>`).join('');
+      const first=p.variants.find(v=>v.stock>0)||p.variants[0];const l=variantLabel(first.name);pickTone=l.tone;pickPack=l.pack;
+      syncVariant(p,false);openOverlay('productModal');}
+    function findVariant(p,tone,pack){return p.variants.findIndex(v=>{const l=variantLabel(v.name);return l.tone===tone&&l.pack===pack})}
+    function syncVariant(p,photo){let i=findVariant(p,pickTone,pickPack);
+      if(i<0||!p.variants[i].stock){const alt=p.variants.findIndex(v=>{const l=variantLabel(v.name);return l.tone===pickTone&&v.stock>0});if(alt>=0){i=alt;pickPack=variantLabel(p.variants[i].name).pack}else if(i<0)i=0}
+      $('variantSelect').value=String(i);qty=1;
+      if(photo!==false){const im=optImage(p,pickTone);if(im){setMainImg(im);document.querySelectorAll('[data-thumb]').forEach(q=>q.classList.remove('selected'))}}
+      renderVariantPicker();updateDetails()}
+    function updateDetails(){const p=state.products.find(p=>p.id===openProductId);if(!p)return;const v=p.variants[Number($('variantSelect').value)]||p.variants[0];if(!v)return;
+      qty=Math.max(1,Math.min(qty,Number(v.stock)||1));$('qtyValue').textContent=String(qty);const disc=discountDetails(v);
+      $('detailPrice').textContent=fmt(v.price);$('detailOldPrice').innerHTML=disc?`<s>${fmt(disc.old)}</s><b>-${disc.pct}%</b>`:'';
+      const bd=$('detailBadge');bd.hidden=!disc;if(disc)bd.textContent=`${typeof PROMO!=='undefined'&&PROMO?PROMO.name+' · ':''}-${disc.pct}%`;
+      $('detailStock').textContent=v.stock>0?(v.stock<=10?`Últimas ${v.stock} unidades`:`${v.stock} em estoque`):'Esgotado nesta opção';$('detailStock').classList.toggle('low',v.stock<=10);
+      $('detailAdd').disabled=v.stock<=0;$('detailAdd').textContent=v.stock>0?'Adicionar ao carrinho':'Esgotado'}
+    function renderVariantPicker(){const p=state.products.find(x=>x.id===openProductId);if(!p)return;const g=optionGroups(p);const box=$('variantPicker');
+      if(p.variants.length<2){box.innerHTML='';return}
+      const toneOk=t=>p.variants.some(v=>variantLabel(v.name).tone===t&&v.stock>0);
+      const packOk=k=>{const i=findVariant(p,pickTone,k);return i>=0&&p.variants[i].stock>0};
+      let html=`<div class="opt"><p class="opt-label">${esc(g.n1)}: <b>${esc(pickTone)}</b></p><div class="opt-row">${g.tones.map(t=>{const im=optImage(p,t);return `<button type="button" class="chip-opt${im?' has-img':''}" data-tone="${esc(t)}" aria-pressed="${t===pickTone}" ${toneOk(t)?'':'disabled'}>${im?`<img src="${esc(im)}" alt="">`:''}<span>${esc(t)}</span></button>`}).join('')}</div></div>`;
+      if(g.packs.length)html+=`<div class="opt"><p class="opt-label">${esc(g.n2)}: <b>${esc(pickPack)}</b></p><div class="opt-row">${g.packs.map(k=>`<button type="button" class="chip-opt" data-pack="${esc(k)}" aria-pressed="${k===pickPack}" ${packOk(k)?'':'disabled'}><span>${esc(k)}</span></button>`).join('')}</div></div>`;
+      box.innerHTML=html;
+      box.querySelectorAll('[data-tone]').forEach(b=>b.onclick=()=>{pickTone=b.dataset.tone;syncVariant(p)});
+      box.querySelectorAll('[data-pack]').forEach(b=>b.onclick=()=>{pickPack=b.dataset.pack;syncVariant(p,false)})}
     function wholesaleQty(){return state.cart.filter(x=>x.productId.startsWith('fil:')).reduce((acc,x)=>acc+x.qty,0)}
     const filItem=id=>(window.NP_FIL_INDEX||{})[String(id).slice(4)];
     function filMargin(total){const P=window.NP_PRICING||{retail:20,tiers:[]};let m=P.retail;for(const t of P.tiers)if(total>=t.min)m=t.add;return m}
