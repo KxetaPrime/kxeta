@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etiqueta Bonita</title>
+<style>
+/* Bancada de expedição: faixa preta de "conferir", fundo papel de etiqueta, acento amarelo-fita */
+:root{
+  --bg:#f3f2ee; --card:#ffffff; --fg:#17171a; --muted:#5d5d66; --line:#d9d7cf;
+  --ink:#111111; --tape:#f5c400; --ok:#1d7a46; --bad:#b3261e;
+  --display:"Arial Black","Helvetica Neue",Arial,sans-serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"Courier New",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141416; --card:#1d1d21; --fg:#ececef; --muted:#a3a3ad; --line:#34343b;
+  --ink:#f5c400; --ok:#5fcf8d; --bad:#ff7b72; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141416; --card:#1d1d21; --fg:#ececef; --muted:#a3a3ad; --line:#34343b;
+  --ink:#f5c400; --ok:#5fcf8d; --bad:#ff7b72; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body);
+  padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header h1{font:900 30px/1.1 var(--display);margin:0;letter-spacing:.5px}
+header h1 span{background:var(--tape);color:#111;padding:0 8px}
+header p{margin:6px 0 0;color:var(--muted);max-width:65ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+.drop{border:3px dashed var(--line);border-radius:10px;padding:34px 18px;text-align:center;cursor:pointer}
+.drop.over{border-color:var(--tape);background:rgba(245,196,0,.08)}
+.drop strong{font:900 20px/1.2 var(--display);display:block}
+.drop small{color:var(--muted)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+button,.btn{font:700 15px var(--body);padding:10px 16px;border-radius:8px;border:2px solid var(--fg);background:var(--fg);color:var(--bg);cursor:pointer;text-decoration:none;display:inline-block}
+button.sec,.btn.sec{background:transparent;color:var(--fg)}
+button:disabled{opacity:.4;cursor:default}
+button:focus-visible,.btn:focus-visible,.drop:focus-visible,textarea:focus-visible{outline:3px solid var(--tape);outline-offset:2px}
+.status{font-weight:700}
+.status.ok{color:var(--ok)} .status.bad{color:var(--bad)}
+.pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.pages figure{margin:0;display:flex;flex-direction:column;gap:6px}
+.pages canvas{width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:4px}
+.pages figcaption{font-size:13px;color:var(--muted)}
+details summary{cursor:pointer;font-weight:700}
+textarea{width:100%;min-height:120px;font:13px/1.4 var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px}
+.tbl{overflow-x:auto} table{border-collapse:collapse;font-size:13px;min-width:520px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.sku{font:700 13px var(--mono)}
+ol.steps{margin:0;padding-left:20px} ol.steps li{margin:4px 0}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1><span>ETIQUETA</span> BONITA</h1>
+  <p>Arraste o PDF de etiquetas do UpSeller. A parte de baixo de cada etiqueta vira um quadro de conferência: quantidade grande, SKU, produto e variação em destaque. Tudo roda neste computador, nenhum dado sai daqui.</p>
+</header>
+
+<section class="card">
+  <div id="drop" class="drop" tabindex="0" role="button" aria-label="Escolher PDF de etiquetas">
+    <strong>Solte aqui o PDF das etiquetas</strong>
+    <small>ou clique para escolher o arquivo (PDF baixado do UpSeller, tamanho 10x15)</small>
+    <input id="file" type="file" accept="application/pdf" hidden>
+  </div>
+  <div class="row" style="margin-top:14px">
+    <span id="status" class="status">Nenhum arquivo ainda.</span>
+  </div>
+  <div class="row" style="margin-top:12px">
+    <button id="baixar" disabled>Baixar PDF pronto</button>
+    <button id="abrir" class="sec" disabled>Abrir para imprimir</button>
+  </div>
+</section>
+
+<section class="card" id="previewCard" hidden>
+  <div class="row" style="justify-content:space-between"><strong>Prévia</strong><small id="previewInfo"></small></div>
+  <div id="pages" class="pages" style="margin-top:12px"></div>
+</section>
+
+<section class="card" id="resumoCard" hidden>
+  <strong>O que foi lido de cada etiqueta</strong>
+  <div class="tbl" style="margin-top:10px"><table><thead><tr><th>Pág.</th><th>Pedido</th><th>Qtd</th><th>SKU</th><th>Produto</th><th>Variação</th></tr></thead><tbody id="resumo"></tbody></table></div>
+</section>
+
+<section class="card">
+  <details>
+    <summary>Nomes curtos (opcional)</summary>
+    <p style="color:var(--muted);margin:8px 0">Uma regra por linha: <code>palavra do título = NOME CURTO</code>. Vale antes das regras automáticas. Fica salvo neste navegador.</p>
+    <textarea id="regras" placeholder="porta lata = PORTA LATA 473ML&#10;sagrada = SAGRADA FAMÍLIA"></textarea>
+  </details>
+</section>
+
+<section class="card">
+  <strong>Como usar no dia a dia</strong>
+  <ol class="steps">
+    <li>No UpSeller, gere as etiquetas dos pedidos do dia e baixe o <b>PDF</b>.</li>
+    <li>Arraste o PDF para esta página.</li>
+    <li>Confira a prévia e clique em <b>Baixar PDF pronto</b> (ou <b>Abrir para imprimir</b>).</li>
+    <li>Imprima na térmica em <b>100 x 150 mm</b>, escala 100% (sem "ajustar à página").</li>
+    <li>Pedido com muitos itens ganha uma <b>etiqueta extra de lista</b> logo depois da etiqueta de envio.</li>
+  </ol>
+</section>
+</main>
+
+<script>/*PDFJS*/</script>
+<script>/*PDFJSWORKER*/</script>
+<script>/*PDFLIB*/</script>
+<script>
+(function(){
+"use strict";
+const $=id=>document.getElementById(id);
+let outBytes=null, outUrl=null;
+
+/* ---------- regras de produto (nome curto, SKU, variação) ---------- */
+const noAcc=s=>(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const COR={"azul cristal":["AC","AZUL CRISTAL"],"azul":["AZ","AZUL"],"rosa":["RS","ROSA"],"verde":["VD","VERDE"],"branc":["BR","BRANCO"],"preto":["PT","PRETO"],"dourad":["DO","DOURADO"],"lilas":["LI","LILÁS"],"sortid":["ST","SORTIDO"],"amarel":["AM","AMARELO"]};
+function cor(v){const n=noAcc(v);for(const k of Object.keys(COR)) if(n.includes(k)) return COR[k];return null;}
+const num=(v,re)=>{const m=noAcc(v).match(re);return m?parseInt(m[1],10):null;};
+const pad2=n=>String(n).padStart(2,"0");
+const RULES=[
+ {k:/tric/, nome:"ÁRVORE TRICÔ COM RENAS", f:v=>{const n=noAcc(v);
+   if(/renas/.test(n)&&/arvore/.test(n)) return ["TRI-KIT","KIT ÁRVORE + 3 RENAS"];
+   if(/renas/.test(n)) return ["TRI-RENAS3","KIT 3 RENAS (SEM ÁRVORE)"];
+   return ["TRI-ARV","SÓ A ÁRVORE"];}},
+ {k:/articulad/, nome:"ÁRVORE ARTICULADA 7CM", f:v=>{const n=noAcc(v);
+   if(/kit|trio/.test(n)) return ["ART-KIT3","KIT 3 MODELOS"];
+   if(/classic/.test(n)) return ["ART-CLAS","CLÁSSICA"];
+   if(/decorad/.test(n)) return ["ART-DEC","DECORADA"];
+   if(/ondulad/.test(n)) return ["ART-OND","ONDULADA"];return ["",v];}},
+ {k:/letreiro|feliz natal/, nome:"LETREIRO FELIZ NATAL 20CM", f:v=>{const n=noAcc(v);
+   if(/kit/.test(n)) return ["KIT-NATAL-01","KIT 1 FELIZ NATAL"];
+   if(/verd/.test(n)) return ["NATAL-20CM-VERD","VERDE"];
+   return ["NATAL-20CM-VERM","VERMELHO"];}},
+ {k:/casinha/, nome:"CASINHA DE NATAL 7CM", f:v=>["CASA-7",v||"PADRÃO"]},
+ {k:/arvore de natal|arvore moderna/, nome:"ÁRVORE DE NATAL MODERNA", f:v=>{const n=noAcc(v);
+   if(/10\s*cm/.test(n)) return ["Árvore-10cm","10 CM"];
+   if(/15\s*cm/.test(n)) return ["Árvore-15cm","15 CM"];return ["",v];}},
+ {k:/chaveiro|nossa senhora/, nome:"CHAVEIRO N. SRA. APARECIDA", f:v=>{const c=cor(v),q=num(v,/(\d+)\s*unid/);
+   return [c&&q?`NSA-${c[0]}-${pad2(q)}`:"", [c?c[1]:"",q?`${q} UNID.`:""].filter(Boolean).join(" · ")||v];}},
+ {k:/ampola/, nome:"PORTA AMPOLAS 4 FRASCOS", f:v=>{const map={RS:"ROS",PT:"PTO",BR:"BRC",LI:"LIL",DO:"DOU"};const c=cor(v);
+   return [c&&map[c[0]]?`NP3D-PA4-${map[c[0]]}-01`:"", c?c[1]:v];}},
+ {k:/algodao|cotonete/, nome:"PORTA ALGODÃO E COTONETE", f:v=>{const c=cor(v),n=noAcc(v);const q=/kit\s*3/.test(n)?"K3":/kit\s*2/.test(n)?"K2":"1";
+   return [c?`ALG-${c[0]}-${q}`:"", [c?c[1]:"", q==="1"?"1 UNID.":`KIT ${q.slice(1)}`].filter(Boolean).join(" · ")];}},
+ {k:/raquete/, nome:"SUPORTE RAQUETE PAREDE", f:v=>{const c=cor(v),q=num(v,/(\d+)\s*unid/)||1;
+   return [c?`RAQ-${c[0]}-${q}`:"", [c?c[1]:"",`${q} UNID.`].filter(Boolean).join(" · ")];}},
+ {k:/bone/, nome:"SUPORTE DE BONÉS", f:v=>{const c=cor(v),q=num(v,/(\d+)\s*bon/);
+   return [c&&q?`BONE-${c[0]}-${pad2(q)}`:"", [c?c[1]:"",q?`${q} BONÉS`:""].filter(Boolean).join(" · ")||v];}},
+ {k:/tampa/, nome:"SUPORTE TAMPA PANELA (KIT 4)", f:v=>{const c=cor(v);return [c?`TAMPA-${c[0]}`:"", c?c[1]:v];}},
+ {k:/dreno/, nome:"DRENO PLACA SOLAR", f:v=>{const n=noAcc(v);const mm=/32[,.]5/.test(n)?"325":(n.match(/(30|35|40)\s*mm/)||[])[1];const q=num(v,/(\d+)\s*un/);
+   return [mm&&q?`DRN-${mm}-${q}`:"", [mm?(mm==="325"?"32,5MM":mm+"MM"):"", q?`${q} UN`:""].filter(Boolean).join(" · ")||v];}},
+ {k:/porta.?lata|caneca|lata/, nome:"PORTA LATA (CANECA)", f:v=>{const c=cor(v);return [c?`LATA-${c[0]}`:"", c?c[1]:v];}},
+ {k:/starlink/, nome:"CONVERSOR STARLINK MINI", f:v=>{const n=noAcc(v);
+   if(/com/.test(n)) return ["STAR-CC","COM CASE"]; if(/sem/.test(n)) return ["STAR-SC","SEM CASE"]; return ["",v];}},
+ {k:/sagrada/, nome:"SAGRADA FAMÍLIA 22CM", f:v=>["SAGRADA-22",v||"PADRÃO"]},
+];
+function userRules(){const out=[];($("regras").value||"").split("\n").forEach(l=>{const i=l.indexOf("=");if(i>0){const a=noAcc(l.slice(0,i).trim()),b=l.slice(i+1).trim();if(a&&b) out.push([a,b.toUpperCase()]);}});return out;}
+function classify(title,variation){
+  const t=noAcc(title); let nome=null,sku="",varl=(variation||"").toUpperCase();
+  for(const r of RULES){ if(r.k.test(t)){ nome=r.nome; const res=r.f(variation||""); sku=res[0]||""; varl=(res[1]||variation||"").toUpperCase(); break; } }
+  for(const [a,b] of userRules()){ if(t.includes(a)){ nome=b; break; } }
+  if(!nome){ nome=(title||"").replace(/[|]/g," ").split(/\s+/).slice(0,5).join(" ").toUpperCase(); }
+  return {nome,sku,varl};
+}
+
+/* ---------- leitura do texto da etiqueta ---------- */
+function lines(items){
+  const arr=items.filter(i=>i.str&&i.str.trim()).map(i=>({s:i.str,x:i.transform[4],y:i.transform[5],h:Math.abs(i.transform[3])||8,w:i.width||0}));
+  arr.sort((a,b)=>b.y-a.y||a.x-b.x);
+  const out=[];
+  for(const it of arr){ const L=out.find(l=>Math.abs(l.y-it.y)<Math.max(0.9,it.h*0.12)); if(L){L.parts.push(it);} else out.push({y:it.y,h:it.h,parts:[it]}); }
+  out.forEach(l=>{l.parts.sort((a,b)=>a.x-b.x); l.x0=l.parts[0].x; l.x1=Math.max(...l.parts.map(p=>p.x+p.w)); l.text=l.parts.map(p=>p.s).join(" ").replace(/\s+/g," ").trim();});
+  return out.sort((a,b)=>b.y-a.y);
+}
+function parsePage(textItems){
+  const L=lines(textItems);
+  const ai=L.findIndex(l=>/SKU\s*:/i.test(l.text)&&/Total\s*Items/i.test(l.text)) ;
+  const idx= ai>=0?ai:L.findIndex(l=>/Total\s*Items\s*:/i.test(l.text));
+  if(idx<0) return null;
+  let head=L[idx], hi=idx;
+  let H=head.text;
+  while(!/Deadline\s*:/i.test(H) && hi+1<L.length && hi-idx<2 && !/^\d{1,2}\.\s/.test(L[hi+1].text)){ hi++; H+=" "+L[hi].text; }
+  const below=L.slice(hi+1);
+  const total=(H.match(/Total\s*Items\s*:\s*(\d+)/i)||[])[1];
+  const pedido=(H.match(/#\s*([A-Z0-9]+)/i)||[])[1]||"";
+  const prazo=(H.match(/Deadline\s*:\s*([0-9/]+)/i)||[])[1]||"";
+  const its=[]; let cur=null;
+  for(const l of below){
+    // separa inícios de item no meio da linha: "... 2. (Azul) / ..."
+    const pieces=l.text.split(/(?=(?:^|\s)\d{1,2}\.\s+\()/).map(x=>x.trim()).filter(Boolean);
+    for(let t of pieces){
+      const q=t.match(/\*\s*(\d+)\b/);
+      const m=t.match(/^(\d{1,2})\.\s+(.*)$/);
+      if(m){ cur={txt:"",qty:null}; its.push(cur); t=m[2]; }
+      if(!cur) continue;
+      if(q){ if(cur.qty==null) cur.qty=parseInt(q[1],10); t=t.replace(/\*\s*\d+\b/,""); }
+      cur.txt=(cur.txt+" "+t).replace(/\s+/g," ").trim();
+    }
+  }
+  const items=its.map(it=>{
+    let v="",title=it.txt; const m=it.txt.match(/^\((.*?)\)\s*\/\s*(.*)$/);
+    if(m){v=m[1].trim(); title=m[2].trim();}
+    const c=classify(title,v);
+    return {qty:it.qty||1,title,variation:v,...c};
+  });
+  let minY=Math.min(L[hi].y, ...below.map(l=>l.y));
+  let minX=Math.min(head.x0, ...below.map(l=>l.x0));
+  let maxX=Math.max(head.x1, ...below.map(l=>l.x1));
+  return {top:head.y+head.h*1.05, bottom:minY-2, x0:minX, x1:maxX, total:total?parseInt(total,10):items.reduce((a,b)=>a+b.qty,0), pedido, prazo, items};
+}
+
+/* ---------- desenho ---------- */
+function safe(s){ // só caracteres que a fonte padrão do PDF aceita
+  return (s||"").replace(/[–—]/g,"-").replace(/[“”]/g,'"').replace(/[‘’]/g,"'").replace(/[^\x20-\x7E\xA0-\xFF]/g,"");
+}
+function fit(font,text,size,maxW){ text=safe(text); if(font.widthOfTextAtSize(text,size)<=maxW) return text;
+  while(text.length>1 && font.widthOfTextAtSize(text+"...",size)>maxW) text=text.slice(0,-1); return text+"..."; }
+const DIM={full:{head:13,warn:11,qW:34,cW:22},compact:{head:10,warn:9,qW:24,cW:16}};
+function rowHeight(it,s,mode){ return mode==="compact"?17*s:(it&&it.sku?31:25)*s; }
+function needH(info,s,mode){ const d=DIM[mode]; const units=info.items.reduce((a,b)=>a+b.qty,0); const multi=info.items.length>1||units>1;
+  return d.head*s+(multi?d.warn*s:0)+info.items.reduce((a,it)=>a+rowHeight(it,s,mode),0)+2; }
+function drawBox(page,F,box,info,opts){
+  const {rgb}=PDFLib; const K=rgb(0,0,0), W=rgb(1,1,1);
+  const {x,y,w,h}=box; const s=opts.scale; const mode=opts.mode; const d=DIM[mode==="overflow"?"compact":mode];
+  page.drawRectangle({x,y,width:w,height:h,color:W});
+  page.drawRectangle({x,y,width:w,height:h,borderColor:K,borderWidth:1.6*s});
+  let top=y+h;
+  const headH=d.head*s, hf=headH*0.62; top-=headH;
+  page.drawRectangle({x,y:top,width:w,height:headH,color:K});
+  const units=info.items.reduce((a,b)=>a+b.qty,0);
+  const right=`${info.items.length} ${info.items.length===1?"produto":"produtos"} · ${units} un`;
+  const rw=F.b.widthOfTextAtSize(safe(right),hf);
+  page.drawText(safe(right),{x:x+w-rw-4*s,y:top+headH*0.28,size:hf,font:F.b,color:W});
+  page.drawText(fit(F.b,"CONFERIR ANTES DE FECHAR",hf,w-rw-14*s),{x:x+4*s,y:top+headH*0.28,size:hf,font:F.b,color:W});
+  const multi=info.items.length>1||units>1;
+  if(multi||mode==="overflow"){ const wh=d.warn*s; top-=wh;
+    page.drawRectangle({x,y:top,width:w,height:wh,color:W,borderColor:K,borderWidth:1.2*s});
+    const base=multi?`ATENÇÃO: ${info.items.length} ${info.items.length===1?"PRODUTO":"PRODUTOS"} · ${units} UNIDADES`:"ATENÇÃO";
+    const t=mode==="overflow"?`${base} - LISTA NA PRÓXIMA ETIQUETA`:base;
+    page.drawSvgPath("M0,7 L4,0 L8,7 Z",{x:x+4*s,y:top+wh-1.5*s,scale:s*wh/(11*s),color:K});
+    page.drawText(fit(F.b,t,wh*0.66,w-20*s),{x:x+15*s,y:top+wh*0.27,size:wh*0.66,font:F.b,color:K});
+  }
+  if(mode==="overflow") return;
+  const qW=d.qW*s, cW=d.cW*s;
+  for(const it of info.items){
+    const rowH=rowHeight(it,s,mode); const ry=top-rowH; if(ry<y-0.5) break;
+    page.drawLine({start:{x,y:top},end:{x:x+w,y:top},thickness:1.2*s,color:K});
+    page.drawLine({start:{x:x+qW,y:ry},end:{x:x+qW,y:top},thickness:1.2*s,color:K});
+    page.drawLine({start:{x:x+w-cW,y:ry},end:{x:x+w-cW,y:top},thickness:1.2*s,color:K});
+    const qt=`${it.qty}x`; const qs=Math.min((mode==="compact"?12:17)*s,rowH*0.62); const qwid=F.b.widthOfTextAtSize(qt,qs);
+    page.drawText(qt,{x:x+(qW-qwid)/2,y:ry+(rowH-qs*0.72)/2,size:qs,font:F.b,color:K});
+    const bx=Math.min(12*s,rowH*0.5); page.drawRectangle({x:x+w-cW+(cW-bx)/2,y:ry+(rowH-bx)/2,width:bx,height:bx,borderColor:K,borderWidth:1.3*s});
+    const tx=x+qW+4*s, tw=w-qW-cW-8*s;
+    const pill=(txt,size,yy)=>{ const vt=fit(F.b,txt,size,tw-10*s); const vw=F.b.widthOfTextAtSize(vt,size);
+      page.drawSvgPath("M0,0 L5,3.5 L0,7 Z",{x:tx,y:yy+size*0.9,scale:size/7.5,color:K});
+      page.drawRectangle({x:tx+6.5*s,y:yy-size*0.22,width:vw+4*s,height:size*1.15,color:K});
+      page.drawText(vt,{x:tx+8.5*s,y:yy,size,font:F.b,color:W}); };
+    if(mode==="compact"){
+      const v=it.varl||it.nome; pill(v,6.6*s,top-8.4*s);
+      const l2=[it.sku,it.nome].filter(Boolean).join("  ·  ");
+      page.drawText(fit(F.b,l2,5.4*s,tw),{x:tx,y:ry+2.6*s,size:5.4*s,font:F.b,color:K});
+    } else {
+      let ty=top-3.5*s;
+      if(it.sku){ ty-=7.5*s; page.drawText(fit(F.m,it.sku,7.5*s,tw),{x:tx,y:ty,size:7.5*s,font:F.m,color:K}); ty-=2*s; }
+      ty-=6.5*s; page.drawText(fit(F.b,it.nome,6.5*s,tw),{x:tx,y:ty,size:6.5*s,font:F.b,color:K});
+      if(it.varl){ ty-=3.2*s+7*s; pill(it.varl,7*s,ty); }
+    }
+    top=ry;
+  }
+}
+async function processar(file){
+  const st=$("status"); st.className="status"; st.textContent="Lendo o PDF...";
+  ["baixar","abrir"].forEach(id=>$(id).disabled=true);
+  const buf=new Uint8Array(await file.arrayBuffer());
+  const doc=await pdfjsLib.getDocument({data:buf.slice()}).promise;
+  const out=await PDFLib.PDFDocument.load(buf);
+  const F={b:await out.embedFont(PDFLib.StandardFonts.HelveticaBold), m:await out.embedFont(PDFLib.StandardFonts.CourierBold)};
+  const src=out.getPages(); let feitos=0, extras=0, offset=0; const resumo=[];
+  for(let i=1;i<=doc.numPages;i++){
+    const pg=await doc.getPage(i); const tc=await pg.getTextContent();
+    const info=parsePage(tc.items); if(!info||!info.items.length) continue;
+    const page=src[i-1]; const {width,height}=page.getSize();
+    const s=Math.max(0.8,Math.min(1.6,width/283));
+    const margin=Math.max(6,info.x0-2); const x=margin, w=Math.min(width-2*margin, Math.max(info.x1-info.x0+4, width-2*margin));
+    const y=Math.max(2, info.bottom-2), h=Math.max(30*s, info.top-y+1);
+    const mode=needH(info,s,"full")<=h?"full":(needH(info,s,"compact")<=h?"compact":"overflow");
+    const fits=mode!=="overflow";
+    page.drawRectangle({x:x-3,y:0,width:w+6,height:y+0.5,color:PDFLib.rgb(1,1,1)}); // apaga sobras do texto original abaixo do quadro
+    drawBox(page,F,{x,y,w,h},info,{scale:s,mode});
+    feitos++;
+    info.items.forEach(it=>resumo.push([i,info.pedido,it.qty,it.sku,it.nome,it.varl]));
+    if(!fits){
+      const np=out.insertPage(i+offset,[width,height]); offset++; extras++;
+      const {rgb}=PDFLib; const K=rgb(0,0,0);
+      const hs=Math.max(1,Math.min(2,width/200));
+      np.drawText(fit(F.b,`PEDIDO ${info.pedido}`,11*hs,width-20),{x:10,y:height-22*hs,size:11*hs,font:F.b,color:K});
+      if(info.prazo) np.drawText(safe(`Enviar até ${info.prazo}`),{x:10,y:height-36*hs,size:8*hs,font:F.b,color:K});
+      const s2=Math.max(1,Math.min(1.8,(width-16)/260));
+      const avail=height-46*hs-10; let m2="full"; if(needH(info,s2,m2)>avail) m2="compact";
+      const hh=Math.min(avail,needH(info,s2,m2));
+      drawBox(np,F,{x:8,y:height-46*hs-hh,w:width-16,h:hh},info,{scale:s2,mode:m2});
+    }
+  }
+  if(!feitos){ st.className="status bad"; st.textContent="Não encontrei a lista de produtos (linha \"SKU: ...; Total Items\") neste PDF. Ele é o PDF de etiquetas do UpSeller?"; return; }
+  outBytes=await out.save(); window.etiquetaUltimoPDF=outBytes;
+  if(outUrl) URL.revokeObjectURL(outUrl);
+  outUrl=URL.createObjectURL(new Blob([outBytes],{type:"application/pdf"}));
+  st.className="status ok"; st.textContent=`Pronto: ${feitos} etiqueta(s) ajustada(s)`+(extras?` e ${extras} etiqueta(s) extra de lista para pedidos grandes.`:".");
+  ["baixar","abrir"].forEach(id=>$(id).disabled=false);
+  $("resumo").innerHTML=resumo.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td><b>${r[2]}x</b></td><td class="sku">${esc(r[3]||"-")}</td><td>${esc(r[4])}</td><td>${esc(r[5])}</td></tr>`).join("");
+  $("resumoCard").hidden=false;
+  await previa(outBytes);
+}
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+async function previa(bytes){
+  const d=await pdfjsLib.getDocument({data:bytes.slice()}).promise; const box=$("pages"); box.innerHTML="";
+  const n=Math.min(d.numPages,8);
+  for(let i=1;i<=n;i++){ const p=await d.getPage(i); const vp=p.getViewport({scale:2});
+    const c=document.createElement("canvas"); c.width=vp.width; c.height=vp.height;
+    await p.render({canvasContext:c.getContext("2d"),viewport:vp}).promise;
+    const f=document.createElement("figure"); const cap=document.createElement("figcaption"); cap.textContent=`Página ${i}`;
+    f.append(c,cap); box.append(f); }
+  $("previewInfo").textContent=d.numPages>n?`mostrando ${n} de ${d.numPages} páginas`:`${d.numPages} página(s)`;
+  $("previewCard").hidden=false;
+}
+
+/* ---------- interface ---------- */
+const drop=$("drop"), inp=$("file");
+drop.addEventListener("click",()=>inp.click());
+drop.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();inp.click();}});
+["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over");}));
+["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over");}));
+drop.addEventListener("drop",e=>{const f=e.dataTransfer.files[0]; if(f) run(f);});
+inp.addEventListener("change",()=>{const f=inp.files[0]; if(f) run(f);});
+let lastName="etiquetas";
+function run(f){ lastName=f.name.replace(/\.pdf$/i,""); processar(f).catch(err=>{console.error(err);$("status").className="status bad";$("status").textContent="Não consegui ler este PDF: "+err.message;}); }
+$("baixar").addEventListener("click",()=>{ if(!outUrl) return; const a=document.createElement("a"); a.href=outUrl; a.download=lastName+"-bonita.pdf"; document.body.append(a); a.click(); a.remove(); });
+$("abrir").addEventListener("click",()=>{ if(outUrl) window.open(outUrl,"_blank"); });
+try{ $("regras").value=localStorage.getItem("etqRegras")||""; }catch(e){}
+$("regras").addEventListener("input",()=>{ try{ localStorage.setItem("etqRegras",$("regras").value); }catch(e){} });
+})();
+</script>
+</body>
+</html>
