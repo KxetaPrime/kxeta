@@ -13,10 +13,11 @@ def dpath(sw=SW,L=12,R=88,top=10,bot=90):
     return f'M{L} {top}L{a+sw*.55} {top}L{R} {bot}L{b-sw*.55} {bot}Z'
 N_D=npath();D_D=dpath()
 _ids=itertools.count()
-TONES={'dark':(NEON,'#17A83B'),'light':(INK,'#13A33C'),'green':(INK,'#0E5A25'),'white':('#FFFFFF','#BFC6C1')}
+TONES={'dark':(NEON,'#17A83B','#9BFFAE'),'light':(INK,'#13A33C','#3A4440'),'green':(INK,'#0E5A25','#3A4440'),'white':('#FFFFFF','#BFC6C1','#FFFFFF')}
+HX=88-SW+6  # início do realce na haste direita (três tons)
 def mark(tone='dark'):
-    s,d=TONES[tone];i=next(_ids)
-    return f'<clipPath id="nf{i}"><path d="{N_D}"/></clipPath><g clip-path="url(#nf{i})"><rect width="100" height="100" fill="{s}"/><path d="{D_D}" fill="{d}"/></g>'
+    s,d,hl=TONES[tone];i=next(_ids)
+    return f'<clipPath id="nf{i}"><path d="{N_D}"/></clipPath><g clip-path="url(#nf{i})"><rect width="100" height="100" fill="{s}"/><rect x="{HX}" width="40" height="100" fill="{hl}"/><path d="{D_D}" fill="{d}"/></g>'
 def sym(tone,size,extra=''):
     return f'<svg viewBox="4 4 92 92" width="{size}" height="{size}" aria-hidden="true" {extra}>{mark(tone)}</svg>'
 def lockup(tone,bg,fg,acc):
