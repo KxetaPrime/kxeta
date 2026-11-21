@@ -32,30 +32,22 @@
   document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));showTab('natal');
 
   /* ---------- carrossel de mais procurados ---------- */
-  const rail=$('rail');
-  rail.innerHTML=P.filter(p=>p.featured).map(cardHTML).join('');bindCards(rail);
   document.querySelectorAll('[data-rail]').forEach(b=>b.onclick=()=>{const r=b.closest('section').querySelector('.rail');r.scrollBy({left:Number(b.dataset.rail)*r.clientWidth*.8,behavior:reduce?'auto':'smooth'})});
 
-  /* ---------- topo em blocos (bento) ---------- */
+  /* ---------- topo e categorias ---------- */
   (function(){
-    // faixa de produtos reais rolando
-    const pick=P.filter(p=>minAvailable(p)!==null).sort((a,b)=>Number(b.featured)-Number(a.featured));
-    const item=p=>`<button type="button" class="mq-item" data-detail="${p.id}" aria-label="${esc(shortName(p))}"><img src="${esc(thumbOf(p))}" alt="" loading="lazy" decoding="async"><span>${fmt(minAvailable(p))}</span></button>`;
-    $('mqTrack').innerHTML=pick.map(item).join('')+pick.map(item).join('').replace(/<button /g,'<button tabindex="-1" aria-hidden="true" ');
-    $('mqTrack').querySelectorAll('[data-detail]').forEach(b=>b.onclick=()=>openDetails(b.dataset.detail));
-    // filamentos: carretéis oficiais e menor preço
-    const prices=FIL.filter(x=>Number(x.c.stock)>0&&x.c.cost!=null).map(x=>filPrice(x.c,1));
-    if(prices.length)$('heroFilPrice').innerHTML=`a partir de <b>${fmt(Math.min(...prices))}</b>`;
-    const sp=['233340','233336','233338'].map(s=>FIL.find(x=>x.c.sku===s)).filter(Boolean);
-    $('heroSpools').innerHTML=sp.map((x,i)=>`<img class="s${i}" src="${esc(x.c.photo)}" alt="" loading="lazy" decoding="async">`).join('');
-    // promoção (ou Natal)
     const pr=window.NP_PROMO,now=new Date(),end=pr&&pr.ends?new Date(pr.ends+'T23:59:59-03:00'):null,start=pr&&pr.starts?new Date(pr.starts+'T00:00:00-03:00'):null;
-    const on=pr&&pr.off&&!(start&&now<start)&&!(end&&now>end);
-    const nat=natal[0];if(nat)$('hpImg').src=sm(imgOf(nat));
-    if(on){$('hpTag').textContent=pr.name;$('hpTitle').innerHTML=`<em>${pr.off}%</em> off ou mais`;$('hpText').textContent=pr.categories?pr.categories.join(', '):'Em todos os produtos impressos';
-      if(end){const d=Math.ceil((end-now)/864e5);$('hpTime').textContent=d<=1?'Termina hoje':`Termina em ${d} dias`}
-      $('heroPromo').href='#catalogo'}
-    else $('heroPromo').classList.add('calm');
+    if(pr&&pr.off&&!(start&&now<start)&&!(end&&now>end)){const d=end?Math.ceil((end-now)/864e5):0;
+      $('hpTag').textContent=pr.name;$('hpText').textContent=`${pr.off}% off nos impressos${end?(d<=1?' · termina hoje':` · até ${pr.ends.slice(8,10)}/${pr.ends.slice(5,7)}`):''}`;$('heroPromo').hidden=false}
+    const first=c=>P.filter(p=>p.category===c).sort((a,b)=>Number(b.featured)-Number(a.featured))[0];
+    const fil=FIL.find(x=>x.c.sku==='233338');
+    const cats=[
+      {t:'Natal',s:'Enfeites e árvores',img:first('Natal e decoração'),cat:'Natal e decoração'},
+      {t:'Presentes',s:'Chaveiros e lembranças',img:first('Chaveiros e brindes'),cat:'Chaveiros e brindes'},
+      {t:'Casa',s:'Organização e decoração',img:first('Casa e organização'),cat:'Casa e organização'},
+      {t:'Filamentos',s:'PLA, PETG, ABS e TPU',src:fil&&fil.c.photo,href:'#filamentos'}];
+    $('heroCats').innerHTML=cats.map(c=>{const src=c.src||(c.img?thumbOf(c.img):'');const n=c.cat?P.filter(p=>p.category===c.cat).length:null;
+      return `<a class="catc" href="${c.href||'#catalogo'}" ${c.cat?`data-goto-cat="${esc(c.cat)}"`:''}><img src="${esc(src)}" alt="" loading="lazy" decoding="async"><span><b>${c.t}</b><small>${c.s}</small></span></a>`}).join('');
   })();
 
   /* ---------- favoritos no topo ---------- */

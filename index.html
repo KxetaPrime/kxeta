@@ -7,6 +7,8 @@
   <meta name="description" content="Peças impressas em 3D, filamentos Flashforge, Bambu Lab e Masterprint em carretel de 1 kg e projetos sob medida. Pedido e atendimento pelo WhatsApp.">
   <meta name="theme-color" content="#F3F4F2">
   <link rel="icon" type="image/svg+xml" href="assets/brand/icone.svg">
+  <link rel="preload" as="image" href="assets/hero/vitrine-filamentos.webp" media="(min-width:761px)">
+  <link rel="preload" as="image" href="assets/hero/vitrine-filamentos-mobile.webp" media="(max-width:760px)">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/brand/app-192.png">
   <meta name="apple-mobile-web-app-title" content="Nova Prime 3D">
@@ -41,43 +43,23 @@
 
   <main>
     <section class="wrap" id="inicio" aria-labelledby="heroTitle">
-      <div class="bento">
-        <div class="bx bx-main">
-          <div class="bx-main-copy">
-            <p class="kicker"><span class="live"></span>Estoque a pronta entrega · atendimento no WhatsApp</p>
-            <h1 id="heroTitle">Impressão 3D que vira presente, decoração e solução.</h1>
-            <p class="lead">Peças prontas para comprar, filamentos originais e projetos feitos do zero para você. Pedido e atendimento direto no WhatsApp.</p>
-            <div class="hero-ctas"><a class="pill dark" href="#catalogo">Ver produtos</a><a class="pill line" href="#sob-medida">Fazer um projeto</a></div>
-          </div>
-          <div class="marquee" aria-label="Produtos em destaque"><div class="mq-track" id="mqTrack"></div></div>
-        </div>
-        <a class="bx bx-fil" href="#filamentos" aria-label="Ver filamentos">
-          <div class="bx-txt"><h2>Filamentos originais</h2><p>Flashforge, Bambu Lab e Masterprint</p><span class="bx-price" id="heroFilPrice"></span></div>
-          <div class="bx-spools" id="heroSpools" aria-hidden="true"></div>
-          <span class="bx-go" aria-hidden="true">→</span>
-        </a>
-        <a class="bx bx-promo" href="#natal" id="heroPromo">
-          <div class="bx-txt"><span class="promo-tag" id="hpTag">Natal</span><h2 id="hpTitle">Natal impresso em 3D</h2><p id="hpText">Árvores, enfeites e lembranças.</p><span class="bx-time" id="hpTime"></span></div>
-          <img id="hpImg" alt="" loading="eager" decoding="async">
-          <span class="bx-go" aria-hidden="true">→</span>
-        </a>
+      <div class="hero2">
+        <a class="hero2-promo" id="heroPromo" href="#catalogo" hidden><b id="hpTag"></b><span id="hpText"></span><i aria-hidden="true">→</i></a>
+        <h1 id="heroTitle">Sua ideia, impressa em 3D.</h1>
+        <p class="hero2-lead">Peças prontas, filamentos originais e projetos sob medida, com atendimento direto no WhatsApp.</p>
+        <div class="hero2-ctas"><a class="pill dark" href="#catalogo">Ver produtos</a><a class="pill line" href="#filamentos">Ver filamentos</a></div>
+        <picture class="hero2-img"><source media="(max-width:760px)" srcset="assets/hero/vitrine-filamentos-mobile.webp"><img src="assets/hero/vitrine-filamentos.webp" alt="Carretéis de filamento Flashforge nas cores roxo, azul, verde, vermelho e rosa com peças impressas" width="2400" height="1000" fetchpriority="high"></picture>
       </div>
-      <ul class="trust" aria-label="Por que comprar com a gente">
-        <li><b>Atendimento humano</b><span>Karita e Isabel no WhatsApp</span></li>
-        <li><b>Filamentos originais</b><span>Flashforge, Bambu Lab e Masterprint</span></li>
-        <li><b>Estoque real</b><span>Quantidade de cada item à mostra</span></li>
-        <li><b>Atacado de filamento</b><span>Preço cai a partir de 6 carretéis</span></li>
-      </ul>
+    </section>
+
+    <section class="wrap block cats-sec" aria-labelledby="catsTitle">
+      <h2 id="catsTitle" class="visually-hidden">Categorias</h2>
+      <div class="cats" id="heroCats"></div>
     </section>
 
     <section class="wrap block" id="natal" aria-labelledby="destTitle2">
       <div class="head"><div><h2 id="destTitle2">Destaques da semana</h2><div class="tabs" role="tablist" aria-label="Destaques"><button type="button" role="tab" aria-selected="true" data-tab="natal">Natal com desconto</button><button type="button" role="tab" aria-selected="false" data-tab="fil">Filamentos mais vendidos</button></div></div><div class="rail-nav"><button class="round" type="button" data-rail="-1" aria-label="Anteriores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><button class="round" type="button" data-rail="1" aria-label="Próximos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button></div></div>
       <div class="rail" id="destRail"></div>
-    </section>
-
-    <section class="wrap block" id="destaques" aria-labelledby="destTitle">
-      <div class="head"><div><h2 id="destTitle">Mais procurados</h2><p>Os favoritos de quem já comprou com a gente.</p></div><div class="rail-nav"><button class="round" type="button" data-rail="-1" aria-label="Anteriores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><button class="round" type="button" data-rail="1" aria-label="Próximos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button></div></div>
-      <div class="rail" id="rail"></div>
     </section>
 
     <section class="wrap block" id="catalogo" aria-labelledby="catTitle">
