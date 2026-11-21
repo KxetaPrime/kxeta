@@ -869,6 +869,264 @@ window.NP_FIL = [
     ]
    }
   ]
+ },
+ {
+  "id": "masterprint",
+  "name": "Masterprint",
+  "mono": "MP",
+  "logo": null,
+  "accent": "#F07A1A",
+  "about": "Marca nacional de filamentos, com ótimo custo-benefício para produção.",
+  "lines": [
+   {
+    "id": "mp-pla",
+    "name": "PLA",
+    "about": "PLA nacional de boa qualidade, ótimo custo para produção e peças do dia a dia.",
+    "colors": [
+     {
+      "sku": "MP-PLA-PRE",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Preto",
+      "stock": 0,
+      "cost": null,
+      "hex": "#1E1E20",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-BRA",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Branco",
+      "stock": 0,
+      "cost": null,
+      "hex": "#F3F3F0",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-CIN",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Cinza",
+      "stock": 0,
+      "cost": null,
+      "hex": "#8A8F96",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-VEM",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Vermelho",
+      "stock": 0,
+      "cost": null,
+      "hex": "#C8261F",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-AZU",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Azul",
+      "stock": 0,
+      "cost": null,
+      "hex": "#1E4FB5",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-AMA",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Amarelo",
+      "stock": 0,
+      "cost": null,
+      "hex": "#F5C518",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-VER",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Verde",
+      "stock": 0,
+      "cost": null,
+      "hex": "#2F9E44",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-LAR",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Laranja",
+      "stock": 0,
+      "cost": null,
+      "hex": "#F07A1A",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-ROX",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Roxo",
+      "stock": 0,
+      "cost": null,
+      "hex": "#6B3FA0",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-ROS",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Rosa",
+      "stock": 0,
+      "cost": null,
+      "hex": "#EE8FB7",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-PEL",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Pele",
+      "stock": 0,
+      "cost": null,
+      "hex": "#E8C3A0",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PLA-DOU",
+      "brand": "masterprint",
+      "line": "mp-pla",
+      "name": "Dourado Silk",
+      "stock": 0,
+      "cost": null,
+      "hex": "#D4AF37",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     }
+    ]
+   },
+   {
+    "id": "mp-petg",
+    "name": "PETG",
+    "about": "PETG resistente a impacto e umidade, para peças funcionais e externas.",
+    "colors": [
+     {
+      "sku": "MP-PETG-PRE",
+      "brand": "masterprint",
+      "line": "mp-petg",
+      "name": "Preto",
+      "stock": 0,
+      "cost": null,
+      "hex": "#1E1E20",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PETG-BRA",
+      "brand": "masterprint",
+      "line": "mp-petg",
+      "name": "Branco",
+      "stock": 0,
+      "cost": null,
+      "hex": "#F4F4F2",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PETG-CIN",
+      "brand": "masterprint",
+      "line": "mp-petg",
+      "name": "Cinza",
+      "stock": 0,
+      "cost": null,
+      "hex": "#8A8F96",
+      "official": null,
+      "photo": "",
+      "translucent": false,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PETG-AZT",
+      "brand": "masterprint",
+      "line": "mp-petg",
+      "name": "Azul Translúcido",
+      "stock": 0,
+      "cost": null,
+      "hex": "#3E7BD6",
+      "official": null,
+      "photo": "",
+      "translucent": true,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PETG-VET",
+      "brand": "masterprint",
+      "line": "mp-petg",
+      "name": "Verde Translúcido",
+      "stock": 0,
+      "cost": null,
+      "hex": "#2FB35A",
+      "official": null,
+      "photo": "",
+      "translucent": true,
+      "photoKind": "drawn"
+     },
+     {
+      "sku": "MP-PETG-TRA",
+      "brand": "masterprint",
+      "line": "mp-petg",
+      "name": "Transparente",
+      "stock": 0,
+      "cost": null,
+      "hex": "#DCE6EA",
+      "official": null,
+      "photo": "",
+      "translucent": true,
+      "photoKind": "drawn"
+     }
+    ]
+   }
+  ]
  }
 ];
 window.NP_FIL_INDEX = {};

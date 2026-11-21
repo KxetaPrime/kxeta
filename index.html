@@ -36,12 +36,13 @@
   </header>
 
   <main>
+    <div class="wrap" id="promoWrap" hidden><a class="promo" href="#catalogo" id="promoBar"><span class="promo-tag" id="promoName"></span><strong id="promoText"></strong><span class="promo-time" id="promoTime"></span><span class="promo-cta">Ver ofertas</span></a></div>
     <section class="wrap" id="inicio" aria-labelledby="heroTitle">
       <div class="cine">
         <div class="hero-media" aria-hidden="true"><canvas id="heroCanvas"></canvas><video id="heroVideo" muted playsinline loop preload="none" hidden></video></div>
         <div class="hero-content">
           <h1 id="heroTitle">Peças que ganham forma, camada por camada.</h1>
-          <p>Decoração, presentes, organização e peças técnicas impressas em 3D. Também vendemos filamentos Flashforge originais e criamos projetos sob medida.</p>
+          <p>Decoração, presentes, organização e peças técnicas impressas em 3D. Também vendemos filamentos Flashforge, Bambu Lab e Masterprint e criamos projetos sob medida.</p>
           <div class="hero-ctas"><a class="pill neon" href="#catalogo">Ver produtos</a><a class="pill glass" href="#sob-medida">Fazer um projeto</a></div>
         </div>
         <nav class="hero-cats" id="heroCats" aria-label="Categorias"></nav>
@@ -67,7 +68,7 @@
     </section>
 
     <section class="wrap block" id="filamentos" aria-labelledby="filTitle">
-      <div class="head"><div><h2 id="filTitle">Filamentos originais</h2><p>Flashforge e Bambu Lab em carretel de 1 kg. Toque numa marca para ver as cores com foto oficial. Acima de 5 carretéis o preço cai, e acima de 20 cai de novo.</p></div></div>
+      <div class="head"><div><h2 id="filTitle">Filamentos originais</h2><p>Flashforge, Bambu Lab e Masterprint em carretel de 1 kg. Toque numa marca para ver as cores e o estoque de cada uma. Acima de 5 carretéis o preço cai, e acima de 20 cai de novo.</p></div></div>
       <div class="brands" id="filBrands"></div>
     </section>
 
@@ -123,6 +124,7 @@
   </div>
   <div class="snack" id="snack" role="status"></div>
   <script src="data/products.js"></script>
+  <script src="data/promo.js"></script>
   <script src="data/filaments.js"></script>
   <script src="js/app.js"></script>
   <script src="data/hero.js"></script>

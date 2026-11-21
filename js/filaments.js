@@ -14,7 +14,7 @@
 
   /* carretel desenhado (para cores sem foto oficial); --sel e --sel2 animam a cor */
   function spool(brand,big){
-    const logo=brand.logo?`<image href="${brand.logo}" x="104" y="104" width="32" height="32"/>`:'';
+    const logo=brand.logo?`<image href="${brand.logo}" x="104" y="104" width="32" height="32"/>`:`<text x="120" y="126" text-anchor="middle" font-family="Geist,system-ui,sans-serif" font-weight="800" font-size="17" fill="${brand.accent}">${esc(brand.mono||brand.name.slice(0,2))}</text>`;
     const rings=[94,86,78,70,62].map(r=>`<circle cx="120" cy="120" r="${r}"/>`).join('');
     const windows=[0,60,120,180,240,300].map(a=>{const x=120+40*Math.cos(a*Math.PI/180),y=120+40*Math.sin(a*Math.PI/180);return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8.5"/>`}).join('');
     return `<svg class="spool${big?' big':''}" viewBox="0 0 240 240" aria-hidden="true">
@@ -33,14 +33,16 @@
   const allColors=b=>b.lines.flatMap(l=>l.colors);
   $('filBrands').innerHTML=BRANDS.map(b=>{
     const all=allColors(b),avail=all.filter(inStock),cover=all.find(c=>c.photoKind==='official'&&inStock(c)&&!/branco|preto|natural|cinza/i.test(c.name))||all.find(c=>c.photo)||all[0];
-    const minPrice=Math.min(...avail.map(c=>filPrice(c,1)));
-    const dots=avail.slice(0,10).map(c=>`<i style="--c:${swatchBg(c)}" title="${esc(c.name)}"></i>`).join('')+(avail.length>10?`<em>+${avail.length-10}</em>`:'');
+    const priced=avail.filter(c=>c.cost!=null),minPrice=priced.length?Math.min(...priced.map(c=>filPrice(c,1))):null;
+    const dotsFrom=avail.length?avail:all;
+    const dots=dotsFrom.slice(0,10).map(c=>`<i style="--c:${swatchBg(c)}" title="${esc(c.name)}"></i>`).join('')+(dotsFrom.length>10?`<em>+${dotsFrom.length-10}</em>`:'');
     return `<button type="button" class="brand-card" data-brand="${b.id}" style="--sel:${hexes(cover)[0]};--accent:${b.accent}">
-      <span class="bc-top"><img src="${b.logo}" alt="" width="28" height="28"><b>${esc(b.name)}</b></span>
+      <span class="bc-top">${b.logo?`<img src="${b.logo}" alt="" width="28" height="28">`:`<span class="bc-mono">${esc(b.mono||b.name.slice(0,2))}</span>`}<b>${esc(b.name)}</b></span>
       <span class="bc-pic">${cover.photo?`<img src="${cover.photo}" alt="" loading="lazy">`:spool(b)}</span>
       <span class="bc-lines">${b.lines.map(l=>`<span>${esc(l.name)}</span>`).join('')}</span>
       <span class="bc-dots" aria-label="${avail.length} cores em estoque">${dots}</span>
-      <span class="bc-foot"><span class="bc-price"><small>a partir de</small><strong>${fmt(minPrice)}<span> o carretel</span></strong></span><span class="pill neon sm">Ver cores</span></span>
+      <span class="bc-stock${avail.length?'':' out'}">${avail.length?`${avail.length} ${avail.length===1?'cor':'cores'} em estoque · ${avail.reduce((n,c)=>n+Number(c.stock),0)} carretéis`:`${all.length} cores · sem estoque no momento`}</span>
+      <span class="bc-foot"><span class="bc-price">${minPrice!=null?`<small>a partir de</small><strong>${fmt(minPrice)}<span> o carretel</span></strong>`:`<small>${all.length} cores</small><strong class="soft">Avise-me quando chegar</strong>`}</span><span class="pill neon sm">Ver cores</span></span>
     </button>`}).join('');
   document.querySelectorAll('.brand-card').forEach(c=>c.onclick=()=>open(c.dataset.brand));
 
@@ -49,7 +51,7 @@
   function open(id){
     brand=BRANDS.find(b=>b.id===id);if(!brand)return;
     lastFocus=document.activeElement;line=brand.lines[0];color=null;
-    $('fpLogo').src=brand.logo;$('fpBrand').textContent=brand.name;
+    $('fpLogo').hidden=!brand.logo;if(brand.logo)$('fpLogo').src=brand.logo;$('fpBrand').textContent=brand.name;
     $('fpStageSpool').innerHTML=spool(brand,true);pop.style.setProperty('--accent',brand.accent);
     renderLines();selectLine(line.id);
     pop.hidden=false;document.body.style.overflow='hidden';
@@ -73,7 +75,7 @@
     const cs=line.colors;cs.forEach(c=>{if(c.photo){const i=new Image();i.src=c.photo}});
     $('fpSwatches').innerHTML=cs.map((c,i)=>`<button type="button" role="radio" class="fp-sw${c.translucent?' translucent':''}${inStock(c)?'':' out'}" aria-checked="false" data-i="${i}" style="--c:${swatchBg(c)}" title="${esc(c.name)}${inStock(c)?'':' (esgotado)'}"><i></i><span>${esc(c.name)}</span></button>`).join('');
     $('fpSwatches').querySelectorAll('.fp-sw').forEach(b=>b.onclick=()=>selectColor(cs[Number(b.dataset.i)],b));
-    const n=cs.filter(inStock).length;$('fpCount').textContent=`${n} ${n===1?'cor':'cores'} em estoque`;
+    const n=cs.filter(inStock).length;$('fpCount').textContent=n?`${n} de ${cs.length} ${cs.length===1?'cor':'cores'} em estoque`:`${cs.length} cores, sem estoque`;
     const keep=color&&cs.find(c=>c.name===color.name&&inStock(c));
     const pick=keep||cs.find(c=>c.photo&&inStock(c)&&!/branco|preto|natural/i.test(c.name))||cs.find(inStock)||cs[0];
     selectColor(pick,$('fpSwatches').querySelector(`[data-i="${cs.indexOf(pick)}"]`),true);
@@ -99,7 +101,12 @@
   }
   function renderBuy(){
     const box=$('fpBuy'),c=color,st=Number(c.stock)||0;
-    if(!st){box.innerHTML=`<div class="fp-price"><strong class="soft">Esgotado</strong><small>Esta cor está sem estoque no momento. Escolha outra cor ou fale com uma vendedora.</small></div>`;$('fpNote').textContent='';return}
+    if(!st){
+      const msg=n=>`Olá, ${n}! Quero ser avisado quando chegar o filamento ${brand.name} ${line.name}, cor ${c.name}.${c.cost==null?' Também quero saber o preço.':''}`;
+      box.innerHTML=`<div class="fp-price"><strong class="soft">Sem estoque</strong>${c.cost!=null?`<span>${fmt(filPrice(c,1))} o carretel</span>`:''}<small>Esta cor está em falta. Peça para ser avisado quando chegar.</small></div>
+        <div class="fp-row"><button type="button" class="pill neon grow" data-wa="62994077839" data-name="Karita">Avise-me pela Karita</button><button type="button" class="pill line grow" data-wa="62994632427" data-name="Isabel">Avise-me pela Isabel</button></div>`;
+      box.querySelectorAll('[data-wa]').forEach(b=>b.onclick=()=>whatsapp(b.dataset.wa,msg(b.dataset.name)));
+      $('fpNote').textContent='Você recebe a resposta da vendedora pelo WhatsApp.';return}
     const rows=tiers.map((t,i)=>{const n=tiers[i+1];const label=n?`${t.min} a ${n.min-1} carretéis`:`${t.min} ou mais`;return `<li${i===0?' class="on"':''}><span>${label}</span><b>${fmt(filPrice(c,t.min))}</b></li>`}).join('');
     box.innerHTML=`<div class="fp-price"><strong>${fmt(filPrice(c,1))}</strong><span>o carretel de 1 kg</span></div>
       <ul class="fp-tiers" aria-label="Preço por carretel conforme a quantidade de filamentos no carrinho">${rows}</ul>

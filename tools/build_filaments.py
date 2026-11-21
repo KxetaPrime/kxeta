@@ -89,8 +89,21 @@ CATALOGO=[
    ('354080','Roxo',1,133.96,'Purple'),('354079','Verde Bambu',3,133.96,'Bambu Green'),('233424','Vermelho',2,133.89,'Red')],None,None),
  ('bambulab','bl-petg','PETG Basic','Resistente e com bom acabamento, para peças funcionais.',[
    ('353869','Cinza',3,128.16,'Gray'),('233414','Marrom Escuro',3,128.31,'Dark Brown'),('233413','Preto',3,128.25,'Black')],None,None),
+
+ # Masterprint: cores mais procuradas, ainda sem estoque nem custo do fornecedor (custo None = preço sob consulta)
+ ('masterprint','mp-pla','PLA','PLA nacional de boa qualidade, ótimo custo para produção e peças do dia a dia.',[
+   ('MP-PLA-PRE','Preto',0,None),('MP-PLA-BRA','Branco',0,None),('MP-PLA-CIN','Cinza',0,None),('MP-PLA-VEM','Vermelho',0,None),
+   ('MP-PLA-AZU','Azul',0,None),('MP-PLA-AMA','Amarelo',0,None),('MP-PLA-VER','Verde',0,None),('MP-PLA-LAR','Laranja',0,None),
+   ('MP-PLA-ROX','Roxo',0,None),('MP-PLA-ROS','Rosa',0,None),('MP-PLA-PEL','Pele',0,None),('MP-PLA-DOU','Dourado Silk',0,None)],
+   {'Preto':'#1E1E20','Branco':'#F3F3F0','Cinza':'#8A8F96','Vermelho':'#C8261F','Azul':'#1E4FB5','Amarelo':'#F5C518','Verde':'#2F9E44',
+    'Laranja':'#F07A1A','Roxo':'#6B3FA0','Rosa':'#EE8FB7','Pele':'#E8C3A0','Dourado Silk':'#D4AF37'},lambda c:None),
+ ('masterprint','mp-petg','PETG','PETG resistente a impacto e umidade, para peças funcionais e externas.',[
+   ('MP-PETG-PRE','Preto',0,None),('MP-PETG-BRA','Branco',0,None),('MP-PETG-CIN','Cinza',0,None),('MP-PETG-AZT','Azul Translúcido',0,None),
+   ('MP-PETG-VET','Verde Translúcido',0,None),('MP-PETG-TRA','Transparente',0,None)],
+   {'Preto':'#1E1E20','Branco':'#F4F4F2','Cinza':'#8A8F96','Azul Translúcido':'#3E7BD6','Verde Translúcido':'#2FB35A','Transparente':'#DCE6EA'},lambda c:None),
 ]
 TRANSLUCIDO={'ff-petg-transp'}
+TRANSLUCIDO_COR=('Translúcido','Transparente')
 
 items={};jobs=[]
 for brand,lid,lname,about,rows,hexes,src in CATALOGO:
@@ -100,7 +113,7 @@ for brand,lid,lname,about,rows,hexes,src in CATALOGO:
             V,SW=BL[lid];v=V[en];url=v['imgs'].get('Filament with spool') or v['imgs']['Refill'];hexv=avg(SW[en]);official=f"{en} ({v['code']})"
         else:
             hexv=hexes[name];s=src(name);url=ff(*s) if s else None
-        items[sku]=dict(sku=sku,brand=brand,line=lid,name=name,stock=stock,cost=cost,hex=hexv,official=official,photo='',translucent=lid in TRANSLUCIDO)
+        items[sku]=dict(sku=sku,brand=brand,line=lid,name=name,stock=stock,cost=cost,hex=hexv,official=official,photo='',translucent=lid in TRANSLUCIDO or name.endswith(TRANSLUCIDO_COR))
         if url: jobs.append((sku,url,os.path.join(RAW,brand,sku+'.webp')))
 def run(j):
     sku,url,out=j
@@ -134,6 +147,8 @@ def compose(it):
         if it['sku'] in ADJUST:
             tgt,ref=ADJUST[it['sku']];im=studio.retint(im,tgt,ref);it['hex']=tgt;kind='adjusted'
         pic=studio.place_cutout(im,it['hex']) if transparent(im) else studio.place_flat(im,it['hex'])
+    elif it['brand'] not in BASE:
+        it['photo']='';it['photoKind']='drawn';it.pop('raw',None);return it['sku'],'drawn'
     else:
         base=BASE[it['brand']][1 if it['translucent'] else 0]
         pic=studio.place_cutout(studio.recolor(Image.open(base),it['hex'],it['translucent']),it['hex']);kind='simulated'
@@ -145,6 +160,7 @@ for sku,kind in ThreadPoolExecutor(4).map(compose,list(items.values())):
 BRANDS=[
  dict(id='flashforge',name='Flashforge',logo='assets/brands/flashforge.svg',accent='#E9ECEA',about='Filamentos originais em várias linhas: PLA, PETG, ABS e TPU.'),
  dict(id='bambulab',name='Bambu Lab',logo='assets/brands/bambulab.svg',accent='#00AE42',about='Os filamentos originais da Bambu Lab, com o chip que a impressora reconhece.'),
+ dict(id='masterprint',name='Masterprint',mono='MP',logo=None,accent='#F07A1A',about='Marca nacional de filamentos, com ótimo custo-benefício para produção.'),
 ]
 for b in BRANDS:
     b['lines']=[dict(id=lid,name=lname,about=about,colors=[items[r[0]] for r in rows]) for brand,lid,lname,about,rows,*_ in CATALOGO if brand==b['id']]
