@@ -83,13 +83,15 @@
   /* ---------- hero: vídeo (quando existir) ou impressão desenhada em loop ---------- */
   const hero=$('slide0'),cv=$('heroCanvas'),video=$('heroVideo');
   const saveData=navigator.connection&&navigator.connection.saveData;
+  // Mídia do slide 1 (data/hero.js). image: foto de fundo; video: vídeo em loop; keepNozzle: mantém o bico animado por cima.
   const cfg=window.NP_HERO_VIDEO;
   if(cfg){
-    if(cfg.poster)video.poster=cfg.poster;
-    video.hidden=false;cv.hidden=true;
-    if(!reduce&&!saveData){video.src=narrow()&&cfg.mobile?cfg.mobile:cfg.desktop;video.preload='auto';
-      new IntersectionObserver(es=>{es[0].isIntersecting?video.play().catch(()=>{}):video.pause()}).observe(hero)}
-    return;
+    const media=hero.querySelector('.hero-media');
+    if(cfg.image){const im=new Image();im.className='hero-bg';im.alt='';im.decoding='async';im.src=narrow()&&cfg.imageMobile?cfg.imageMobile:cfg.image;media.prepend(im);hero.classList.add('has-bg')}
+    if(cfg.desktop){if(cfg.poster)video.poster=cfg.poster;video.hidden=false;hero.classList.add('has-bg');
+      if(!reduce&&!saveData){video.src=narrow()&&cfg.mobile?cfg.mobile:cfg.desktop;video.preload='auto';
+        new IntersectionObserver(es=>{es[0].isIntersecting?video.play().catch(()=>{}):video.pause()}).observe(hero)}}
+    if(!cfg.keepNozzle){cv.hidden=true;return}
   }
   const ctx=cv.getContext('2d'),off=document.createElement('canvas'),octx=off.getContext('2d');
   const LOOP=['Verde','Azul','Vermelho','Amarelo','Roxo','Branco','Rosa'].map(c=>ffVariants.find(v=>v.kind==='PLA'&&v.color===c)).filter(Boolean);
