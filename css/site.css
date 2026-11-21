@@ -370,3 +370,39 @@ footer.wrap{margin-top:clamp(56px,8vw,112px);padding-bottom:16px}
   .pm-buy{position:sticky;bottom:0;background:#fff;padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px));z-index:2}
   .pm-buy #detailAdd{min-width:0;font-size:15px}.pm,.pm-info{min-width:0;max-width:100vw}
 }
+
+/* ---------- correções de seções herdadas ---------- */
+#filamentos.wrap{padding:0 max(12px,env(safe-area-inset-right,0px),min(3vw,28px))}
+footer.wrap{background:transparent;border:0}
+
+/* ---------- carrinho ---------- */
+.drawer.cart{width:min(440px,100vw);border-radius:28px 0 0 28px;display:flex;flex-direction:column;background:#fff}
+.cart .drawerTop{padding:22px 22px 14px;border:0}
+.cart .drawerTop h2{font-size:26px;display:flex;align-items:baseline;gap:10px}
+.cart #cartTitleCount{font:500 14px var(--text);color:var(--ink3)}
+.cart-tier{margin:0 22px 10px;padding:12px 14px;border-radius:16px;background:var(--bg)}
+.cart-tier p{margin:0 0 8px;font-size:13px;color:var(--ink2)}.cart-tier b{color:var(--ink)}
+.cart-tier i{display:block;height:6px;border-radius:6px;background:#E1E5E1;overflow:hidden}.cart-tier i span{display:block;height:100%;background:var(--green);border-radius:6px;transition:width .4s}
+.cart .drawerBody{padding:4px 22px;flex:1;overflow-y:auto}
+.cart .cartItem{display:grid;grid-template-columns:76px 1fr auto;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
+.cart .cartItem img{width:76px;height:76px;border-radius:16px;object-fit:cover;background:var(--bg)}
+.ci-body{min-width:0}.ci-body strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14.5px;font-weight:600;line-height:1.3}
+.ci-body p{margin:3px 0 10px;font-size:13px;color:var(--ink3)}
+.ci-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cart .qtyControls{display:flex;align-items:center;height:34px;border-radius:999px;background:var(--bg);border:0;overflow:hidden}
+.cart .qtyControls button{width:32px;height:34px;border:0;background:transparent;font-size:16px}.cart .qtyControls b{min-width:20px;text-align:center;font-size:14px;border:0}
+.ci-price{text-align:right;line-height:1.15}.ci-price small{display:block;font-size:11.5px;color:var(--ink3)}.ci-price b{font-family:var(--display);font-size:17px}
+.cart .trash{width:32px;height:32px;border:0;border-radius:50%;background:transparent;color:var(--ink3);display:grid;place-items:center}.cart .trash:hover{background:var(--bg);color:#C2410C}.cart .trash svg{width:17px;height:17px}
+.cart .drawerBottom{padding:16px 22px calc(18px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:#fff}
+.cart .totalRow{display:flex;justify-content:space-between;align-items:baseline}.cart .totalRow span{font-size:15px;color:var(--ink2)}.cart .totalRow b{font-family:var(--display);font-size:28px;letter-spacing:-.02em}
+.cart-save{margin:4px 0 0;font-size:13.5px;font-weight:600;color:var(--green)}
+.cart .cartHint{margin:6px 0 14px;font-size:12.5px;color:var(--ink3)}
+.cart .sellerBtns{display:grid;grid-template-columns:1fr;gap:8px}
+.cart .sellerBtns .pill{width:100%;height:50px;font-size:15px;border:0}.cart .sellerBtns svg{width:19px;height:19px}
+.cart .sellerBtns .pill:disabled{opacity:.45;cursor:not-allowed}
+.cart-empty{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:40px 4px;color:var(--ink2);font-size:14px}.cart-empty b{color:var(--ink);font-size:17px}.cart-empty .pill{margin-top:10px}
+@media(max-width:760px){.drawer.cart{border-radius:0}}
+.cart .sellerBtns #sellerKarita{background:var(--neon);color:var(--ink)}.cart .sellerBtns #sellerKarita:hover:not(:disabled){background:var(--ink);color:#fff}
+.cart .sellerBtns #sellerIsabel{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}.cart .sellerBtns #sellerIsabel:hover:not(:disabled){box-shadow:inset 0 0 0 1.5px var(--ink)}
+.snack{background:var(--ink)!important;color:#fff!important;padding:12px 20px!important;font-weight:600}
+.cart .sellerBtns .pill{border-radius:999px!important}
