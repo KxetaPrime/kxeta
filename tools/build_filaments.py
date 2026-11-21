@@ -107,6 +107,7 @@ CATALOGO=[
 ]
 TRANSLUCIDO={'ff-petg-transp'}
 TRANSLUCIDO_COR=('Translúcido','Transparente')
+MP_BASE=os.path.join(RAW,'masterprint','_base_madeira.webp')
 MP_NOPHOTO={'PLA-BRANCO','PETG-LAVANDA', 'PETG-BRONZE', 'PETG-TRANSPARENTE', 'PETG-MARROM', 'PETG-PRATA', 'PLA-AZUL-CLARO', 'PETG-PELE', 'PETG-CINZA', 'PETG-MADEIRA'}
 
 items={};jobs=[]
@@ -119,7 +120,6 @@ for brand,lid,lname,about,rows,hexes,src in CATALOGO:
             hexv=hexes[name];s=src(name);url=ff(*s) if s else None
         items[sku]=dict(sku=sku,brand=brand,line=lid,name=name,stock=stock,cost=cost,hex=hexv,official=official,photo='',translucent=lid in TRANSLUCIDO or name.endswith(TRANSLUCIDO_COR))
         if url: jobs.append((sku,url,os.path.join(RAW,brand,sku+'.webp')))
-        elif brand=='masterprint' and sku[3:] not in MP_NOPHOTO and os.path.exists(os.path.join(RAW,brand,sku+'.webp')): items[sku]['raw']=os.path.join(RAW,brand,sku+'.webp')
 def run(j):
     sku,url,out=j
     if os.path.exists(out): return sku,(out,Image.open(out).size)
@@ -152,6 +152,15 @@ def compose(it):
         if it['sku'] in ADJUST:
             tgt,ref=ADJUST[it['sku']];im=studio.retint(im,tgt,ref);it['hex']=tgt;kind='adjusted'
         pic=studio.place_cutout(im,it['hex']) if transparent(im) else studio.place_flat(im,it['hex'],'dense' if it['brand']=='masterprint' else 'center')
+    elif it['brand']=='masterprint':
+        # foto oficial em alta (PLA Madeira, 1215 px, masterprint.com.br); demais cores: só o filamento recolorido
+        base=Image.open(MP_BASE).convert('RGB')
+        if it['name']!='Madeira' or it['line']!='mp-pla':
+            base=studio.recolor_masked(base,it['hex'].split('|')[0]);kind='simulated'
+        else: kind='official'
+        pic=studio.place_flat(base.resize((1200,1200),Image.LANCZOS),it['hex'],'dense')
+        pic.save(out,'WEBP',quality=88,method=6);it['photo']=out;it['photoKind']=kind;it.pop('raw',None)
+        return it['sku'],kind
     elif it['brand'] not in BASE:
         it['photo']='';it['photoKind']='drawn';it.pop('raw',None);return it['sku'],'drawn'
     else:

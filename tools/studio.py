@@ -109,3 +109,31 @@ def retint(rgba, hexcolor, ref=150):
     tinted = tinted * (1 - hi) + 255 * hi
     out = rgb * (1 - w[..., None]) + tinted * w[..., None]
     return Image.fromarray(np.dstack([out, al]).astype('uint8'), 'RGBA')
+
+def recolor_masked(rgb, hexcolor, ref_box=(700, 300, 1000, 900), tol=34):
+    """Troca a cor do filamento numa foto de carretel: pega os pixels parecidos com a cor de referência
+    (amostra em ref_box) e leva para a cor alvo, mantendo a luz/sombra de cada pixel."""
+    a = np.array(rgb.convert('RGB'), float)
+    ref = np.median(a[ref_box[1]:ref_box[3], ref_box[0]:ref_box[2]].reshape(-1, 3), axis=0)
+    # distância de crominância (ignora claro/escuro) + limite de saturação
+    s = a.sum(2, keepdims=True) + 1e-6; rs = ref / ref.sum()
+    dc = np.sqrt(((a / s - rs) ** 2).sum(2)) * 255
+    L = a @ np.array([.299, .587, .114]); Lr = ref @ np.array([.299, .587, .114])
+    m = np.clip(1 - (dc - tol * .35) / (tol * .65), 0, 1) * np.clip((L - 25) / 30, 0, 1) * np.clip((255 - L) / 6 + .2, 0, 1)
+    sat = (a.max(2) - a.min(2)) / np.maximum(a.max(2), 1); sr = (ref.max() - ref.min()) / max(ref.max(), 1)
+    m = m * np.clip((sat - sr * .45) / (sr * .3), 0, 1)
+    # só a região contínua do filamento (a partir do centro da amostra), para não manchar a etiqueta
+    b = Image.fromarray(((m > .35) * 255).astype('uint8')).filter(ImageFilter.MaxFilter(3))
+    ImageDraw.floodfill(b, ((ref_box[0] + ref_box[2]) // 2, (ref_box[1] + ref_box[3]) // 2), 128)
+    reg = Image.fromarray(((np.array(b) == 128) * 255).astype('uint8')).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.GaussianBlur(1))
+    m = m * (np.array(reg, float) / 255)
+    m = np.array(Image.fromarray((m * 255).astype('uint8')).filter(ImageFilter.GaussianBlur(1.2)), float) / 255
+    c = _rgb(hexcolor); Lc = c @ np.array([.299, .587, .114])
+    k = L / Lr
+    tinted = np.clip(c[None, None, :] * k[..., None], 0, 255)
+    if Lc > 200:   # cores muito claras: preserva o relevo com sombras neutras
+        tinted = np.clip(c[None, None, :] * (0.55 + 0.45 * k[..., None]), 0, 255) * np.clip(k[..., None], .55, 1.0) ** .6
+    hi = np.clip((L - Lr * 1.18) / 40, 0, 1)[..., None] * .5
+    tinted = tinted * (1 - hi) + 255 * hi
+    out = a * (1 - m[..., None]) + tinted * m[..., None]
+    return Image.fromarray(np.clip(out, 0, 255).astype('uint8'))

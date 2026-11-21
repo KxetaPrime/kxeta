@@ -895,7 +895,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-AZUL.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-CINZA",
@@ -908,7 +908,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-CINZA.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-VERMELHO",
@@ -921,7 +921,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-VERMELHO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-VERDE",
@@ -934,7 +934,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-VERDE.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-DOURADO",
@@ -947,7 +947,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-DOURADO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-MADEIRA",
@@ -973,7 +973,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-AMARELO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-BRANCO",
@@ -984,9 +984,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#F4F4F2",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PLA-BRANCO.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-ROSA",
@@ -999,7 +999,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-ROSA.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-AZUL-ESCURO",
@@ -1012,7 +1012,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-AZUL-ESCURO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-PRATA",
@@ -1025,7 +1025,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-PRATA.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-LARANJA",
@@ -1038,7 +1038,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-LARANJA.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-PRETO",
@@ -1051,7 +1051,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-PRETO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-CINZA-CLARO",
@@ -1064,7 +1064,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-CINZA-CLARO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-MARROM",
@@ -1077,7 +1077,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-MARROM.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-ROXO",
@@ -1090,7 +1090,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-ROXO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-ROXO-CLARO",
@@ -1103,7 +1103,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-ROXO-CLARO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-MADEIRA-ESCURA",
@@ -1116,7 +1116,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-MADEIRA-ESCURA.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-VERDE-BAMBU",
@@ -1129,7 +1129,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-VERDE-BAMBU.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-VERDE-ESCURO",
@@ -1142,7 +1142,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-VERDE-ESCURO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-CAFE",
@@ -1155,7 +1155,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-CAFE.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-MARROM-ESCURO",
@@ -1168,7 +1168,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-MARROM-ESCURO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-PELE",
@@ -1181,7 +1181,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-PELE.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-TRANSPARENTE",
@@ -1194,7 +1194,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-TRANSPARENTE.webp",
       "translucent": true,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-ROSA-CLARO",
@@ -1207,7 +1207,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PLA-ROSA-CLARO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PLA-AZUL-CLARO",
@@ -1218,9 +1218,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#8FC6EE",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PLA-AZUL-CLARO.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      }
     ]
    },
@@ -1240,7 +1240,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-PRETO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-BRANCO",
@@ -1253,7 +1253,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-BRANCO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-AZUL",
@@ -1266,7 +1266,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-AZUL.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-VERMELHO",
@@ -1279,7 +1279,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-VERMELHO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-VERDE",
@@ -1292,7 +1292,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-VERDE.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-ROSA",
@@ -1305,7 +1305,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-ROSA.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-PRATA",
@@ -1316,9 +1316,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#B5B8BC",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PETG-PRATA.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-TRANSPARENTE",
@@ -1329,9 +1329,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#E8E4DA",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PETG-TRANSPARENTE.webp",
       "translucent": true,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-CINZA",
@@ -1342,9 +1342,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#A3A6AA",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PETG-CINZA.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-AMARELO",
@@ -1357,7 +1357,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-AMARELO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-MARROM",
@@ -1368,9 +1368,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#6B4A40",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PETG-MARROM.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-LARANJA",
@@ -1383,7 +1383,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-LARANJA.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-PELE",
@@ -1394,9 +1394,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#E9B98E",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PETG-PELE.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-MADEIRA",
@@ -1407,9 +1407,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#D8B08C",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PETG-MADEIRA.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-LAVANDA",
@@ -1420,9 +1420,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#B49BD9",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PETG-LAVANDA.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-BRONZE",
@@ -1433,9 +1433,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#9C7A3C",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/MP-PETG-BRONZE.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-DOURADO",
@@ -1448,7 +1448,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-DOURADO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      },
      {
       "sku": "MP-PETG-ROXO",
@@ -1461,7 +1461,7 @@ window.NP_FIL = [
       "official": null,
       "photo": "assets/filamentos/studio/MP-PETG-ROXO.webp",
       "translucent": false,
-      "photoKind": "official"
+      "photoKind": "simulated"
      }
     ]
    }
