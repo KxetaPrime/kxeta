@@ -189,7 +189,7 @@ const RULES=[
    if(/kit/.test(n)) return ["KIT-NATAL-01","KIT 1 FELIZ NATAL"];
    if(/verd/.test(n)) return ["NATAL-20CM-VERD","VERDE"];
    return ["NATAL-20CM-VERM","VERMELHO"];}},
- {k:/casinha/, nome:"CASINHA DE NATAL 7CM", f:v=>["CASA-7",v||"PADRÃO"]},
+ {k:/casinha/, nome:"CASINHA DE NATAL 7CM", f:v=>["CASA-7",v]},
  {k:/arvore de natal|arvore moderna/, nome:"ÁRVORE DE NATAL MODERNA", f:v=>{const n=noAcc(v);
    if(/10\s*cm/.test(n)) return ["Árvore-10cm","10 CM"];
    if(/15\s*cm/.test(n)) return ["Árvore-15cm","15 CM"];return ["",v];}},
@@ -209,7 +209,7 @@ const RULES=[
  {k:/porta.?lata|caneca|lata/, nome:"PORTA LATA (CANECA)", f:v=>{const c=cor(v);return [c?`LATA-${c[0]}`:"", c?c[1]:v];}},
  {k:/starlink/, nome:"CONVERSOR STARLINK MINI", f:v=>{const n=noAcc(v);
    if(/com/.test(n)) return ["STAR-CC","COM CASE"]; if(/sem/.test(n)) return ["STAR-SC","SEM CASE"]; return ["",v];}},
- {k:/sagrada/, nome:"SAGRADA FAMÍLIA 22CM", f:v=>["SAGRADA-22",v||"PADRÃO"]},
+ {k:/sagrada/, nome:"SAGRADA FAMÍLIA 22CM", f:v=>["SAGRADA-22",v]},
 ];
 function userRules(){const out=[];($("regras").value||"").split("\n").forEach(l=>{const i=l.indexOf("=");if(i>0){const a=noAcc(l.slice(0,i).trim()),b=l.slice(i+1).trim();if(a&&b) out.push([a,b.toUpperCase()]);}});return out;}
 function classify(title,variation){
@@ -314,7 +314,7 @@ function drawBox(page,F,box,info,opts){
       page.drawText(vt,{x:tx+8.5*s,y:yy,size,font:F.b,color:W}); };
     if(mode==="compact"){
       const v=it.varl||it.nome; pill(v,6.6*s,top-8.4*s);
-      const l2=[it.sku,it.nome].filter(Boolean).join("  ·  ");
+      const l2=(it.varl?[it.sku,it.nome]:[it.sku]).filter(Boolean).join("  ·  ");
       page.drawText(fit(F.b,l2,5.4*s,tw),{x:tx,y:ry+2.6*s,size:5.4*s,font:F.b,color:K});
     } else {
       let ty=top-3.5*s;
