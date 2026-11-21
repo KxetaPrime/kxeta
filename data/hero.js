@@ -1,5 +1,4 @@
-// Mídia do slide 1 do topo. Enquanto for null, aparece só o bico imprimindo (desenhado em código).
-// Exemplos:
-//   window.NP_HERO_VIDEO = { image:'assets/hero/higgsfield.webp', imageMobile:'assets/hero/higgsfield-mobile.webp', keepNozzle:false };
-//   window.NP_HERO_VIDEO = { desktop:'assets/hero/hero.mp4', mobile:'assets/hero/hero-mobile.mp4', poster:'assets/hero/hero.webp' };
-window.NP_HERO_VIDEO = null;
+// Mídia do slide 1 do topo. Hoje: renderização 3D própria (tools: three.js). Quando a imagem do Higgsfield chegar,
+// troque os arquivos em assets/hero/ ou os caminhos abaixo.
+// Vídeo: window.NP_HERO_VIDEO = { desktop:'assets/hero/hero.mp4', mobile:'assets/hero/hero-mobile.mp4', poster:'assets/hero/hero.webp' };
+window.NP_HERO_VIDEO = { image:'assets/hero/render-3d.webp', imageMobile:'assets/hero/render-3d-mobile.webp', keepNozzle:false };

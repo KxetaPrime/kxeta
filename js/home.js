@@ -20,7 +20,7 @@
   /* ---------- faixa da promoção ---------- */
   (function(){const p=window.NP_PROMO;if(!p||!p.off)return;const now=new Date(),end=p.ends?new Date(p.ends+'T23:59:59-03:00'):null,start=p.starts?new Date(p.starts+'T00:00:00-03:00'):null;
     if((start&&now<start)||(end&&now>end))return;
-    $('promoName').textContent=p.name;$('promoText').textContent=`${p.off}% de desconto ou mais em ${p.categories?p.categories.join(', '):'todos os produtos impressos'}`;
+    $('promoName').textContent=p.name;$('promoText').textContent=innerWidth<760?`${p.off}% off nos impressos`:`${p.off}% de desconto ou mais em ${p.categories?p.categories.join(', '):'todos os produtos impressos'}`;
     if(end){const d=Math.ceil((end-now)/864e5);$('promoTime').textContent=d<=1?'Termina hoje':`Termina em ${d} dias`}
     $('promoWrap').hidden=false})();
 
