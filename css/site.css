@@ -658,3 +658,20 @@ a.bx:hover .bx-go{transform:translateX(4px)}
 @media(min-width:761px){.spool-stage{width:min(1000px,calc((100vh - 520px) * 2.4));min-width:620px}}
 .catc .catc-t{align-items:flex-start;text-align:left}.catc .catc-t b{text-align:left}
 .brand span{letter-spacing:-.035em}
+
+/* ---------- carretéis clicáveis e troca de marca ---------- */
+.sp{border:0;padding:0;background:none;cursor:pointer}
+.sp img{transition:filter .25s}
+.sp:hover img{filter:drop-shadow(0 22px 22px rgba(12,16,14,.22)) brightness(1.05)}
+.sp:focus-visible{outline:2.5px solid var(--ink);outline-offset:6px;border-radius:20px}
+.spool-stage.out .sp img{opacity:0;translate:0 24px;transition:opacity .3s,translate .3s}
+.spool-stage.in .sp img{animation:spIn .7s cubic-bezier(.2,.7,.2,1) both calc(var(--i) * .07s),float 6s ease-in-out infinite calc(var(--i) * -1.3s)}
+.spool-stage[data-brand="bambulab"] .sp{bottom:9%}
+.brand-switch{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:6px 0 clamp(18px,2.4vw,28px)}
+.brand-switch button{position:relative;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border:0;border-radius:999px;background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1px rgba(12,16,14,.08);font:600 14px var(--text);color:var(--ink2);overflow:hidden;transition:background .2s,color .2s}
+.brand-switch button img{width:18px;height:18px}
+.brand-switch button[aria-selected="true"]{background:var(--ink);color:#fff;box-shadow:none}
+.brand-switch button[aria-selected="true"] img{filter:invert(1)}
+.brand-switch i{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--neon);transform-origin:left;transform:scaleX(0)}
+.brand-switch.run [aria-selected="true"] i{animation:prog 5.2s linear both}
+@media(max-width:760px){.brand-switch button{height:36px;padding:0 12px;font-size:13px}}
