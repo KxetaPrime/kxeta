@@ -657,3 +657,4 @@ a.bx:hover .bx-go{transform:translateX(4px)}
 .hero2 h1 .layers{background:repeating-linear-gradient(180deg,var(--ink) 0 .06em,rgba(12,16,14,.86) .06em .072em);-webkit-background-clip:text;background-clip:text}
 @media(min-width:761px){.spool-stage{width:min(1000px,calc((100vh - 520px) * 2.4));min-width:620px}}
 .catc .catc-t{align-items:flex-start;text-align:left}.catc .catc-t b{text-align:left}
+.brand span{letter-spacing:-.035em}
