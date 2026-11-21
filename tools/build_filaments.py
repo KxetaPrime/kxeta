@@ -74,7 +74,7 @@ CATALOGO=[
    {'Preto':'#25262A','Rosa':'#E992BB','Verde':'#36AD44'},lambda c:('hs-petg',f'Basic / {EN[c]}')),
  ('flashforge','ff-petg-transp','PETG Transparente','Translúcido, para luminárias e peças com efeito de vidro.',[
    ('233385','Amarelo',2,82.15),('233386','Azul',14,82.15),('233387','Laranja',5,82.15),('233383','Natural',4,82.15),('233388','Roxo',4,82.15),('233382','Verde',3,82.15),('233384','Vermelho',5,82.15)],
-   {'Amarelo':'#F2C230','Azul':'#3E86E0','Laranja':'#F28A2E','Natural':'#DCE6EA','Roxo':'#8C55D0','Verde':'#36B25A','Vermelho':'#D3303A'},
+   {'Amarelo':'#E3A532','Azul':'#3E86E0','Laranja':'#F28A2E','Natural':'#DCE6EA','Roxo':'#5B3BB5','Verde':'#4E9A33','Vermelho':'#A1262E'},
    lambda c:{'Amarelo':('hs-petg','Transparent / Yellow'),'Verde':('hs-petg','Transparent / Green'),'Roxo':('hs-petg','Transparent / Purple'),'Natural':('hs-petg','Transparent / Transparent'),'Vermelho':('hs-petg','Transparent / Ruby Red')}.get(c)),
  ('flashforge','ff-abs','ABS Basic','Aguenta mais calor, indicado para peças técnicas e de uso no carro.',[
    ('233393','Amarelo',5,68.37),('233394','Azul',5,68.37),('233390','Branco',5,68.37),('233397','Cinza',5,68.37),('233396','Marrom',5,68.37),('233389','Natural',5,68.37),
@@ -117,9 +117,11 @@ def photo_hex(im):
     a=np.array(im.convert('RGBA'),float);rgb,al=a[...,:3],a[...,3];mx,mn=rgb.max(2),rgb.min(2);sat=(mx-mn)/np.maximum(mx,1);L=rgb.mean(2)
     m=(al>200)&(sat>.28)&(L>40)&(L<235)
     if m.sum()<2000: return None
-    px=rgb[m];lum=px@np.array([.299,.587,.114]);lo,hi=np.percentile(lum,[62,92])
+    px=rgb[m];lum=px@np.array([.299,.587,.114]);lo,hi=np.percentile(lum,[70,95])
     return '#%02X%02X%02X'%tuple(int(v) for v in np.median(px[(lum>=lo)&(lum<=hi)],axis=0))
 import numpy as np
+# fotos oficiais com tom corrigido (a foto do fabricante não mostra a cor como ela é): artigo -> (cor alvo, referência de luz)
+ADJUST={'233350':('#D9B44A',80)}  # Dourado: a foto oficial 'Gold' sai verde-oliva
 BASE={'flashforge':(os.path.join(RAW,'flashforge','233335.webp'),os.path.join(RAW,'flashforge','233383.webp'))}
 def compose(it):
     out=f"assets/filamentos/studio/{it['sku']}.webp"
@@ -127,8 +129,11 @@ def compose(it):
         im=Image.open(it['raw'])
         if it['brand']=='flashforge' and transparent(im):
             h=photo_hex(im)
-            if h and not it['translucent'] and not re.search(r'branco|preto|natural|cinza|prata',it['name'],re.I): it['hex']=h
-        pic=studio.place_cutout(im,it['hex']) if transparent(im) else studio.place_flat(im,it['hex']);kind='official'
+            if h and it['sku'] not in ADJUST and not it['translucent'] and not re.search(r'branco|preto|natural|cinza|prata',it['name'],re.I): it['hex']=h
+        kind='official'
+        if it['sku'] in ADJUST:
+            tgt,ref=ADJUST[it['sku']];im=studio.retint(im,tgt,ref);it['hex']=tgt;kind='adjusted'
+        pic=studio.place_cutout(im,it['hex']) if transparent(im) else studio.place_flat(im,it['hex'])
     else:
         base=BASE[it['brand']][1 if it['translucent'] else 0]
         pic=studio.place_cutout(studio.recolor(Image.open(base),it['hex'],it['translucent']),it['hex']);kind='simulated'

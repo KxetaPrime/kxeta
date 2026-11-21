@@ -89,3 +89,16 @@ def recolor(rgba, hexcolor, translucent=False):
     tinted = tinted * (1 - hi) + 255 * hi
     out = rgb * (1 - w[..., None]) + tinted * w[..., None]
     return Image.fromarray(np.dstack([out, al]).astype('uint8'), 'RGBA')
+
+def retint(rgba, hexcolor, ref=150):
+    """Corrige o tom de uma foto oficial: leva as partes coloridas (filamento e peça) para a cor alvo,
+    mantendo luz, sombra e textura. Partes pretas/cinzas (carretel) não mudam."""
+    im = np.array(rgba.convert('RGBA'), float); rgb, al = im[..., :3], im[..., 3]
+    L = rgb @ np.array([.299, .587, .114]); mx, mn = rgb.max(2), rgb.min(2); sat = (mx - mn) / np.maximum(mx, 1)
+    w = np.clip((sat - .08) / .14, 0, 1) * np.clip((L - 18) / 40, 0, 1)
+    c = _rgb(hexcolor); Lc = c @ np.array([.299, .587, .114])
+    tinted = np.clip(c * (L / ref)[..., None] * (ref / Lc), 0, 255)
+    hi = np.clip((L - 200) / 50, 0, 1)[..., None] * .35
+    tinted = tinted * (1 - hi) + 255 * hi
+    out = rgb * (1 - w[..., None]) + tinted * w[..., None]
+    return Image.fromarray(np.dstack([out, al]).astype('uint8'), 'RGBA')

@@ -94,7 +94,7 @@
         im.complete?show():(im.onload=show,im.onerror=show);
       }
     }else{pics.querySelectorAll('img').forEach(i=>i.remove());const s=$('fpStageSpool').firstElementChild;if(s&&!reduce&&changed&&!silent){s.classList.remove('spin');requestAnimationFrame(()=>s.classList.add('spin'))}}
-    $('fpOfficial').textContent=c.photoKind==='simulated'?'Simulação da cor sobre foto oficial':c.photo?'Foto oficial do fabricante':'Ilustração na cor escolhida';
+    $('fpOfficial').textContent={simulated:'Simulação da cor sobre foto oficial',adjusted:'Foto oficial com a cor corrigida',official:'Foto oficial do fabricante'}[c.photoKind]||'Ilustração na cor escolhida';
     renderBuy();
   }
   function renderBuy(){
