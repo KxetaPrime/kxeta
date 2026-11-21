@@ -48,12 +48,13 @@
 
   /* ---------- janela ---------- */
   const pop=$('filPop');let brand=null,line=null,color=null,qty=1,lastFocus=null;
-  function open(id){
+  function open(id,sku){
     brand=BRANDS.find(b=>b.id===id);if(!brand)return;
     lastFocus=document.activeElement;line=brand.lines[0];color=null;
     $('fpLogo').hidden=!brand.logo;if(brand.logo)$('fpLogo').src=brand.logo;$('fpLogo').classList.toggle('wide',!!brand.logoWide);$('fpBrand').hidden=!!brand.logoWide;$('fpBrand').textContent=brand.name;
     $('fpStageSpool').innerHTML=spool(brand,true);pop.style.setProperty('--accent',brand.accent);
     renderLines();selectLine(line.id);
+    if(sku){const l=brand.lines.find(l=>l.colors.some(c=>c.sku===sku));if(l){if(l!==line)selectLine(l.id);const i=line.colors.findIndex(c=>c.sku===sku);selectColor(line.colors[i],$('fpSwatches').querySelector(`[data-i="${i}"]`),true)}}
     pop.hidden=false;document.body.style.overflow='hidden';
     requestAnimationFrame(()=>pop.classList.add('on'));
     setTimeout(()=>$('fpClose').focus(),reduce?0:180);

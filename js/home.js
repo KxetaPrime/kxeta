@@ -24,24 +24,53 @@
     if(end){const d=Math.ceil((end-now)/864e5);$('promoTime').textContent=d<=1?'Termina hoje':`Termina em ${d} dias`}
     $('promoWrap').hidden=false})();
 
-  /* ---------- categorias no hero ---------- */
-  const CATS=['Natal e decoração','Chaveiros e brindes','Casa e organização','Peças e acessórios'];
-  const firstImg=c=>{const p=P.filter(x=>x.category===c).sort((a,b)=>Number(b.featured)-Number(a.featured))[0];return p?imgOf(p):''};
-  const filImg=(ffVariants.find(v=>v.color==='Verde'&&v.image)||ffVariants.find(v=>v.image)||{}).image||'';
-  $('heroCats').innerHTML=CATS.map(c=>{const n=P.filter(p=>p.category===c).length;return `<a class="cat" href="#catalogo" data-goto-cat="${esc(c)}"><img src="${esc(firstImg(c))}" alt="" loading="lazy"><span><b>${esc(c)}</b><small>${n} ${n===1?'produto':'produtos'}</small></span></a>`}).join('')
-    +`<a class="cat" href="#filamentos"><img src="${esc(filImg)}" alt="" loading="lazy"><span><b>Filamentos</b><small>Flashforge, Bambu Lab e mais</small></span></a>`
-    +`<a class="cat" href="#sob-medida"><i class="cat-icon" aria-hidden="true">+</i><span><b>Sob medida</b><small>Sua ideia em 3D</small></span></a>`;
-
-  /* ---------- vitrine de Natal ---------- */
-  const natal=P.filter(p=>p.category==='Natal e decoração').sort((a,b)=>Number(b.featured)-Number(a.featured)||(minAvailable(a)??1e9)-(minAvailable(b)??1e9)).slice(0,5);
-  $('natalBento').innerHTML=natal.map((p,i)=>{const m=minAvailable(p);return `<button type="button" class="tile${i===0?' big':''}" data-detail="${p.id}"><img src="${esc(imgOf(p))}" alt="" loading="lazy"><span class="tile-info"><b>${esc(shortName(p))}</b>${m!==null?`<em>${p.variants.length>1?'a partir de ':''}${fmt(m)}</em>`:'<em>Esgotado</em>'}</span></button>`}).join('');
+  /* ---------- vitrine de destaques (abas: Natal | Filamentos) ---------- */
+  const destRail=$('destRail');
+  const natal=P.filter(p=>p.category==='Natal e decoração').sort((a,b)=>Number(b.featured)-Number(a.featured)||(minAvailable(a)??1e9)-(minAvailable(b)??1e9));
+  const FIL=(window.NP_FIL||[]).flatMap(b=>b.lines.flatMap(l=>l.colors.map(c=>({b,l,c}))));
+  const topFil=FIL.filter(x=>Number(x.c.stock)>0&&x.c.photoKind==='official').sort((x,y)=>Number(y.c.stock)-Number(x.c.stock));
+  // mistura as marcas: vai pegando a cor com mais estoque de cada marca, em rodízio, sem repetir mais de 3 por linha
+  const byBrand={};topFil.forEach(x=>(byBrand[x.b.id]=byBrand[x.b.id]||[]).push(x));
+  const pickFil=[];for(let r=0;pickFil.length<10&&r<20;r++)for(const k in byBrand){const x=byBrand[k].find(x=>!pickFil.includes(x)&&pickFil.filter(y=>y.l===x.l).length<3);if(x&&pickFil.length<10)pickFil.push(x)}
+  const PLUS='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  const filCard=({b,l,c})=>{const st=Number(c.stock);return `<article class="card fil-card"><div class="card-media"><button class="card-img" type="button" data-fil-open="${b.id}" data-sku="${c.sku}" aria-label="Ver ${esc(b.name)} ${esc(l.name)} ${esc(c.name)}"><img loading="lazy" src="${esc(c.photo)}" alt="${esc(b.name)} ${esc(l.name)} ${esc(c.name)}"></button><span class="badge">${esc(b.name)}</span></div><div class="card-body"><p class="card-cat">${esc(l.name)} · 1 kg</p><p class="card-stock${st<=10?' low':''}">${st<=10?`Últimas ${st} unidades`:`${st} em estoque`}</p><h3 class="card-title"><button type="button" data-fil-open="${b.id}" data-sku="${c.sku}"><i class="dot-c" style="background:${String(c.hex).split('|')[0]}"></i>${esc(c.name)}</button></h3><div class="card-foot"><div class="card-price"><small>o carretel</small><strong>${fmt(filPrice(c,1))}</strong></div><button class="add" type="button" data-fil-open="${b.id}" data-sku="${c.sku}" aria-label="Escolher ${esc(c.name)}">${PLUS}</button></div></div></article>`};
+  function bindCards(root){root.querySelectorAll('[data-detail]').forEach(b=>b.onclick=()=>openDetails(b.dataset.detail));root.querySelectorAll('[data-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFav(b.dataset.fav)});root.querySelectorAll('[data-fil-open]').forEach(b=>b.onclick=()=>window.openFilamentBrand&&window.openFilamentBrand(b.dataset.filOpen,b.dataset.sku))}
+  function showTab(t){document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t)));destRail.innerHTML=t==='fil'?pickFil.map(filCard).join(''):natal.map(cardHTML).join('');destRail.scrollLeft=0;bindCards(destRail)}
+  document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));showTab('natal');
 
   /* ---------- carrossel de mais procurados ---------- */
   const rail=$('rail');
-  rail.innerHTML=P.filter(p=>p.featured).map(cardHTML).join('');
-  document.querySelectorAll('[data-rail]').forEach(b=>b.onclick=()=>rail.scrollBy({left:Number(b.dataset.rail)*rail.clientWidth*.8,behavior:reduce?'auto':'smooth'}));
-  function bindCards(root){root.querySelectorAll('[data-detail]').forEach(b=>b.onclick=()=>openDetails(b.dataset.detail));root.querySelectorAll('[data-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFav(b.dataset.fav)})}
-  bindCards(rail);bindCards($('natalBento'));
+  rail.innerHTML=P.filter(p=>p.featured).map(cardHTML).join('');bindCards(rail);
+  document.querySelectorAll('[data-rail]').forEach(b=>b.onclick=()=>{const r=b.closest('section').querySelector('.rail');r.scrollBy({left:Number(b.dataset.rail)*r.clientWidth*.8,behavior:reduce?'auto':'smooth'})});
+
+  /* ---------- hero em carrossel ---------- */
+  (function(){
+    const hero=$('hero'),slides=[...hero.querySelectorAll('.slide')],dots=[...hero.querySelectorAll('[data-go]')];let cur=0,timer=0,paused=false;
+    // slide 2: menor preço de filamento em estoque
+    const prices=FIL.filter(x=>Number(x.c.stock)>0&&x.c.cost!=null).map(x=>filPrice(x.c,1));
+    if(prices.length)$('heroFilPrice').innerHTML=`a partir de <b>${fmt(Math.min(...prices))}</b> o carretel`;
+    // slide 3: promoção (se ativa) com fotos de Natal
+    const pr=window.NP_PROMO;const promoOn=pr&&pr.off&&(!pr.ends||new Date()<=new Date(pr.ends+'T23:59:59-03:00'));
+    if(promoOn){$('slidePromoTag').textContent=pr.name;$('slidePromoTitle').textContent=`Natal com ${pr.off}% de desconto ou mais.`;$('slidePromoText').textContent='Árvores, enfeites e lembranças impressas em 3D com preço de Black Friday, por tempo limitado.'}
+    $('promoPics').innerHTML=natal.slice(0,3).map((p,i)=>`<img class="p${i}" src="${esc(imgOf(p))}" alt="">`).join('');
+    function go(n,user){
+      n=(n+slides.length)%slides.length;if(n===cur)return;const dir=(n>cur||(cur===slides.length-1&&n===0))&&!(cur===0&&n===slides.length-1)?1:-1;
+      slides.forEach((s,i)=>{s.classList.remove('on','from-left','from-right','out-left','out-right');s.setAttribute('aria-hidden',String(i!==n))});
+      slides[cur].classList.add(dir>0?'out-left':'out-right');slides[n].classList.add('on',dir>0?'from-right':'from-left');
+      dots.forEach((d,i)=>d.setAttribute('aria-selected',String(i===n)));cur=n;hero.dataset.slide=n;
+      if(user)restart();
+    }
+    function restart(){clearInterval(timer);hero.classList.remove('run');void hero.offsetWidth;if(!reduce&&!paused){hero.classList.add('run');timer=setInterval(()=>go(cur+1),7000)}}
+    dots.forEach(d=>d.onclick=()=>go(Number(d.dataset.go),true));
+    hero.querySelectorAll('[data-step]').forEach(b=>b.onclick=()=>go(cur+Number(b.dataset.step),true));
+    hero.addEventListener('mouseenter',()=>{paused=true;restart()});hero.addEventListener('mouseleave',()=>{paused=false;restart()});
+    hero.addEventListener('focusin',()=>{paused=true;restart()});hero.addEventListener('focusout',()=>{paused=false;restart()});
+    let x0=null,y0=0;hero.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse')return;x0=e.clientX;y0=e.clientY});
+    hero.addEventListener('pointerup',e=>{if(x0===null)return;const dx=e.clientX-x0,dy=e.clientY-y0;x0=null;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))go(cur+(dx<0?1:-1),true)});
+    hero.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1,true);if(e.key==='ArrowLeft')go(cur-1,true)});
+    document.addEventListener('visibilitychange',()=>{paused=document.hidden;restart()});
+    hero.dataset.slide=0;restart();
+  })();
 
   /* ---------- favoritos no topo ---------- */
   $('favBtn').onclick=()=>{onlyFav=!onlyFav;if(onlyFav)currentFilter='Todos';updateFavUI();renderFilters();renderCatalog();$('catalogo').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
@@ -52,7 +81,7 @@
   const onScroll=()=>head.classList.toggle('scrolled',scrollY>8);addEventListener('scroll',onScroll,{passive:true});onScroll();
 
   /* ---------- hero: vídeo (quando existir) ou impressão desenhada em loop ---------- */
-  const hero=document.querySelector('.cine'),cv=$('heroCanvas'),video=$('heroVideo');
+  const hero=$('slide0'),cv=$('heroCanvas'),video=$('heroVideo');
   const saveData=navigator.connection&&navigator.connection.saveData;
   const cfg=window.NP_HERO_VIDEO;
   if(cfg){

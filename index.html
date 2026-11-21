@@ -37,21 +37,44 @@
 
   <main>
     <div class="wrap" id="promoWrap" hidden><a class="promo" href="#catalogo" id="promoBar"><span class="promo-tag" id="promoName"></span><strong id="promoText"></strong><span class="promo-time" id="promoTime"></span><span class="promo-cta">Ver ofertas</span></a></div>
-    <section class="wrap" id="inicio" aria-labelledby="heroTitle">
-      <div class="cine">
-        <div class="hero-media" aria-hidden="true"><canvas id="heroCanvas"></canvas><video id="heroVideo" muted playsinline loop preload="none" hidden></video></div>
-        <div class="hero-content">
-          <h1 id="heroTitle">Peças que ganham forma, camada por camada.</h1>
-          <p>Decoração, presentes, organização e peças técnicas impressas em 3D. Também vendemos filamentos Flashforge, Bambu Lab e Masterprint e criamos projetos sob medida.</p>
-          <div class="hero-ctas"><a class="pill neon" href="#catalogo">Ver produtos</a><a class="pill glass" href="#sob-medida">Fazer um projeto</a></div>
+    <section class="wrap" id="inicio" aria-roledescription="carrossel" aria-label="Destaques da Nova Prime 3D">
+      <div class="cine" id="hero">
+        <div class="slide on" id="slide0" role="group" aria-roledescription="slide" aria-label="1 de 3">
+          <div class="hero-media" aria-hidden="true"><canvas id="heroCanvas"></canvas><video id="heroVideo" muted playsinline loop preload="none" hidden></video></div>
+          <div class="hero-content">
+            <h1 id="heroTitle">Peças que ganham forma, camada por camada.</h1>
+            <p>Decoração, presentes, organização e peças técnicas impressas em 3D, além de filamentos originais e projetos sob medida.</p>
+            <div class="hero-ctas"><a class="pill neon" href="#catalogo">Ver produtos</a><a class="pill glass" href="#sob-medida">Fazer um projeto</a></div>
+          </div>
         </div>
-        <nav class="hero-cats" id="heroCats" aria-label="Categorias"></nav>
+        <div class="slide slide-fil" id="slide1" role="group" aria-roledescription="slide" aria-label="2 de 3" aria-hidden="true">
+          <div class="hero-content">
+            <h2>Filamentos originais para a sua impressora.</h2>
+            <p>Flashforge, Bambu Lab, Masterprint e genéricos em carretel de 1 kg. Acima de 5 carretéis o preço cai, e acima de 20 cai de novo.</p>
+            <div class="fil-brands-row"><img src="assets/brands/flashforge.svg" alt="Flashforge"><img src="assets/brands/bambulab.svg" alt="Bambu Lab"><img class="wide" src="assets/brands/masterprint.webp" alt="Masterprint"></div>
+            <div class="hero-ctas"><a class="pill neon" href="#filamentos">Ver filamentos</a><span class="hero-price" id="heroFilPrice"></span></div>
+          </div>
+          <div class="spools" aria-hidden="true"><img src="assets/hero/carretel-azul.webp" alt="" class="s1"><img src="assets/hero/carretel-vermelho.webp" alt="" class="s2"><img src="assets/hero/carretel-verde.webp" alt="" class="s3"></div>
+        </div>
+        <div class="slide slide-promo" id="slide2" role="group" aria-roledescription="slide" aria-label="3 de 3" aria-hidden="true">
+          <div class="hero-content">
+            <span class="promo-tag" id="slidePromoTag">Natal</span>
+            <h2 id="slidePromoTitle">Natal impresso em 3D.</h2>
+            <p id="slidePromoText">Árvores, enfeites e lembranças para a mesa, a estante e a porta de casa.</p>
+            <div class="hero-ctas"><button type="button" class="pill neon" data-goto-cat="Natal e decoração">Ver peças de Natal</button></div>
+          </div>
+          <div class="promo-pics" id="promoPics" aria-hidden="true"></div>
+        </div>
+        <div class="cine-nav">
+          <div class="dots" role="tablist" aria-label="Escolher slide"><button type="button" role="tab" aria-label="Slide 1" aria-selected="true" data-go="0"><i></i></button><button type="button" role="tab" aria-label="Slide 2" aria-selected="false" data-go="1"><i></i></button><button type="button" role="tab" aria-label="Slide 3" aria-selected="false" data-go="2"><i></i></button></div>
+          <div class="arrows"><button type="button" class="round glassy" data-step="-1" aria-label="Slide anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><button type="button" class="round glassy" data-step="1" aria-label="Próximo slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button></div>
+        </div>
       </div>
     </section>
 
-    <section class="wrap block" id="natal" aria-labelledby="natalTitle">
-      <div class="head"><div><h2 id="natalTitle">Natal impresso em 3D</h2><p>Árvores, enfeites e lembranças para a mesa, a estante e a porta de casa.</p></div><button class="pill line" type="button" data-goto-cat="Natal e decoração">Ver tudo de Natal</button></div>
-      <div class="bento" id="natalBento"></div>
+    <section class="wrap block" id="natal" aria-labelledby="destTitle2">
+      <div class="head"><div><h2 id="destTitle2">Destaques da semana</h2><div class="tabs" role="tablist" aria-label="Destaques"><button type="button" role="tab" aria-selected="true" data-tab="natal">Natal com desconto</button><button type="button" role="tab" aria-selected="false" data-tab="fil">Filamentos mais vendidos</button></div></div><div class="rail-nav"><button class="round" type="button" data-rail="-1" aria-label="Anteriores"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><button class="round" type="button" data-rail="1" aria-label="Próximos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button></div></div>
+      <div class="rail" id="destRail"></div>
     </section>
 
     <section class="wrap block" id="destaques" aria-labelledby="destTitle">
