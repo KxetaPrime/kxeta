@@ -76,6 +76,12 @@
   $('favBtn').onclick=()=>{onlyFav=!onlyFav;if(onlyFav)currentFilter='Todos';updateFavUI();renderFilters();renderCatalog();$('catalogo').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
   updateFavUI();
 
+  /* ---------- barra inferior (celular) ---------- */
+  $('tbWhats').onclick=()=>openService('sales');
+  const tbLinks=[...document.querySelectorAll('[data-tb]')],tbSecs=tbLinks.map(a=>$(a.dataset.tb)).filter(Boolean);
+  const tbSpy=()=>{let cur=tbSecs[0];for(const s of tbSecs)if(s.getBoundingClientRect().top<innerHeight*.4)cur=s;tbLinks.forEach(a=>a.classList.toggle('on',a.dataset.tb===cur.id))};
+  addEventListener('scroll',tbSpy,{passive:true});tbSpy();
+
   /* ---------- topo com sombra ao rolar ---------- */
   const head=document.querySelector('.tophead');
   const onScroll=()=>head.classList.toggle('scrolled',scrollY>8);addEventListener('scroll',onScroll,{passive:true});onScroll();
