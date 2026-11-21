@@ -1,0 +1,61 @@
+/* Hero em tela cheia "impressão pelo scroll" + identidade verde neon e preto.
+   Layout: cena presa na tela (sticky) com o nome da marca gigante ATRÁS da peça; textos em capítulos à esquerda. */
+:root{--blue:#0E9F34;--blue2:#0B7F29;--amber:#3DF25C;--amber2:#27D645;--neon:#3DF25C;--wa:#1B9E52;--ink:#0A0F0C;--ink2:#4B564E;--paper:#EEF1EE;--rule:#D7DDD8;
+--brand:"Unbounded","Big Shoulders Display",system-ui,sans-serif;--hero-bg:#06180C;--hero-glow:#0E4A1E;--fil:#49BA51}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* topo: transparente sobre o hero, sólido depois */
+.tophead{position:fixed;left:0;right:0;top:0;background:transparent;border-bottom:1px solid transparent;backdrop-filter:none;transition:background .3s,border-color .3s}
+.tophead.solid{background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom-color:var(--rule)}
+.logo-img{display:block;flex:none}.logo-word{font-family:var(--brand);font-weight:800;font-size:15px;letter-spacing:.01em;color:#fff;transition:color .3s}.logo-word span{color:var(--neon)}
+.tophead.solid .logo-word{color:var(--ink)}.tophead.solid .logo-word span{color:var(--blue)}
+.tophead:not(.solid) .top-nav{color:rgba(255,255,255,.8)}.tophead:not(.solid) .top-nav a:hover{color:#fff}
+.tophead:not(.solid) .finder{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25)}
+.tophead:not(.solid) .finder input{color:#fff}.tophead:not(.solid) .finder input::placeholder{color:rgba(255,255,255,.6)}.tophead:not(.solid) .finder svg{color:rgba(255,255,255,.75)}
+.tophead:not(.solid) .searchToggle{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#fff}
+.cartButton{background:var(--neon);color:var(--ink)}.cartButton .count{background:var(--ink);color:var(--neon)}
+footer .logo-word{color:#fff}footer .logo-word span{color:var(--neon)}
+
+/* cena */
+.story{position:relative;height:430vh;background:var(--hero-bg)}
+.story-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--hero-bg);color:#fff;isolation:isolate;transition:--hero-bg .7s ease,--hero-glow .7s ease}
+.story-pin::before{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(46% 62% at 66% 56%,var(--hero-glow),transparent 72%),repeating-linear-gradient(0deg,transparent 0 13px,rgba(255,255,255,.04) 13px 14px)}
+.story-pin::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(0,0,0,.45),transparent 52%),linear-gradient(0deg,rgba(0,0,0,.4),transparent 38%)}
+.story-brand{position:absolute;z-index:1;left:clamp(16px,4vw,48px);right:0;top:54%;transform:translateY(-50%) translateY(calc(var(--bp,0) * -80px));opacity:calc(1 - var(--bp,0));pointer-events:none;font-family:var(--brand);font-weight:800;line-height:.86;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.34);font-size:clamp(64px,14.6vw,230px);display:flex;flex-direction:column}
+.story-brand span:last-child{color:rgba(255,255,255,.07);-webkit-text-stroke:1.5px rgba(61,242,92,.55)}
+#storyCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+#storyCanvas.seq{mix-blend-mode:screen}
+.story-ui{position:absolute;inset:0;z-index:3;pointer-events:none}
+.chap{position:absolute;left:clamp(16px,4vw,48px);bottom:clamp(36px,9vh,96px);max-width:min(520px,calc(100% - 32px));opacity:0;transform:translateY(18px);will-change:opacity,transform}
+.chap.on{pointer-events:auto}
+.chap h1,.chap h2{font-family:var(--brand);font-weight:800;line-height:1.08;margin:0 0 14px;font-size:clamp(26px,3.5vw,50px);color:#fff;text-wrap:balance}
+.chap p{margin:0 0 18px;font-size:clamp(15px,1.4vw,18px);color:rgba(255,255,255,.82);max-width:46ch}
+.cue{display:inline-flex;align-items:center;gap:12px;font-size:13px;font-weight:600;color:rgba(255,255,255,.75)}
+.cue::after{content:"";width:1.5px;height:34px;background:linear-gradient(var(--neon),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(.2);transform-origin:bottom}}
+.story .kindtabs{margin-bottom:16px}.story .swatches{max-width:440px}.story .pick{margin:16px 0 0}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap}
+.story .btn{background:var(--neon);color:var(--ink)}.story .btn:hover{background:#fff}
+.btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}.story .btn.ghost{background:transparent;color:#fff}.story .btn.ghost:hover{background:#fff;color:var(--ink)}
+.skip{position:absolute;z-index:4;right:clamp(16px,4vw,48px);bottom:clamp(36px,9vh,96px);font-size:13px;font-weight:600;color:rgba(255,255,255,.7);padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25)}.skip:hover{color:#fff;border-color:#fff}
+.progress{position:absolute;z-index:4;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.12)}.progress i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:var(--neon)}
+
+/* seções claras com a nova identidade */
+.strip{background:var(--neon);border-color:var(--ink)}
+.btn{background:var(--ink);color:#fff}.btn:hover{background:var(--blue)}
+.itemPrice strong{color:var(--blue)}.itemBtn:hover,.item:hover .itemBtn{background:var(--blue)}
+.sec-head h2{font-family:var(--brand);font-weight:700;font-size:clamp(26px,3.4vw,46px);line-height:1.05;max-width:20ch}
+.band{background:linear-gradient(120deg,#07140B,#0D3A19);color:#fff}
+.band h2{font-family:var(--brand);font-weight:800;font-size:clamp(30px,4.6vw,66px);line-height:1.02;max-width:16ch}.band p{color:rgba(255,255,255,.82)}
+.band .btn{background:var(--neon);color:var(--ink)}.band .btn:hover{background:#fff}
+.band-art{background:radial-gradient(circle,#06100A 0 14%,transparent 15%),repeating-radial-gradient(circle,rgba(61,242,92,.4) 0 3px,transparent 3px 14px);opacity:.55}
+.pricechips .hot b{color:var(--neon)}.steps li:nth-child(2) b{background:var(--ink);color:var(--neon)}
+
+@media(max-width:980px){.story{height:380vh}}
+@media(max-width:760px){
+  .story-brand{top:34%;font-size:clamp(54px,19vw,120px);-webkit-text-stroke-width:1px}
+  .chap{bottom:30px}.chap h1,.chap h2{font-size:clamp(24px,7vw,34px)}.skip{top:78px;bottom:auto;right:16px}
+  .story-pin::after{background:linear-gradient(0deg,rgba(0,0,0,.78),transparent 62%)}
+  .top-nav{display:none}
+}
+@media(prefers-reduced-motion:reduce){.story{height:auto}.story-pin{position:relative}.cue::after{animation:none}}
