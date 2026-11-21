@@ -687,3 +687,8 @@ a.bx:hover .bx-go{transform:translateX(4px)}
 @media(max-width:760px){.hero2 h1{font-size:clamp(34px,9.6vw,44px)}.hero2-lead{font-size:15px;margin-bottom:18px}.brand span{font-size:16px}.brand img{width:26px;height:26px}}
 .hero2 h1{max-width:none}
 @media(max-width:760px){.brand-switch{flex-wrap:nowrap;gap:6px}.brand-switch button{height:34px;padding:0 10px;font-size:12.5px;gap:6px}.brand-switch button img{width:15px;height:15px}}
+/* ainda mais enxuto */
+.brand span{font-size:15px}.brand img{width:26px;height:26px}.brand{gap:8px}
+@media(min-width:761px){.hero2 h1{font-size:clamp(32px,3.4vw,48px);line-height:1;margin-bottom:10px}.hero2-lead{font-size:15px}}
+@media(max-width:760px){.hero2 h1{font-size:clamp(28px,8vw,36px);line-height:1}.hero2-lead{font-size:14px}.brand span{font-size:14.5px}.brand img{width:24px;height:24px}}
+@media(min-width:761px){.hero2-lead{max-width:none}}
