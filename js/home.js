@@ -47,8 +47,13 @@
       {t:'Casa',s:'Organização e decoração',img:first('Casa e organização'),cat:'Casa e organização'},
       {t:'Filamentos',s:'PLA, PETG, ABS e TPU',src:fil&&fil.c.photo,href:'#filamentos'}];
     $('heroCats').innerHTML=cats.map(c=>{const src=c.src||(c.img?thumbOf(c.img):'');const n=c.cat?P.filter(p=>p.category===c.cat).length:null;
-      return `<a class="catc" href="${c.href||'#catalogo'}" ${c.cat?`data-goto-cat="${esc(c.cat)}"`:''}><img src="${esc(src)}" alt="" loading="lazy" decoding="async"><span><b>${c.t}</b><small>${c.s}</small></span></a>`}).join('');
+      return `<a class="catc${c.cat?'':' fil'}" href="${c.href||'#catalogo'}" ${c.cat?`data-goto-cat="${esc(c.cat)}"`:''}><img src="${esc(src)}" alt="" loading="lazy" decoding="async"><span><span class="catc-t"><b>${c.t}</b><small>${n?`${n} ${n===1?'produto':'produtos'}`:c.s}</small></span><em aria-hidden="true">→</em></span></a>`}).join('');
   })();
+
+  /* ---------- carretéis: profundidade com o mouse ---------- */
+  (function(){const st=$('spoolStage');if(!st||reduce||matchMedia('(hover:none)').matches)return;const box=st.closest('.hero2');let raf=0,mx=0,my=0;
+    box.addEventListener('pointermove',e=>{const r=box.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-.5;my=(e.clientY-r.top)/r.height-.5;if(!raf)raf=requestAnimationFrame(()=>{raf=0;st.style.setProperty('--mx',mx.toFixed(3));st.style.setProperty('--my',my.toFixed(3))})});
+    box.addEventListener('pointerleave',()=>{st.style.setProperty('--mx',0);st.style.setProperty('--my',0)})})();
 
   /* ---------- favoritos no topo ---------- */
   $('favBtn').onclick=()=>{onlyFav=!onlyFav;if(onlyFav)currentFilter='Todos';updateFavUI();renderFilters();renderCatalog();$('catalogo').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};
