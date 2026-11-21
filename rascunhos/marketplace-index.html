@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Nova Prime 3D | Filamentos Flashforge e Peças Impressas em 3D</title>
+  <meta name="description" content="Nova Prime 3D — Filamentos PLA e PETG Basic, presentes, decoração, acessórios e projetos 3D. Atendimento pelo WhatsApp.">
+  <meta name="theme-color" content="#EEF0F3">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/icone.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Nova Prime 3D | Filamentos Flashforge e Peças Impressas em 3D">
+  <meta property="og:description" content="Filamentos PLA e PETG Basic originais, presentes, decoração, acessórios e projetos 3D sob medida. Atendimento pelo WhatsApp.">
+  <meta property="og:image" content="assets/img-01.webp">
+  <link rel="preconnect" href="https://cf.shopee.com.br" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Unbounded:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/design.css">
+</head>
+<body>
+  <header class="tophead">
+    <div class="wrap">
+      <div class="top-row">
+        <a class="logo" href="#inicio" aria-label="Nova Prime 3D, início"><img src="assets/brand/icone.svg" alt="" width="34" height="34"><span class="logo-word">NOVA<small>PRIME 3D</small></span></a>
+        <nav class="top-nav" aria-label="Navegação principal"><a href="#filamentos">Filamentos</a><a href="#catalogo">Produtos impressos</a><a href="#como-funciona">Como comprar</a><a href="#projetos">Sob medida</a></nav>
+        <label class="finder" aria-label="Pesquisar produtos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg><input id="searchInput" type="search" placeholder="Buscar produtos" autocomplete="off"></label>
+        <div class="hActions"><button id="toggleSearch" class="searchToggle" type="button" aria-label="Abrir busca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="7"/><path d="m16 16 5 5"/></svg></button><button class="simpleBtn" type="button" id="contactBtn">Falar com vendedor</button>
+          <button class="iconPill" id="favBtn" type="button" aria-pressed="false" aria-label="Ver só os favoritos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-9.2-9.3C1.7 8 3.6 5 6.8 5c2 0 3.4 1.1 5.2 3 1.8-1.9 3.2-3 5.2-3 3.2 0 5.1 3 4 6.2-1.7 4.7-9.2 9.3-9.2 9.3z"/></svg><span class="iconPillLabel">Favoritos</span><span class="badgeNum" id="favCount" hidden>0</span></button>
+          <button class="iconPill dark cartButton" id="openCart" type="button" aria-label="Abrir carrinho"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M2 3h3l2.5 13h13l2-10H6"/></svg><span class="cartButtonLabel">Carrinho</span><span class="count" id="cartCount">0</span></button></div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="wrap" id="inicio" aria-labelledby="heroTitle">
+      <div class="stage">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <span class="pill-note">Flashforge original, carretel de 1 kg</span>
+            <h1 id="heroTitle">Filamento na cor que a sua peça pede.</h1>
+            <p class="lead">PLA e PETG Basic com procedência e atendimento de quem imprime. Escolha a cor e veja o vaso mudar.</p>
+            <div class="kindtabs" role="group" aria-label="Tipo de filamento"><button type="button" data-kind="PLA" aria-pressed="true">PLA Basic</button><button type="button" data-kind="PETG" aria-pressed="false">PETG Basic</button></div>
+            <div class="swatches" id="heroSwatches" role="radiogroup" aria-label="Cor do filamento"></div>
+            <p class="pick"><strong id="heroColorName">Verde</strong><span id="heroColorMeta">PLA Basic, 1 kg</span></p>
+            <div class="hero-buy"><button class="btn" id="heroBuy" type="button">Escolher quantidade</button><div class="price"><strong>R$ 85,00</strong>por kg, R$ 80,00 a partir de 5 kg</div></div>
+          </div>
+          <figure class="hero-art"><svg id="vase" viewBox="0 0 360 500" role="img" aria-label="Vaso impresso em 3D, camada por camada, na cor escolhida"></svg>
+            <svg class="spool" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="96" fill="#DCE0E8"/><circle cx="100" cy="100" r="88" fill="var(--fil)"/><g fill="none" stroke="rgba(0,0,0,.16)" stroke-width="1.5"><circle cx="100" cy="100" r="80"/><circle cx="100" cy="100" r="72"/><circle cx="100" cy="100" r="64"/><circle cx="100" cy="100" r="56"/></g><path d="M30 70a78 78 0 0 1 60-48" stroke="rgba(255,255,255,.55)" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="100" cy="100" r="46" fill="#EEF0F4"/><circle cx="100" cy="100" r="19" fill="#0A0F0C"/><g fill="#0A0F0C" opacity=".85"><circle cx="100" cy="68" r="7"/><circle cx="128" cy="116" r="7"/><circle cx="72" cy="116" r="7"/></g></svg>
+            <figcaption>Peça e carretel ilustrativos</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap sec" id="filamentos">
+      <div class="sec-head"><div><h2>Filamentos Flashforge</h2><p>Carretéis originais de 1 kg. Escolha a cor para ver a foto e definir a quantidade.</p></div><span class="chipnote">Atacado a partir de 5 kg</span></div>
+      <div class="fgrid" id="filList"></div>
+    </section>
+
+    <section class="wrap sec" id="catalogo">
+      <div class="sec-head"><div><h2>Produtos impressos</h2><p>Peças para presentear, organizar, decorar e usar de verdade.</p></div><span class="chipnote" id="catalogCountLabel">17 produtos</span></div>
+      <div class="filterBar" id="filterBar" aria-label="Filtrar produtos por categoria"></div>
+      <div class="shop">
+        <aside class="filters" id="filtersPanel" aria-label="Filtros">
+          <div class="fbox"><div class="fbox-head"><strong>Preço máximo</strong><button type="button" class="linkbtn" id="resetPrice">Redefinir</button></div><p class="fnote" id="priceNote">Sem limite</p><input type="range" id="priceMax" min="0" max="100" value="100" aria-label="Preço máximo"><div class="range-labels"><span id="priceMinLabel">R$ 0</span><span id="priceMaxLabel">R$ 0</span></div></div>
+          <div class="fbox"><strong>Disponibilidade</strong><label class="check"><input type="checkbox" id="onlyStock"><span>Só o que tem em estoque</span></label></div>
+          <div class="fbox"><strong>Ordenar por</strong><select id="sortSelect"><option value="featured">Destaques primeiro</option><option value="asc">Menor preço</option><option value="desc">Maior preço</option><option value="az">Nome A a Z</option></select></div>
+          <button type="button" class="btn ghost" id="clearFilters">Limpar filtros</button>
+        </aside>
+        <div class="shop-main">
+          <div class="catalogTools"><span id="showingLabel">Exibindo todos os produtos</span><button type="button" class="iconPill filterToggle" id="filterToggle" aria-expanded="false" aria-controls="filtersPanel">Filtros</button></div>
+          <div class="productGrid" id="productGrid"></div>
+          <div class="empty" id="emptyResults" hidden><strong>Nenhum produto encontrado.</strong>Tente buscar por outro nome, mudar a categoria ou limpar os filtros.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap sec" id="como-funciona">
+      <div class="sec-head"><div><h2>Como comprar</h2><p>Você escolhe os produtos e a gente cuida do atendimento.</p></div></div>
+      <ol class="steps">
+        <li><b>1</b><h3>Escolha o que deseja</h3><p>Pesquise no catálogo, confira as fotos e escolha variação e quantidade.</p></li>
+        <li><b>2</b><h3>Monte seu carrinho</h3><p>Adicione vários itens e confira o resumo do pedido e o preço de atacado.</p></li>
+        <li><b>3</b><h3>Finalize pelo WhatsApp</h3><p>Escolha a Karita ou a Isabel e combine cor, frete e pagamento.</p></li>
+      </ol>
+    </section>
+
+    <section class="wrap" id="projetos">
+      <div class="band"><div><h2>Sua ideia não precisa caber em um catálogo.</h2><p>Conte o que você precisa. A gente transforma referências e medidas em uma peça feita para você. Fale com o Samuel ou com o Geovane.</p></div><button type="button" class="btn light" id="contactDesignBtn">Falar com o Design 3D</button></div>
+    </section>
+  </main>
+  <footer><div class="wrap"><div class="foot"><div><a class="logo" href="#inicio"><img src="assets/brand/icone.svg" alt="" width="34" height="34"><span class="logo-word">NOVA<small>PRIME 3D</small></span></a><p>Criatividade em camadas. Filamentos Flashforge originais, peças impressas em 3D e projetos sob medida, com atendimento pelo WhatsApp.</p></div><nav aria-label="Rodapé"><a href="#filamentos">Filamentos</a><a href="#catalogo">Produtos impressos</a><a href="#como-funciona">Como comprar</a><a href="#projetos">Sob medida</a></nav></div></div></footer>
+  <div id="veil" class="veil"></div><aside class="drawer" id="cartDrawer" aria-label="Carrinho" aria-hidden="true"><div class="drawerTop"><h2>Seu carrinho <span id="cartTitleCount" style="font-size:12px;color:#7d8ca3"></span></h2><button type="button" class="xBtn" data-close aria-label="Fechar carrinho">×</button></div><div class="drawerBody" id="cartItems"></div><div class="drawerBottom"><div class="totalRow"><span>Total estimado</span><b id="cartTotal">R$ 0,00</b></div><p class="cartHint" id="cartHint">Frete e pagamento são combinados diretamente com a vendedora pelo WhatsApp.</p><div class="sellerBtns"><button id="sellerKarita" type="button">Finalizar com Karita ↗</button><button id="sellerIsabel" type="button">Finalizar com Isabel ↗</button></div></div></aside>
+  <div class="modal" id="productModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Detalhes do produto"><div class="modalHead"><strong>Detalhes do produto</strong><button class="xBtn" type="button" data-close aria-label="Fechar detalhes">×</button></div><div class="modalContent"><div><img class="modalImg" id="detailImg" alt=""><div class="thumbs" id="detailThumbs"></div></div><div><div class="pCat" id="detailCat"></div><h2 class="modalTitle" id="detailTitle"></h2><p class="modalText" id="detailDesc"></p><label class="fieldLabel">Escolha cor e quantidade</label><div class="variantPicker" id="variantPicker" role="radiogroup" aria-label="Escolha a variação"></div><p class="variantPhotoNote" id="variantPhotoNote"></p><select class="choiceSelect" id="variantSelect" hidden aria-hidden="true" tabindex="-1"></select><div id="detailOldPrice" class="pOld"></div><div class="modalPrice" id="detailPrice"></div><div class="stockText" id="detailStock"></div><div class="modalActions"><div class="qtyBox"><button id="qtyDec" type="button" aria-label="Diminuir quantidade">−</button><b id="qtyValue">1</b><button id="qtyInc" type="button" aria-label="Aumentar quantidade">+</button></div><button class="btnPrimary" type="button" id="detailAdd">Adicionar ao carrinho →</button></div><div class="otherActions" id="detailExternal"></div></div></div></div>
+
+  <div class="modal" id="filamentModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Escolher cor de filamento"><div class="modalHead"><strong>Filamentos originais Flashforge</strong><button class="xBtn" data-close type="button" aria-label="Fechar">×</button></div><div class="filSelectGrid"><div class="filColorVisual"><div id="filColorEmpty" class="filColorEmpty"><div class="emptySwatch"></div><span class="emptyTitle">Flashforge Basic</span><small class="emptyDesc">Foto desta cor em atualização</small></div><img id="filColorPic" alt="" hidden title="Toque para ampliar a imagem"><div id="filColorNote" class="filColorNote"></div></div><div class="filColorMain"><span class="pCat">FLASHFORGE · 1 KG</span><h2 id="filColorsTitle" class="modalTitle">Flashforge PLA Basic</h2><p id="filColorName" class="modalText"></p><div class="fieldLabel">Escolha a cor</div><div class="colorOptions" id="filColorsOptions"></div><div class="priceMini"><strong>R$ 85,00/kg</strong><small>R$ 80,00/kg a partir de 5 kg no carrinho</small></div><label class="fieldLabel" for="filQty">Quantidade (kg)</label><input id="filQty" type="number" min="1" max="99" step="1" value="1" class="choiceSelect" style="max-width:140px"><button id="addChosenFil" type="button" class="btnPrimary" style="margin-top:17px;width:100%">Adicionar ao carrinho →</button><p class="filSmallInfo">Disponibilidade, frete e pagamento são confirmados pelo WhatsApp.</p></div></div></div>
+  <div id="zoomOverlay" class="zoomOverlay" role="dialog" aria-modal="true" aria-label="Visualização ampliada da foto" hidden><button id="closeZoom" type="button" aria-label="Fechar zoom">✕</button><img id="zoomImg" alt="Imagem do produto ampliada"><span>Toque fora da imagem para fechar</span></div>
+  <button id="floatContact" class="floatContact" type="button" aria-label="Escolher vendedor pelo WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4.9 19 3 22l.9-4.3A9 9 0 1 1 7 20.1L4.9 19Z"/><path d="M9 8c.7 2.1 2.3 3.8 4.7 4.7l1.6-1.3 2 1.4c-.5 2.5-2.2 3.1-4.9 2.2C9.3 13.9 7 11.7 6.4 8.8 6 6.9 7.8 6.1 9 8Z"/></svg><span>Falar com vendedor</span></button>
+  <div class="modal serviceModal" id="serviceModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Escolher atendente"><div class="modalHead"><strong id="serviceModalHeading">Escolha quem vai te atender</strong><button class="xBtn" type="button" data-close aria-label="Fechar">×</button></div><div class="modalContent"><h2 class="modalTitle" id="serviceTitle">Como podemos ajudar?</h2><p class="modalText" id="serviceDescription">Selecione um atendente para começar a conversa.</p><div class="personList" id="personList"></div></div></div>
+  <div class="snack" id="snack" role="status"></div>
+  <script src="data/products.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/design.js"></script>
+</body>
+</html>
