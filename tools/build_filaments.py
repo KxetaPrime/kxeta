@@ -140,7 +140,7 @@ def photo_hex(im):
 import numpy as np
 # fotos oficiais com tom corrigido (a foto do fabricante não mostra a cor como ela é): artigo -> (cor alvo, referência de luz)
 ADJUST={'233350':('#D9B44A',80)}  # Dourado: a foto oficial 'Gold' sai verde-oliva
-BASE={'flashforge':(os.path.join(RAW,'flashforge','233335.webp'),os.path.join(RAW,'flashforge','233383.webp'))}
+BASE={'flashforge':(os.path.join(RAW,'flashforge','233335.webp'),os.path.join(RAW,'flashforge','233383.webp')),'generico':(os.path.join(RAW,'flashforge','233390.webp'),os.path.join(RAW,'flashforge','233383.webp'))}
 def compose(it):
     out=f"assets/filamentos/studio/{it['sku']}.webp"
     if it.get('raw'):
@@ -166,6 +166,7 @@ def compose(it):
     else:
         base=BASE[it['brand']][1 if it['translucent'] else 0]
         pic=studio.place_cutout(studio.recolor(Image.open(base),it['hex'],it['translucent']),it['hex']);kind='simulated'
+        if it['brand']=='generico': kind='generic'
     pic.save(out,'WEBP',quality=86,method=6);it['photo']=out;it['photoKind']=kind;it.pop('raw',None)
     return it['sku'],kind
 for sku,kind in ThreadPoolExecutor(4).map(compose,list(items.values())):

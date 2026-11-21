@@ -32,7 +32,7 @@
   /* ---------- cards ---------- */
   const allColors=b=>b.lines.flatMap(l=>l.colors);
   $('filBrands').innerHTML=BRANDS.map(b=>{
-    const all=allColors(b),avail=all.filter(inStock),cover=all.find(c=>c.photoKind==='official'&&inStock(c)&&!/branco|preto|natural|cinza/i.test(c.name))||all.find(c=>c.photo)||all[0];
+    const all=allColors(b),avail=all.filter(inStock),cover=all.find(c=>c.photoKind==='official'&&inStock(c)&&!/branco|preto|natural|cinza/i.test(c.name))||all.find(c=>c.photo&&!/branco|preto|natural|cinza|transp/i.test(c.name))||all.find(c=>c.photo)||all[0];
     const priced=avail.filter(c=>c.cost!=null),minPrice=priced.length?Math.min(...priced.map(c=>filPrice(c,1))):null;
     const dotsFrom=avail.length?avail:all;
     const dots=dotsFrom.slice(0,10).map(c=>`<i style="--c:${swatchBg(c)}" title="${esc(c.name)}"></i>`).join('')+(dotsFrom.length>10?`<em>+${dotsFrom.length-10}</em>`:'');
@@ -96,7 +96,7 @@
         im.complete?show():(im.onload=show,im.onerror=show);
       }
     }else{pics.querySelectorAll('img').forEach(i=>i.remove());const s=$('fpStageSpool').firstElementChild;if(s&&!reduce&&changed&&!silent){s.classList.remove('spin');requestAnimationFrame(()=>s.classList.add('spin'))}}
-    $('fpOfficial').textContent={simulated:'Simulação da cor sobre foto oficial',adjusted:'Foto oficial com a cor corrigida',official:'Foto oficial do fabricante'}[c.photoKind]||'Ilustração na cor escolhida';
+    $('fpOfficial').textContent={simulated:'Simulação da cor sobre foto oficial',adjusted:'Foto oficial com a cor corrigida',generic:'Foto ilustrativa de filamento sem marca',official:'Foto oficial do fabricante'}[c.photoKind]||'Ilustração na cor escolhida';
     renderBuy();
   }
   function renderBuy(){

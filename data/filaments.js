@@ -1489,9 +1489,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#1E1E20",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-PRE.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-BRA",
@@ -1502,9 +1502,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#F3F3F0",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-BRA.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-CIN",
@@ -1515,9 +1515,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#8A8F96",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-CIN.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-VEM",
@@ -1528,9 +1528,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#C8261F",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-VEM.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-AZU",
@@ -1541,9 +1541,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#1E4FB5",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-AZU.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-AMA",
@@ -1554,9 +1554,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#F5C518",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-AMA.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-VER",
@@ -1567,9 +1567,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#2F9E44",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-VER.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-LAR",
@@ -1580,9 +1580,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#F07A1A",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-LAR.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-ROX",
@@ -1593,9 +1593,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#6B3FA0",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-ROX.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PLA-ROS",
@@ -1606,9 +1606,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#EE8FB7",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PLA-ROS.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      }
     ]
    },
@@ -1626,9 +1626,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#1E1E20",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PETG-PRE.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PETG-BRA",
@@ -1639,9 +1639,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#F4F4F2",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PETG-BRA.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PETG-CIN",
@@ -1652,9 +1652,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#8A8F96",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PETG-CIN.webp",
       "translucent": false,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      },
      {
       "sku": "GN-PETG-TRA",
@@ -1665,9 +1665,9 @@ window.NP_FIL = [
       "cost": null,
       "hex": "#DCE6EA",
       "official": null,
-      "photo": "",
+      "photo": "assets/filamentos/studio/GN-PETG-TRA.webp",
       "translucent": true,
-      "photoKind": "drawn"
+      "photoKind": "generic"
      }
     ]
    }
