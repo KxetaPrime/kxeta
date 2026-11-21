@@ -7,8 +7,6 @@
   <meta name="description" content="Peças impressas em 3D, filamentos Flashforge, Bambu Lab e Masterprint em carretel de 1 kg e projetos sob medida. Pedido e atendimento pelo WhatsApp.">
   <meta name="theme-color" content="#F3F4F2">
   <link rel="icon" type="image/svg+xml" href="assets/brand/icone.svg">
-  <link rel="preload" as="image" href="assets/hero/render-3d.webp" media="(min-width:761px)">
-  <link rel="preload" as="image" href="assets/hero/render-3d-mobile.webp" media="(max-width:760px)">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/brand/app-192.png">
   <meta name="apple-mobile-web-app-title" content="Nova Prime 3D">
@@ -16,7 +14,7 @@
   <meta property="og:locale" content="pt_BR">
   <meta property="og:title" content="Nova Prime 3D | Filamentos Flashforge e Peças Impressas em 3D">
   <meta property="og:description" content="Filamentos PLA e PETG Basic originais, presentes, decoração, acessórios e projetos 3D sob medida. Atendimento pelo WhatsApp.">
-  <meta property="og:image" content="assets/hero/carretel-verde.webp">
+  <meta property="og:image" content="assets/filamentos/studio/233338.webp">
   <link rel="preconnect" href="https://cf.shopee.com.br" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,40 +40,34 @@
   </header>
 
   <main>
-    <div class="wrap" id="promoWrap" hidden><a class="promo" href="#catalogo" id="promoBar"><span class="promo-tag" id="promoName"></span><strong id="promoText"></strong><span class="promo-time" id="promoTime"></span><span class="promo-cta">Ver ofertas</span></a></div>
-    <section class="wrap" id="inicio" aria-roledescription="carrossel" aria-label="Destaques da Nova Prime 3D">
-      <div class="cine" id="hero">
-        <div class="slide on" id="slide0" role="group" aria-roledescription="slide" aria-label="1 de 3">
-          <div class="hero-media" aria-hidden="true"><canvas id="heroCanvas"></canvas><video id="heroVideo" muted playsinline loop preload="none" hidden></video></div>
-          <div class="hero-content">
-            <h1 id="heroTitle">Peças que ganham forma, camada por camada.</h1>
-            <p>Decoração, presentes, organização e peças técnicas impressas em 3D, além de filamentos originais e projetos sob medida.</p>
-            <div class="hero-ctas"><a class="pill neon" href="#catalogo">Ver produtos</a><a class="pill glass" href="#sob-medida">Fazer um projeto</a></div>
+    <section class="wrap" id="inicio" aria-labelledby="heroTitle">
+      <div class="bento">
+        <div class="bx bx-main">
+          <div class="bx-main-copy">
+            <p class="kicker"><span class="live"></span>Estoque a pronta entrega · atendimento no WhatsApp</p>
+            <h1 id="heroTitle">Impressão 3D que vira presente, decoração e solução.</h1>
+            <p class="lead">Peças prontas para comprar, filamentos originais e projetos feitos do zero para você. Pedido e atendimento direto no WhatsApp.</p>
+            <div class="hero-ctas"><a class="pill dark" href="#catalogo">Ver produtos</a><a class="pill line" href="#sob-medida">Fazer um projeto</a></div>
           </div>
+          <div class="marquee" aria-label="Produtos em destaque"><div class="mq-track" id="mqTrack"></div></div>
         </div>
-        <div class="slide slide-fil" id="slide1" role="group" aria-roledescription="slide" aria-label="2 de 3" aria-hidden="true">
-          <div class="hero-content">
-            <h2>Filamentos originais para a sua impressora.</h2>
-            <p>Flashforge, Bambu Lab, Masterprint e genéricos em carretel de 1 kg. Acima de 5 carretéis o preço cai, e acima de 20 cai de novo.</p>
-            <div class="fil-brands-row"><img src="assets/brands/flashforge.svg" alt="Flashforge"><img src="assets/brands/bambulab.svg" alt="Bambu Lab"><img class="wide" src="assets/brands/masterprint.webp" alt="Masterprint"></div>
-            <div class="hero-ctas"><a class="pill neon" href="#filamentos">Ver filamentos</a><span class="hero-price" id="heroFilPrice"></span></div>
-          </div>
-          <div class="spools" aria-hidden="true"><img src="assets/hero/carretel-azul.webp" alt="" class="s1" loading="lazy" decoding="async"><img src="assets/hero/carretel-vermelho.webp" alt="" class="s2" loading="lazy" decoding="async"><img src="assets/hero/carretel-verde.webp" alt="" class="s3" loading="lazy" decoding="async"></div>
-        </div>
-        <div class="slide slide-promo" id="slide2" role="group" aria-roledescription="slide" aria-label="3 de 3" aria-hidden="true">
-          <div class="hero-content">
-            <span class="promo-tag" id="slidePromoTag">Natal</span>
-            <h2 id="slidePromoTitle">Natal impresso em 3D.</h2>
-            <p id="slidePromoText">Árvores, enfeites e lembranças para a mesa, a estante e a porta de casa.</p>
-            <div class="hero-ctas"><button type="button" class="pill neon" data-goto-cat="Natal e decoração">Ver peças de Natal</button></div>
-          </div>
-          <div class="promo-pics" id="promoPics" aria-hidden="true"></div>
-        </div>
-        <div class="cine-nav">
-          <div class="dots" role="tablist" aria-label="Escolher slide"><button type="button" role="tab" aria-label="Slide 1" aria-selected="true" data-go="0"><i></i></button><button type="button" role="tab" aria-label="Slide 2" aria-selected="false" data-go="1"><i></i></button><button type="button" role="tab" aria-label="Slide 3" aria-selected="false" data-go="2"><i></i></button></div>
-          <div class="arrows"><button type="button" class="round glassy" data-step="-1" aria-label="Slide anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button><button type="button" class="round glassy" data-step="1" aria-label="Próximo slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></button></div>
-        </div>
+        <a class="bx bx-fil" href="#filamentos" aria-label="Ver filamentos">
+          <div class="bx-txt"><h2>Filamentos originais</h2><p>Flashforge, Bambu Lab e Masterprint</p><span class="bx-price" id="heroFilPrice"></span></div>
+          <div class="bx-spools" id="heroSpools" aria-hidden="true"></div>
+          <span class="bx-go" aria-hidden="true">→</span>
+        </a>
+        <a class="bx bx-promo" href="#natal" id="heroPromo">
+          <div class="bx-txt"><span class="promo-tag" id="hpTag">Natal</span><h2 id="hpTitle">Natal impresso em 3D</h2><p id="hpText">Árvores, enfeites e lembranças.</p><span class="bx-time" id="hpTime"></span></div>
+          <img id="hpImg" alt="" loading="eager" decoding="async">
+          <span class="bx-go" aria-hidden="true">→</span>
+        </a>
       </div>
+      <ul class="trust" aria-label="Por que comprar com a gente">
+        <li><b>Atendimento humano</b><span>Karita e Isabel no WhatsApp</span></li>
+        <li><b>Filamentos originais</b><span>Flashforge, Bambu Lab e Masterprint</span></li>
+        <li><b>Estoque real</b><span>Quantidade de cada item à mostra</span></li>
+        <li><b>Atacado de filamento</b><span>Preço cai a partir de 6 carretéis</span></li>
+      </ul>
     </section>
 
     <section class="wrap block" id="natal" aria-labelledby="destTitle2">
@@ -185,7 +177,6 @@
   <script src="data/reviews.js"></script>
   <script src="data/filaments.js"></script>
   <script src="js/app.js"></script>
-  <script src="data/hero.js"></script>
   <script src="js/home.js"></script>
   <script src="js/filaments.js"></script>
   <script src="js/extras.js"></script>

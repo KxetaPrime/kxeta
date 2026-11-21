@@ -7,7 +7,7 @@ Os pedidos são finalizados pelo WhatsApp. Para ver, abra `index.html` no navega
 - `index.html`: página
 - `css/style.css`: estilos antigos ainda usados pelos modais; `css/site.css`: visual atual
 - `js/app.js`: catálogo, carrinho, preços, promoção e WhatsApp
-- `js/home.js`: hero em carrossel, destaques, favoritos
+- `js/home.js`: topo em blocos (bento), destaques, favoritos
 - `js/filaments.js`: cards de marca e janela de filamentos
 - `data/products.json` / `products.js`: produtos impressos (vindos das planilhas da Shopee)
 - `data/filaments.js`: filamentos (gerado por `tools/build_filaments.py`)
@@ -15,7 +15,7 @@ Os pedidos são finalizados pelo WhatsApp. Para ver, abra `index.html` no navega
 - `assets/products/`: fotos dos produtos (inclui uma foto por opção: `*-op-*.webp`)
 - `assets/filamentos/studio/`: fotos dos filamentos no fundo de estúdio
 - `tools/studio.py`: tratamento das fotos dos filamentos; `tools/build_filaments.py`: catálogo de filamentos
-- `logo/`: propostas de logotipo; `higgsfield/prompts.md`: prompts para gerar vídeo/imagem
+- `logo/`: propostas de logotipo
 
 ## Tarefas comuns
 - **Preço/estoque dos filamentos:** edite `CATALOGO` em `tools/build_filaments.py` e rode `python3 tools/build_filaments.py`.
