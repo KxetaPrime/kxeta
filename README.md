@@ -27,6 +27,12 @@ Os pedidos são finalizados pelo WhatsApp. Para ver, abra `index.html` no navega
 python3 -c "import json;d=json.load(open('data/products.json'));open('data/products.js','w').write('window.NP_PRODUCTS = '+json.dumps(d,ensure_ascii=False,indent=1)+';\\n')"
 ```
 
+## Google (SEO)
+Depois de mudar produtos, preços ou a promoção, rode `python3 tools/seo.py` para atualizar os dados que o Google lê.
+
+## Links diretos
+`#p-<ID do produto>` abre o produto e `#f-<marca>-<SKU>` abre o filamento na cor. O botão Compartilhar gera esses links.
+
 ## Avaliações (estrelas e comentários)
 Copie as avaliações reais da Shopee (Central do Vendedor > Avaliações) para `data/reviews.js`, usando o ID do produto.
 Sem dados, a área de avaliações não aparece. Nunca invente avaliações.
