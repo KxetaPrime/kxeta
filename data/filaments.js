@@ -23,8 +23,9 @@ window.NP_FIL = [
       "cost": 64.93,
       "hex": "#F2B51D",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233342.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233342.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233343",
@@ -35,8 +36,9 @@ window.NP_FIL = [
       "cost": 64.93,
       "hex": "#FADE89",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233343.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233340",
@@ -45,10 +47,11 @@ window.NP_FIL = [
       "name": "Azul",
       "stock": 2,
       "cost": 64.93,
-      "hex": "#1454B9",
+      "hex": "#01358E",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233340.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233340.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233335",
@@ -59,8 +62,9 @@ window.NP_FIL = [
       "cost": 75.45,
       "hex": "#F6F6F1",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233335.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233335.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233349",
@@ -71,8 +75,9 @@ window.NP_FIL = [
       "cost": 64.93,
       "hex": "#788393",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233349.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233349.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233350",
@@ -81,10 +86,11 @@ window.NP_FIL = [
       "name": "Dourado",
       "stock": 15,
       "cost": 64.93,
-      "hex": "#B59B54",
+      "hex": "#786E44",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233350.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233350.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233348",
@@ -93,10 +99,11 @@ window.NP_FIL = [
       "name": "Marrom",
       "stock": 10,
       "cost": 64.93,
-      "hex": "#92502C",
+      "hex": "#8D4A1F",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233348.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233348.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233345",
@@ -107,8 +114,9 @@ window.NP_FIL = [
       "cost": 64.93,
       "hex": "#25262A",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233345.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233345.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233344",
@@ -117,10 +125,11 @@ window.NP_FIL = [
       "name": "Rosa",
       "stock": 13,
       "cost": 64.93,
-      "hex": "#EA8EB9",
+      "hex": "#E28EC6",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233344.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233344.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233347",
@@ -129,10 +138,11 @@ window.NP_FIL = [
       "name": "Roxo",
       "stock": 1,
       "cost": 64.93,
-      "hex": "#7524B8",
+      "hex": "#5F199A",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233347.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233347.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233338",
@@ -141,10 +151,11 @@ window.NP_FIL = [
       "name": "Verde",
       "stock": 1,
       "cost": 64.93,
-      "hex": "#49BA51",
+      "hex": "#5BAE45",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233338.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233338.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233336",
@@ -153,10 +164,11 @@ window.NP_FIL = [
       "name": "Vermelho",
       "stock": 8,
       "cost": 64.93,
-      "hex": "#D72F29",
+      "hex": "#CB291D",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233336.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233336.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233337",
@@ -167,8 +179,9 @@ window.NP_FIL = [
       "cost": 64.93,
       "hex": "#F67B72",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233337.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      }
     ]
    },
@@ -186,8 +199,9 @@ window.NP_FIL = [
       "cost": 66.08,
       "hex": "#E9C04A",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233354.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233358",
@@ -198,8 +212,9 @@ window.NP_FIL = [
       "cost": 66.08,
       "hex": "#F08A78",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233358.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233362",
@@ -210,8 +225,9 @@ window.NP_FIL = [
       "cost": 66.08,
       "hex": "#B4A2D8",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233362.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233352",
@@ -222,8 +238,9 @@ window.NP_FIL = [
       "cost": 66.08,
       "hex": "#2A2B2E",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233352.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233359",
@@ -234,8 +251,9 @@ window.NP_FIL = [
       "cost": 66.08,
       "hex": "#E8A7BF",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233359.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233356",
@@ -246,8 +264,9 @@ window.NP_FIL = [
       "cost": 66.08,
       "hex": "#6FAE6A",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233356.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      }
     ]
    },
@@ -265,8 +284,9 @@ window.NP_FIL = [
       "cost": 117.07,
       "hex": "#EAF4E2",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233370.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233369",
@@ -277,8 +297,9 @@ window.NP_FIL = [
       "cost": 117.07,
       "hex": "#F59A3A",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233369.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233368",
@@ -289,8 +310,9 @@ window.NP_FIL = [
       "cost": 117.07,
       "hex": "#E5484A",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233368.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      }
     ]
    },
@@ -308,8 +330,9 @@ window.NP_FIL = [
       "cost": 85.56,
       "hex": "#F2C230|#2E6FD6",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233363.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233364",
@@ -320,8 +343,9 @@ window.NP_FIL = [
       "cost": 85.56,
       "hex": "#EE8FB7|#3E86E0",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233364.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233365",
@@ -332,8 +356,9 @@ window.NP_FIL = [
       "cost": 85.56,
       "hex": "#3FAE4F|#F28A2E",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233365.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      }
     ]
    },
@@ -351,8 +376,9 @@ window.NP_FIL = [
       "cost": 63.79,
       "hex": "#25262A",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233373.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233373.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233377",
@@ -361,10 +387,11 @@ window.NP_FIL = [
       "name": "Rosa",
       "stock": 3,
       "cost": 63.79,
-      "hex": "#E992BB",
+      "hex": "#D889AD",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233377.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233377.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233376",
@@ -373,10 +400,11 @@ window.NP_FIL = [
       "name": "Verde",
       "stock": 4,
       "cost": 63.79,
-      "hex": "#36AD44",
+      "hex": "#3E9226",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233376.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233376.webp",
+      "translucent": false,
+      "photoKind": "official"
      }
     ]
    },
@@ -394,8 +422,9 @@ window.NP_FIL = [
       "cost": 82.15,
       "hex": "#F2C230",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233385.webp",
-      "translucent": true
+      "photo": "assets/filamentos/studio/233385.webp",
+      "translucent": true,
+      "photoKind": "official"
      },
      {
       "sku": "233386",
@@ -406,8 +435,9 @@ window.NP_FIL = [
       "cost": 82.15,
       "hex": "#3E86E0",
       "official": null,
-      "photo": "",
-      "translucent": true
+      "photo": "assets/filamentos/studio/233386.webp",
+      "translucent": true,
+      "photoKind": "simulated"
      },
      {
       "sku": "233387",
@@ -418,8 +448,9 @@ window.NP_FIL = [
       "cost": 82.15,
       "hex": "#F28A2E",
       "official": null,
-      "photo": "",
-      "translucent": true
+      "photo": "assets/filamentos/studio/233387.webp",
+      "translucent": true,
+      "photoKind": "simulated"
      },
      {
       "sku": "233383",
@@ -430,8 +461,9 @@ window.NP_FIL = [
       "cost": 82.15,
       "hex": "#DCE6EA",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233383.webp",
-      "translucent": true
+      "photo": "assets/filamentos/studio/233383.webp",
+      "translucent": true,
+      "photoKind": "official"
      },
      {
       "sku": "233388",
@@ -442,8 +474,9 @@ window.NP_FIL = [
       "cost": 82.15,
       "hex": "#8C55D0",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233388.webp",
-      "translucent": true
+      "photo": "assets/filamentos/studio/233388.webp",
+      "translucent": true,
+      "photoKind": "official"
      },
      {
       "sku": "233382",
@@ -454,8 +487,9 @@ window.NP_FIL = [
       "cost": 82.15,
       "hex": "#36B25A",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233382.webp",
-      "translucent": true
+      "photo": "assets/filamentos/studio/233382.webp",
+      "translucent": true,
+      "photoKind": "official"
      },
      {
       "sku": "233384",
@@ -466,8 +500,9 @@ window.NP_FIL = [
       "cost": 82.15,
       "hex": "#D3303A",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233384.webp",
-      "translucent": true
+      "photo": "assets/filamentos/studio/233384.webp",
+      "translucent": true,
+      "photoKind": "official"
      }
     ]
    },
@@ -485,8 +520,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#F4C21B",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233393.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233394",
@@ -497,8 +533,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#1F5FC8",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233394.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233390",
@@ -509,8 +546,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#F4F4F0",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233390.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233390.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233397",
@@ -521,8 +559,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#8A9099",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233397.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233396",
@@ -533,8 +572,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#8B4A2B",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233396.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233389",
@@ -545,8 +585,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#E9E4D4",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233389.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233391",
@@ -557,8 +598,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#222326",
       "official": null,
-      "photo": "assets/filamentos/flashforge/233391.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233391.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233398",
@@ -569,8 +611,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#EE8FB7",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233398.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233395",
@@ -581,8 +624,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#3FAE4F",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233395.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233392",
@@ -593,8 +637,9 @@ window.NP_FIL = [
       "cost": 68.37,
       "hex": "#D2302B",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233392.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      }
     ]
    },
@@ -612,8 +657,9 @@ window.NP_FIL = [
       "cost": 114.21,
       "hex": "#F2C230",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233402.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233403",
@@ -624,8 +670,9 @@ window.NP_FIL = [
       "cost": 114.21,
       "hex": "#2F6FCF",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233403.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233399",
@@ -636,8 +683,9 @@ window.NP_FIL = [
       "cost": 114.21,
       "hex": "#F2F2EE",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233399.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233405",
@@ -648,8 +696,9 @@ window.NP_FIL = [
       "cost": 114.21,
       "hex": "#8A9099",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233405.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      },
      {
       "sku": "233406",
@@ -660,8 +709,9 @@ window.NP_FIL = [
       "cost": 114.21,
       "hex": "#8B4A2B",
       "official": null,
-      "photo": "",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233406.webp",
+      "translucent": false,
+      "photoKind": "simulated"
      }
     ]
    }
@@ -688,8 +738,9 @@ window.NP_FIL = [
       "cost": 133.91,
       "hex": "#5B6579",
       "official": "Blue Grey (10602)",
-      "photo": "assets/filamentos/bambulab/233416.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233416.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233422",
@@ -700,8 +751,9 @@ window.NP_FIL = [
       "cost": 133.96,
       "hex": "#FFFFFF",
       "official": "Jade White (10100)",
-      "photo": "assets/filamentos/bambulab/233422.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233422.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233418",
@@ -712,8 +764,9 @@ window.NP_FIL = [
       "cost": 134.02,
       "hex": "#0086D6",
       "official": "Cyan (10603)",
-      "photo": "assets/filamentos/bambulab/233418.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233418.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233419",
@@ -724,8 +777,9 @@ window.NP_FIL = [
       "cost": 133.85,
       "hex": "#8E9089",
       "official": "Gray (10103)",
-      "photo": "assets/filamentos/bambulab/233419.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233419.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "354080",
@@ -736,8 +790,9 @@ window.NP_FIL = [
       "cost": 133.96,
       "hex": "#5E43B7",
       "official": "Purple (10700)",
-      "photo": "assets/filamentos/bambulab/354080.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/354080.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "354079",
@@ -748,8 +803,9 @@ window.NP_FIL = [
       "cost": 133.96,
       "hex": "#16C344",
       "official": "Bambu Green (10501)",
-      "photo": "assets/filamentos/bambulab/354079.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/354079.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233424",
@@ -760,8 +816,9 @@ window.NP_FIL = [
       "cost": 133.89,
       "hex": "#C12E1F",
       "official": "Red (10200)",
-      "photo": "assets/filamentos/bambulab/233424.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233424.webp",
+      "translucent": false,
+      "photoKind": "official"
      }
     ]
    },
@@ -779,8 +836,9 @@ window.NP_FIL = [
       "cost": 128.16,
       "hex": "#7F7E83",
       "official": "Gray (30107)",
-      "photo": "assets/filamentos/bambulab/353869.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/353869.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233414",
@@ -791,8 +849,9 @@ window.NP_FIL = [
       "cost": 128.31,
       "hex": "#502C1E",
       "official": "Dark Brown (30800)",
-      "photo": "assets/filamentos/bambulab/233414.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233414.webp",
+      "translucent": false,
+      "photoKind": "official"
      },
      {
       "sku": "233413",
@@ -803,8 +862,9 @@ window.NP_FIL = [
       "cost": 128.25,
       "hex": "#000000",
       "official": "Black (30105)",
-      "photo": "assets/filamentos/bambulab/233413.webp",
-      "translucent": false
+      "photo": "assets/filamentos/studio/233413.webp",
+      "translucent": false,
+      "photoKind": "official"
      }
     ]
    }

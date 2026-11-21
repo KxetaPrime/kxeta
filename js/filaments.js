@@ -32,7 +32,7 @@
   /* ---------- cards ---------- */
   const allColors=b=>b.lines.flatMap(l=>l.colors);
   $('filBrands').innerHTML=BRANDS.map(b=>{
-    const all=allColors(b),avail=all.filter(inStock),cover=all.find(c=>c.photo&&inStock(c)&&!/branco|preto|natural/i.test(c.name))||all.find(c=>c.photo)||all[0];
+    const all=allColors(b),avail=all.filter(inStock),cover=all.find(c=>c.photoKind==='official'&&inStock(c)&&!/branco|preto|natural|cinza/i.test(c.name))||all.find(c=>c.photo)||all[0];
     const minPrice=Math.min(...avail.map(c=>filPrice(c,1)));
     const dots=avail.slice(0,10).map(c=>`<i style="--c:${swatchBg(c)}" title="${esc(c.name)}"></i>`).join('')+(avail.length>10?`<em>+${avail.length-10}</em>`:'');
     return `<button type="button" class="brand-card" data-brand="${b.id}" style="--sel:${hexes(cover)[0]};--accent:${b.accent}">
@@ -89,12 +89,12 @@
     if(c.photo){
       const cur=pics.querySelector('img.on');
       if(!cur||cur.getAttribute('src')!==c.photo){
-        const im=new Image();im.alt=`${brand.name} ${line.name}, cor ${c.name}, foto oficial do fabricante`;im.decoding='async';im.src=c.photo;
+        const im=new Image();im.alt=`${brand.name} ${line.name}, cor ${c.name}${c.photoKind==='simulated'?', simulação da cor':', foto oficial do fabricante'}`;im.decoding='async';im.src=c.photo;
         pics.appendChild(im);const show=()=>requestAnimationFrame(()=>{im.classList.add('on');if(cur){cur.classList.remove('on');setTimeout(()=>cur.remove(),reduce?0:420)}});
         im.complete?show():(im.onload=show,im.onerror=show);
       }
     }else{pics.querySelectorAll('img').forEach(i=>i.remove());const s=$('fpStageSpool').firstElementChild;if(s&&!reduce&&changed&&!silent){s.classList.remove('spin');requestAnimationFrame(()=>s.classList.add('spin'))}}
-    $('fpOfficial').textContent=c.photo?'Foto oficial do fabricante':'Ilustração na cor escolhida';
+    $('fpOfficial').textContent=c.photoKind==='simulated'?'Simulação da cor sobre foto oficial':c.photo?'Foto oficial do fabricante':'Ilustração na cor escolhida';
     renderBuy();
   }
   function renderBuy(){

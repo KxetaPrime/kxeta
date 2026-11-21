@@ -7,7 +7,11 @@ from concurrent.futures import ThreadPoolExecutor
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)));os.chdir(ROOT)
 CACHE=sys.argv[1] if len(sys.argv)>1 else '/tmp/np-fil-cache'
 os.makedirs(CACHE,exist_ok=True)
-for d in ('assets/filamentos/flashforge','assets/filamentos/bambulab'):os.makedirs(d,exist_ok=True)
+RAW=os.path.join(CACHE,'raw')
+for d in ('flashforge','bambulab'):os.makedirs(os.path.join(RAW,d),exist_ok=True)
+os.makedirs('assets/filamentos/studio',exist_ok=True)
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+import studio
 
 def get(u,minb=2000):
     r=subprocess.run(['curl','-sS','-L','--max-time','60','--retry','3',u],capture_output=True)
@@ -97,13 +101,41 @@ for brand,lid,lname,about,rows,hexes,src in CATALOGO:
         else:
             hexv=hexes[name];s=src(name);url=ff(*s) if s else None
         items[sku]=dict(sku=sku,brand=brand,line=lid,name=name,stock=stock,cost=cost,hex=hexv,official=official,photo='',translucent=lid in TRANSLUCIDO)
-        if url: jobs.append((sku,url,f'assets/filamentos/{brand}/{sku}.webp'))
+        if url: jobs.append((sku,url,os.path.join(RAW,brand,sku+'.webp')))
 def run(j):
-    sku,url,out=j;d=(img(url+'__op__resize,m_lfit,w_1600') if 'bblcdn' in url else None) or img(url)
+    sku,url,out=j
+    if os.path.exists(out): return sku,(out,Image.open(out).size)
+    d=(img(url+'__op__resize,m_lfit,w_1600') if 'bblcdn' in url else None) or img(url)
     return sku,(out,save(d,out)) if d else None
 for sku,r in ThreadPoolExecutor(8).map(run,jobs):
-    if r: items[sku]['photo']=r[0]
-    print(sku,items[sku]['brand'],items[sku]['line'],items[sku]['name'],r[1] if r else 'SEM FOTO')
+    if r: items[sku]['raw']=r[0]
+
+# ---------- estúdio: fundo padronizado, sem cortes; simulação para cores sem foto oficial ----------
+def transparent(im): return im.mode=='RGBA' and im.getchannel('A').getextrema()[0]<20
+def photo_hex(im):
+    # cor real tirada da foto: mediana dos pixels coloridos do produto
+    a=np.array(im.convert('RGBA'),float);rgb,al=a[...,:3],a[...,3];mx,mn=rgb.max(2),rgb.min(2);sat=(mx-mn)/np.maximum(mx,1);L=rgb.mean(2)
+    m=(al>200)&(sat>.28)&(L>40)&(L<235)
+    if m.sum()<2000: return None
+    px=rgb[m];lum=px@np.array([.299,.587,.114]);lo,hi=np.percentile(lum,[62,92])
+    return '#%02X%02X%02X'%tuple(int(v) for v in np.median(px[(lum>=lo)&(lum<=hi)],axis=0))
+import numpy as np
+BASE={'flashforge':(os.path.join(RAW,'flashforge','233335.webp'),os.path.join(RAW,'flashforge','233383.webp'))}
+def compose(it):
+    out=f"assets/filamentos/studio/{it['sku']}.webp"
+    if it.get('raw'):
+        im=Image.open(it['raw'])
+        if it['brand']=='flashforge' and transparent(im):
+            h=photo_hex(im)
+            if h and not it['translucent'] and not re.search(r'branco|preto|natural|cinza|prata',it['name'],re.I): it['hex']=h
+        pic=studio.place_cutout(im,it['hex']) if transparent(im) else studio.place_flat(im,it['hex']);kind='official'
+    else:
+        base=BASE[it['brand']][1 if it['translucent'] else 0]
+        pic=studio.place_cutout(studio.recolor(Image.open(base),it['hex'],it['translucent']),it['hex']);kind='simulated'
+    pic.save(out,'WEBP',quality=86,method=6);it['photo']=out;it['photoKind']=kind;it.pop('raw',None)
+    return it['sku'],kind
+for sku,kind in ThreadPoolExecutor(4).map(compose,list(items.values())):
+    print(sku,items[sku]['brand'],items[sku]['line'],items[sku]['name'],kind,items[sku]['hex'])
 
 BRANDS=[
  dict(id='flashforge',name='Flashforge',logo='assets/brands/flashforge.svg',accent='#E9ECEA',about='Filamentos originais em várias linhas: PLA, PETG, ABS e TPU.'),
