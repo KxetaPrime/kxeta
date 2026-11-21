@@ -46,13 +46,20 @@ def place_cutout(rgba, hexcolor):
     out = Image.fromarray(np.clip(can, 0, 255).astype('uint8')).convert('RGBA')
     out.alpha_composite(im, (x0, y0)); return out.convert('RGB')
 
-def clean_flat(rgb):
+def clean_flat(rgb, seed='center'):
     """Foto com fundo liso (Bambu Lab): apaga logos/selos e devolve (fator de multiplicação 0..1, bbox da peça)."""
     a = np.array(rgb.convert('RGB'), float); bg = np.median(np.concatenate([a[:8, :8].reshape(-1, 3), a[-8:, -8:].reshape(-1, 3), a[-8:, :8].reshape(-1, 3)]), axis=0)
     d = np.abs(a - bg).max(axis=2); obj = (d > 7).astype('uint8') * 255
     m = Image.fromarray(obj, 'L').filter(ImageFilter.MaxFilter(5))
     # semente: ponto da peça mais perto do centro
-    ys, xs = np.nonzero(np.array(m)); i = np.argmin((xs - S / 2) ** 2 + (ys - S * .55) ** 2)
+    # semente: ponto mais "cheio" do objeto (evita cair num pontinho de texto)
+    if seed == 'dense':
+        dens = np.array(m.resize((S // 8, S // 8), Image.BOX).filter(ImageFilter.BoxBlur(6)), float)
+        dens[np.array(m.resize((S // 8, S // 8), Image.NEAREST)) == 0] = -1
+        yy, xx = np.unravel_index(np.argmax(dens), dens.shape); sx, sy = xx * 8 + 4, yy * 8 + 4
+    else:
+        sx, sy = S / 2, S * .55
+    mm = np.array(m); ys, xs = np.nonzero(mm); i = np.argmin((xs - sx) ** 2 + (ys - sy) ** 2)
     ImageDraw.floodfill(m, (int(xs[i]), int(ys[i])), 128)
     keep = np.array(m) == 128
     a[~keep] = bg                                    # logos e selos somem
@@ -60,8 +67,8 @@ def clean_flat(rgb):
     ys, xs = np.nonzero(keep & (d > 7)); bb = (xs.min(), ys.min(), xs.max() + 1, ys.max() + 1)
     return f, bb
 
-def place_flat(rgb, hexcolor):
-    f, (x0, y0, x1, y1) = clean_flat(rgb)
+def place_flat(rgb, hexcolor, seed='center'):
+    f, (x0, y0, x1, y1) = clean_flat(rgb, seed)
     pad = 40; x0, y0, x1, y1 = max(0, x0 - pad), max(0, y0 - pad), min(S, x1 + pad), min(S, y1 + pad)
     crop = Image.fromarray((f[y0:y1, x0:x1] * 255).astype('uint8'))
     k = _fit(crop.width, crop.height, 900); crop = crop.resize((round(crop.width * k), round(crop.height * k)), Image.LANCZOS)

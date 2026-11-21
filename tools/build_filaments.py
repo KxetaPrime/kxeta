@@ -90,20 +90,24 @@ CATALOGO=[
  ('bambulab','bl-petg','PETG Basic','Resistente e com bom acabamento, para peças funcionais.',[
    ('353869','Cinza',3,128.16,'Gray'),('233414','Marrom Escuro',3,128.31,'Dark Brown'),('233413','Preto',3,128.25,'Black')],None,None),
 
- # Masterprint: cores mais procuradas, ainda sem estoque nem custo do fornecedor (custo None = preço sob consulta)
- ('masterprint','mp-pla','PLA','PLA nacional de boa qualidade, ótimo custo para produção e peças do dia a dia.',[
-   ('MP-PLA-PRE','Preto',0,None),('MP-PLA-BRA','Branco',0,None),('MP-PLA-CIN','Cinza',0,None),('MP-PLA-VEM','Vermelho',0,None),
-   ('MP-PLA-AZU','Azul',0,None),('MP-PLA-AMA','Amarelo',0,None),('MP-PLA-VER','Verde',0,None),('MP-PLA-LAR','Laranja',0,None),
-   ('MP-PLA-ROX','Roxo',0,None),('MP-PLA-ROS','Rosa',0,None),('MP-PLA-PEL','Pele',0,None),('MP-PLA-DOU','Dourado Silk',0,None)],
-   {'Preto':'#1E1E20','Branco':'#F3F3F0','Cinza':'#8A8F96','Vermelho':'#C8261F','Azul':'#1E4FB5','Amarelo':'#F5C518','Verde':'#2F9E44',
-    'Laranja':'#F07A1A','Roxo':'#6B3FA0','Rosa':'#EE8FB7','Pele':'#E8C3A0','Dourado Silk':'#D4AF37'},lambda c:None),
- ('masterprint','mp-petg','PETG','PETG resistente a impacto e umidade, para peças funcionais e externas.',[
-   ('MP-PETG-PRE','Preto',0,None),('MP-PETG-BRA','Branco',0,None),('MP-PETG-CIN','Cinza',0,None),('MP-PETG-AZT','Azul Translúcido',0,None),
-   ('MP-PETG-VET','Verde Translúcido',0,None),('MP-PETG-TRA','Transparente',0,None)],
-   {'Preto':'#1E1E20','Branco':'#F4F4F2','Cinza':'#8A8F96','Azul Translúcido':'#3E7BD6','Verde Translúcido':'#2FB35A','Transparente':'#DCE6EA'},lambda c:None),
+ # Masterprint: PLA Básico e PETG Básico do catálogo oficial (masterprint.com.br), sem estoque nem custo ainda (custo None = sob consulta).
+ # Fotos: recortadas do catálogo oficial em PDF (prepare_masterprint em tools/; ficam no cache em raw/masterprint).
+ ('masterprint','mp-pla','PLA Básico','PLA nacional de boa qualidade, ótimo custo para produção e peças do dia a dia.',[('MP-PLA-AZUL', 'Azul', 0, None), ('MP-PLA-CINZA', 'Cinza', 0, None), ('MP-PLA-VERMELHO', 'Vermelho', 0, None), ('MP-PLA-VERDE', 'Verde', 0, None), ('MP-PLA-DOURADO', 'Dourado', 0, None), ('MP-PLA-MADEIRA', 'Madeira', 0, None), ('MP-PLA-AMARELO', 'Amarelo', 0, None), ('MP-PLA-BRANCO', 'Branco', 0, None), ('MP-PLA-ROSA', 'Rosa', 0, None), ('MP-PLA-AZUL-ESCURO', 'Azul Escuro', 0, None), ('MP-PLA-PRATA', 'Prata', 0, None), ('MP-PLA-LARANJA', 'Laranja', 0, None), ('MP-PLA-PRETO', 'Preto', 0, None), ('MP-PLA-CINZA-CLARO', 'Cinza Claro', 0, None), ('MP-PLA-MARROM', 'Marrom', 0, None), ('MP-PLA-ROXO', 'Roxo', 0, None), ('MP-PLA-ROXO-CLARO', 'Roxo Claro', 0, None), ('MP-PLA-MADEIRA-ESCURA', 'Madeira Escura', 0, None), ('MP-PLA-VERDE-BAMBU', 'Verde Bambu', 0, None), ('MP-PLA-VERDE-ESCURO', 'Verde Escuro', 0, None), ('MP-PLA-CAFE', 'Café', 0, None), ('MP-PLA-MARROM-ESCURO', 'Marrom Escuro', 0, None), ('MP-PLA-PELE', 'Pele', 0, None), ('MP-PLA-TRANSPARENTE', 'Transparente', 0, None), ('MP-PLA-ROSA-CLARO', 'Rosa Claro', 0, None), ('MP-PLA-AZUL-CLARO', 'Azul Claro', 0, None)],
+   {'Azul': '#2F7FD6', 'Cinza': '#A3A6AA', 'Vermelho': '#D8262A', 'Verde': '#1FA34A', 'Dourado': '#E0A12A', 'Madeira': '#D8B08C', 'Amarelo': '#F6E21C', 'Branco': '#F4F4F2', 'Rosa': '#E94FA8', 'Azul Escuro': '#1C3A78', 'Prata': '#B5B8BC', 'Laranja': '#F7931E', 'Preto': '#1E1E20', 'Cinza Claro': '#D2D4D6', 'Marrom': '#6B4A40', 'Roxo': '#5B3FB0', 'Roxo Claro': '#D9C2EC', 'Madeira Escura': '#A0623A', 'Verde Bambu': '#2FB44A', 'Verde Escuro': '#4E7D4E', 'Café': '#4E3A36', 'Marrom Escuro': '#3E2A26', 'Pele': '#E9B98E', 'Transparente': '#E8E4DA', 'Rosa Claro': '#F2B3D6', 'Lavanda': '#B49BD9', 'Bronze': '#9C7A3C', 'Azul Claro': '#8FC6EE'},lambda c:None),
+ ('masterprint','mp-petg','PETG Básico','PETG resistente a impacto e umidade, para peças funcionais e externas.',[('MP-PETG-PRETO', 'Preto', 0, None), ('MP-PETG-BRANCO', 'Branco', 0, None), ('MP-PETG-AZUL', 'Azul', 0, None), ('MP-PETG-VERMELHO', 'Vermelho', 0, None), ('MP-PETG-VERDE', 'Verde', 0, None), ('MP-PETG-ROSA', 'Rosa', 0, None), ('MP-PETG-PRATA', 'Prata', 0, None), ('MP-PETG-TRANSPARENTE', 'Transparente', 0, None), ('MP-PETG-CINZA', 'Cinza', 0, None), ('MP-PETG-AMARELO', 'Amarelo', 0, None), ('MP-PETG-MARROM', 'Marrom', 0, None), ('MP-PETG-LARANJA', 'Laranja', 0, None), ('MP-PETG-PELE', 'Pele', 0, None), ('MP-PETG-MADEIRA', 'Madeira', 0, None), ('MP-PETG-LAVANDA', 'Lavanda', 0, None), ('MP-PETG-BRONZE', 'Bronze', 0, None), ('MP-PETG-DOURADO', 'Dourado', 0, None), ('MP-PETG-ROXO', 'Roxo', 0, None)],
+   {'Azul': '#2F7FD6', 'Cinza': '#A3A6AA', 'Vermelho': '#D8262A', 'Verde': '#1FA34A', 'Dourado': '#E0A12A', 'Madeira': '#D8B08C', 'Amarelo': '#F6E21C', 'Branco': '#F4F4F2', 'Rosa': '#E94FA8', 'Azul Escuro': '#1C3A78', 'Prata': '#B5B8BC', 'Laranja': '#F7931E', 'Preto': '#1E1E20', 'Cinza Claro': '#D2D4D6', 'Marrom': '#6B4A40', 'Roxo': '#5B3FB0', 'Roxo Claro': '#D9C2EC', 'Madeira Escura': '#A0623A', 'Verde Bambu': '#2FB44A', 'Verde Escuro': '#4E7D4E', 'Café': '#4E3A36', 'Marrom Escuro': '#3E2A26', 'Pele': '#E9B98E', 'Transparente': '#E8E4DA', 'Rosa Claro': '#F2B3D6', 'Lavanda': '#B49BD9', 'Bronze': '#9C7A3C', 'Azul Claro': '#8FC6EE'},lambda c:None),
+ # Genéricos: linha sem marca, cores mais vendidas; sem foto de fabricante, usa o carretel desenhado.
+ ('generico','gn-pla','PLA','PLA de linha econômica, bom para testes, protótipos e grandes volumes.',[
+   ('GN-PLA-PRE','Preto',0,None),('GN-PLA-BRA','Branco',0,None),('GN-PLA-CIN','Cinza',0,None),('GN-PLA-VEM','Vermelho',0,None),('GN-PLA-AZU','Azul',0,None),
+   ('GN-PLA-AMA','Amarelo',0,None),('GN-PLA-VER','Verde',0,None),('GN-PLA-LAR','Laranja',0,None),('GN-PLA-ROX','Roxo',0,None),('GN-PLA-ROS','Rosa',0,None)],
+   {'Preto':'#1E1E20','Branco':'#F3F3F0','Cinza':'#8A8F96','Vermelho':'#C8261F','Azul':'#1E4FB5','Amarelo':'#F5C518','Verde':'#2F9E44','Laranja':'#F07A1A','Roxo':'#6B3FA0','Rosa':'#EE8FB7'},lambda c:None),
+ ('generico','gn-petg','PETG','PETG de linha econômica, resistente e fácil de imprimir.',[
+   ('GN-PETG-PRE','Preto',0,None),('GN-PETG-BRA','Branco',0,None),('GN-PETG-CIN','Cinza',0,None),('GN-PETG-TRA','Transparente',0,None)],
+   {'Preto':'#1E1E20','Branco':'#F4F4F2','Cinza':'#8A8F96','Transparente':'#DCE6EA'},lambda c:None),
 ]
 TRANSLUCIDO={'ff-petg-transp'}
 TRANSLUCIDO_COR=('Translúcido','Transparente')
+MP_NOPHOTO={'PLA-BRANCO','PETG-LAVANDA', 'PETG-BRONZE', 'PETG-TRANSPARENTE', 'PETG-MARROM', 'PETG-PRATA', 'PLA-AZUL-CLARO', 'PETG-PELE', 'PETG-CINZA', 'PETG-MADEIRA'}
 
 items={};jobs=[]
 for brand,lid,lname,about,rows,hexes,src in CATALOGO:
@@ -115,6 +119,7 @@ for brand,lid,lname,about,rows,hexes,src in CATALOGO:
             hexv=hexes[name];s=src(name);url=ff(*s) if s else None
         items[sku]=dict(sku=sku,brand=brand,line=lid,name=name,stock=stock,cost=cost,hex=hexv,official=official,photo='',translucent=lid in TRANSLUCIDO or name.endswith(TRANSLUCIDO_COR))
         if url: jobs.append((sku,url,os.path.join(RAW,brand,sku+'.webp')))
+        elif brand=='masterprint' and sku[3:] not in MP_NOPHOTO and os.path.exists(os.path.join(RAW,brand,sku+'.webp')): items[sku]['raw']=os.path.join(RAW,brand,sku+'.webp')
 def run(j):
     sku,url,out=j
     if os.path.exists(out): return sku,(out,Image.open(out).size)
@@ -146,7 +151,7 @@ def compose(it):
         kind='official'
         if it['sku'] in ADJUST:
             tgt,ref=ADJUST[it['sku']];im=studio.retint(im,tgt,ref);it['hex']=tgt;kind='adjusted'
-        pic=studio.place_cutout(im,it['hex']) if transparent(im) else studio.place_flat(im,it['hex'])
+        pic=studio.place_cutout(im,it['hex']) if transparent(im) else studio.place_flat(im,it['hex'],'dense' if it['brand']=='masterprint' else 'center')
     elif it['brand'] not in BASE:
         it['photo']='';it['photoKind']='drawn';it.pop('raw',None);return it['sku'],'drawn'
     else:
@@ -160,7 +165,8 @@ for sku,kind in ThreadPoolExecutor(4).map(compose,list(items.values())):
 BRANDS=[
  dict(id='flashforge',name='Flashforge',logo='assets/brands/flashforge.svg',accent='#E9ECEA',about='Filamentos originais em várias linhas: PLA, PETG, ABS e TPU.'),
  dict(id='bambulab',name='Bambu Lab',logo='assets/brands/bambulab.svg',accent='#00AE42',about='Os filamentos originais da Bambu Lab, com o chip que a impressora reconhece.'),
- dict(id='masterprint',name='Masterprint',mono='MP',logo=None,accent='#F07A1A',about='Marca nacional de filamentos, com ótimo custo-benefício para produção.'),
+ dict(id='masterprint',name='Masterprint',mono='MP',logo='assets/brands/masterprint.webp',logoWide=True,accent='#1C6FD1',about='Marca nacional de filamentos do Grupo Master, com ótimo custo-benefício para produção.'),
+ dict(id='generico',name='Genéricos',mono='3D',logo=None,accent='#8A918C',about='Filamentos sem marca, de linha econômica, para testes, protótipos e produção em volume.'),
 ]
 for b in BRANDS:
     b['lines']=[dict(id=lid,name=lname,about=about,colors=[items[r[0]] for r in rows]) for brand,lid,lname,about,rows,*_ in CATALOGO if brand==b['id']]

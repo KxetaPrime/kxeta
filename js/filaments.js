@@ -14,7 +14,7 @@
 
   /* carretel desenhado (para cores sem foto oficial); --sel e --sel2 animam a cor */
   function spool(brand,big){
-    const logo=brand.logo?`<image href="${brand.logo}" x="104" y="104" width="32" height="32"/>`:`<text x="120" y="126" text-anchor="middle" font-family="Geist,system-ui,sans-serif" font-weight="800" font-size="17" fill="${brand.accent}">${esc(brand.mono||brand.name.slice(0,2))}</text>`;
+    const logo=brand.logo&&!brand.logoWide?`<image href="${brand.logo}" x="104" y="104" width="32" height="32"/>`:`<text x="120" y="126" text-anchor="middle" font-family="Geist,system-ui,sans-serif" font-weight="800" font-size="17" fill="${brand.accent}">${esc(brand.mono||brand.name.slice(0,2))}</text>`;
     const rings=[94,86,78,70,62].map(r=>`<circle cx="120" cy="120" r="${r}"/>`).join('');
     const windows=[0,60,120,180,240,300].map(a=>{const x=120+40*Math.cos(a*Math.PI/180),y=120+40*Math.sin(a*Math.PI/180);return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8.5"/>`}).join('');
     return `<svg class="spool${big?' big':''}" viewBox="0 0 240 240" aria-hidden="true">
@@ -37,7 +37,7 @@
     const dotsFrom=avail.length?avail:all;
     const dots=dotsFrom.slice(0,10).map(c=>`<i style="--c:${swatchBg(c)}" title="${esc(c.name)}"></i>`).join('')+(dotsFrom.length>10?`<em>+${dotsFrom.length-10}</em>`:'');
     return `<button type="button" class="brand-card" data-brand="${b.id}" style="--sel:${hexes(cover)[0]};--accent:${b.accent}">
-      <span class="bc-top">${b.logo?`<img src="${b.logo}" alt="" width="28" height="28">`:`<span class="bc-mono">${esc(b.mono||b.name.slice(0,2))}</span>`}<b>${esc(b.name)}</b></span>
+      <span class="bc-top">${b.logoWide?`<img class="bc-wide" src="${b.logo}" alt="${esc(b.name)}">`:`${b.logo?`<img src="${b.logo}" alt="" width="28" height="28">`:`<span class="bc-mono">${esc(b.mono||b.name.slice(0,2))}</span>`}<b>${esc(b.name)}</b>`}</span>
       <span class="bc-pic">${cover.photo?`<img src="${cover.photo}" alt="" loading="lazy">`:spool(b)}</span>
       <span class="bc-lines">${b.lines.map(l=>`<span>${esc(l.name)}</span>`).join('')}</span>
       <span class="bc-dots" aria-label="${avail.length} cores em estoque">${dots}</span>
@@ -51,7 +51,7 @@
   function open(id){
     brand=BRANDS.find(b=>b.id===id);if(!brand)return;
     lastFocus=document.activeElement;line=brand.lines[0];color=null;
-    $('fpLogo').hidden=!brand.logo;if(brand.logo)$('fpLogo').src=brand.logo;$('fpBrand').textContent=brand.name;
+    $('fpLogo').hidden=!brand.logo;if(brand.logo)$('fpLogo').src=brand.logo;$('fpLogo').classList.toggle('wide',!!brand.logoWide);$('fpBrand').hidden=!!brand.logoWide;$('fpBrand').textContent=brand.name;
     $('fpStageSpool').innerHTML=spool(brand,true);pop.style.setProperty('--accent',brand.accent);
     renderLines();selectLine(line.id);
     pop.hidden=false;document.body.style.overflow='hidden';

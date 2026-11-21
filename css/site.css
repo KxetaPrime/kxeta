@@ -72,6 +72,8 @@ button{font:inherit;color:inherit}
 .badge.promo{background:var(--ink);color:var(--neon)}
 .card-stock{margin:0 0 6px;font-size:12.5px;font-weight:600;color:var(--green)}.card-stock.low{color:#C2410C}
 .bc-stock{grid-area:stock;font-size:13px;font-weight:600;color:var(--green)}.bc-stock.out{color:var(--ink3)}
+.bc-top img.bc-wide{height:44px;width:auto;border-radius:8px;display:block}
+#fpLogo.wide{width:auto;height:32px;border-radius:6px}
 /* blocos */
 .block{margin-top:clamp(56px,8vw,112px)}
 .head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-bottom:24px}
@@ -131,7 +133,9 @@ button{font:inherit;color:inherit}
 .empty-state{padding:48px 24px;border-radius:var(--r-lg);background:var(--card);display:flex;flex-direction:column;gap:4px;color:var(--ink2)}.empty-state strong{color:var(--ink);font-size:18px}
 
 /* filamentos por marca */
-.brands{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.brands{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.brands .bc-pic{width:190px}
+@media(max-width:760px){.brands .bc-pic{width:112px}}
 .brand-card{--sel:#49BA51;position:relative;display:grid;grid-template-columns:1fr auto;grid-template-areas:"top spool" "lines spool" "dots dots" "stock stock" "foot foot";gap:12px 16px;align-items:start;padding:22px;border:0;border-radius:var(--r-xl);background:var(--card);text-align:left;cursor:pointer;overflow:hidden;
   box-shadow:var(--sh-1),0 0 0 1px rgba(12,16,14,.04);transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
 .brand-card::before{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--sel) 30%,transparent),transparent 70%);transition:background .5s}
