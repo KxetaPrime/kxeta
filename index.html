@@ -7,6 +7,9 @@
   <meta name="description" content="Peças impressas em 3D, filamentos Flashforge, Bambu Lab e Masterprint em carretel de 1 kg e projetos sob medida. Pedido e atendimento pelo WhatsApp.">
   <meta name="theme-color" content="#F3F4F2">
   <link rel="icon" type="image/svg+xml" href="assets/brand/icone.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/brand/app-192.png">
+  <meta name="apple-mobile-web-app-title" content="Nova Prime 3D">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:title" content="Nova Prime 3D | Filamentos Flashforge e Peças Impressas em 3D">
@@ -55,7 +58,7 @@
             <div class="fil-brands-row"><img src="assets/brands/flashforge.svg" alt="Flashforge"><img src="assets/brands/bambulab.svg" alt="Bambu Lab"><img class="wide" src="assets/brands/masterprint.webp" alt="Masterprint"></div>
             <div class="hero-ctas"><a class="pill neon" href="#filamentos">Ver filamentos</a><span class="hero-price" id="heroFilPrice"></span></div>
           </div>
-          <div class="spools" aria-hidden="true"><img src="assets/hero/carretel-azul.webp" alt="" class="s1"><img src="assets/hero/carretel-vermelho.webp" alt="" class="s2"><img src="assets/hero/carretel-verde.webp" alt="" class="s3"></div>
+          <div class="spools" aria-hidden="true"><img src="assets/hero/carretel-azul.webp" alt="" class="s1" loading="lazy" decoding="async"><img src="assets/hero/carretel-vermelho.webp" alt="" class="s2" loading="lazy" decoding="async"><img src="assets/hero/carretel-verde.webp" alt="" class="s3" loading="lazy" decoding="async"></div>
         </div>
         <div class="slide slide-promo" id="slide2" role="group" aria-roledescription="slide" aria-label="3 de 3" aria-hidden="true">
           <div class="hero-content">
@@ -118,7 +121,15 @@
       <nav aria-label="Rodapé"><a href="#catalogo">Produtos</a><a href="#natal">Natal</a><a href="#filamentos">Filamentos</a><a href="#sob-medida">Sob medida</a><a href="#como-funciona">Como comprar</a></nav>
     </div>
   </footer>
-  <div id="veil" class="veil"></div><aside class="drawer cart" id="cartDrawer" aria-label="Carrinho" aria-hidden="true"><div class="drawerTop"><h2>Seu carrinho <span id="cartTitleCount"></span></h2><button type="button" class="xBtn" data-close aria-label="Fechar carrinho">×</button></div><div class="cart-tier" id="cartTier" hidden></div><div class="drawerBody" id="cartItems"></div><div class="drawerBottom"><div class="totalRow"><span>Subtotal</span><b id="cartTotal">R$ 0,00</b></div><p class="cart-save" id="cartSave" hidden></p><p class="cartHint" id="cartHint">Frete e pagamento são combinados com a vendedora pelo WhatsApp.</p><div class="sellerBtns"><button id="sellerKarita" type="button" class="pill neon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4.9 19 3 22l.9-4.3A9 9 0 1 1 7 20.1L4.9 19Z"/><path d="M9 8c.7 2.1 2.3 3.8 4.7 4.7l1.6-1.3 2 1.4c-.5 2.5-2.2 3.1-4.9 2.2C9.3 13.9 7 11.7 6.4 8.8 6 6.9 7.8 6.1 9 8Z"/></svg>Finalizar com a Karita</button><button id="sellerIsabel" type="button" class="pill line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4.9 19 3 22l.9-4.3A9 9 0 1 1 7 20.1L4.9 19Z"/><path d="M9 8c.7 2.1 2.3 3.8 4.7 4.7l1.6-1.3 2 1.4c-.5 2.5-2.2 3.1-4.9 2.2C9.3 13.9 7 11.7 6.4 8.8 6 6.9 7.8 6.1 9 8Z"/></svg>Finalizar com a Isabel</button></div></div></aside>
+  <div id="veil" class="veil"></div><aside class="drawer cart" id="cartDrawer" aria-label="Carrinho" aria-hidden="true"><div class="drawerTop"><h2>Seu carrinho <span id="cartTitleCount"></span></h2><button type="button" class="xBtn" data-close aria-label="Fechar carrinho">×</button></div><div class="cart-tier" id="cartTier" hidden></div><div class="drawerBody" id="cartItems"></div><div class="drawerBottom"><div class="totalRow"><span>Subtotal</span><b id="cartTotal">R$ 0,00</b></div><p class="cart-save" id="cartSave" hidden></p><details class="buyer" id="buyerBox"><summary><span>Seus dados para o pedido</span><small id="buyerSummary">Opcional, agiliza o atendimento</small></summary>
+        <div class="buyer-grid">
+          <label class="fld"><span>Seu nome</span><input id="bName" type="text" autocomplete="name" placeholder="Como podemos te chamar?"></label>
+          <label class="fld"><span>Cidade ou CEP</span><input id="bCity" type="text" autocomplete="postal-code" placeholder="Ex.: Goiânia ou 74000-000"></label>
+          <fieldset class="seg"><legend>Entrega</legend><label><input type="radio" name="bShip" value="Envio"><span>Envio</span></label><label><input type="radio" name="bShip" value="Retirada"><span>Retirar</span></label></fieldset>
+          <fieldset class="seg"><legend>Pagamento</legend><label><input type="radio" name="bPay" value="Pix"><span>Pix</span></label><label><input type="radio" name="bPay" value="Cartão"><span>Cartão</span></label><label><input type="radio" name="bPay" value="Dinheiro"><span>Dinheiro</span></label></fieldset>
+          <label class="fld full"><span>Observação</span><input id="bNote" type="text" placeholder="Prazo, cor alternativa, presente…"></label>
+        </div></details>
+        <p class="cartHint" id="cartHint">Frete e pagamento são confirmados pela vendedora no WhatsApp.</p><div class="sellerBtns"><button id="sellerKarita" type="button" class="pill neon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4.9 19 3 22l.9-4.3A9 9 0 1 1 7 20.1L4.9 19Z"/><path d="M9 8c.7 2.1 2.3 3.8 4.7 4.7l1.6-1.3 2 1.4c-.5 2.5-2.2 3.1-4.9 2.2C9.3 13.9 7 11.7 6.4 8.8 6 6.9 7.8 6.1 9 8Z"/></svg>Finalizar com a Karita</button><button id="sellerIsabel" type="button" class="pill line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4.9 19 3 22l.9-4.3A9 9 0 1 1 7 20.1L4.9 19Z"/><path d="M9 8c.7 2.1 2.3 3.8 4.7 4.7l1.6-1.3 2 1.4c-.5 2.5-2.2 3.1-4.9 2.2C9.3 13.9 7 11.7 6.4 8.8 6 6.9 7.8 6.1 9 8Z"/></svg>Finalizar com a Isabel</button></div></div></aside>
   <div class="modal pmodal" id="productModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="detailTitle"><button class="xBtn pm-x" type="button" data-close aria-label="Fechar">×</button><div class="pm">
     <div class="pm-gallery"><div class="pm-main"><img class="modalImg" id="detailImg" alt=""><span class="pm-badge" id="detailBadge" hidden></span></div><div class="thumbs" id="detailThumbs"></div></div>
     <div class="pm-info">

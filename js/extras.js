@@ -10,7 +10,7 @@
 
   /* ---------- índice ---------- */
   const IDX=[];
-  state.products.forEach(p=>{const m=minAvailable(p);IDX.push({kind:'p',id:p.id,title:short(p.title),sub:p.category,img:imgOf(p),price:m,out:m===null,
+  state.products.forEach(p=>{const m=minAvailable(p);IDX.push({kind:'p',id:p.id,title:short(p.title),sub:p.category,img:thumbOf(p),price:m,out:m===null,
     text:norm([p.title,p.category,p.variants.map(v=>v.name).join(' ')].join(' '))})});
   (window.NP_FIL||[]).forEach(b=>b.lines.forEach(l=>l.colors.forEach(c=>{IDX.push({kind:'f',brand:b.id,sku:c.sku,title:`${b.name} ${l.name} ${c.name}`,sub:Number(c.stock)>0?`Filamento 1 kg · ${c.stock} em estoque`:'Filamento 1 kg · sem estoque',
     img:c.photo,price:c.cost!=null?filPrice(c,1):null,out:!(Number(c.stock)>0),text:norm(`filamento carretel ${b.name} ${l.name} ${c.name}`)})})));

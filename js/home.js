@@ -52,7 +52,7 @@
     // slide 3: promoção (se ativa) com fotos de Natal
     const pr=window.NP_PROMO;const promoOn=pr&&pr.off&&(!pr.ends||new Date()<=new Date(pr.ends+'T23:59:59-03:00'));
     if(promoOn){$('slidePromoTag').textContent=pr.name;$('slidePromoTitle').textContent=`Natal com ${pr.off}% de desconto ou mais.`;$('slidePromoText').textContent='Árvores, enfeites e lembranças impressas em 3D com preço de Black Friday, por tempo limitado.'}
-    $('promoPics').innerHTML=natal.slice(0,3).map((p,i)=>`<img class="p${i}" src="${esc(imgOf(p))}" alt="">`).join('');
+    $('promoPics').innerHTML=natal.slice(0,3).map((p,i)=>`<img class="p${i}" src="${esc(thumbOf(p))}" alt="" loading="lazy" decoding="async">`).join('');
     function go(n,user){
       n=(n+slides.length)%slides.length;if(n===cur)return;const dir=(n>cur||(cur===slides.length-1&&n===0))&&!(cur===0&&n===slides.length-1)?1:-1;
       slides.forEach((s,i)=>{s.classList.remove('on','from-left','from-right','out-left','out-right');s.setAttribute('aria-hidden',String(i!==n))});
