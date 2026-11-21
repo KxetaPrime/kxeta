@@ -22,7 +22,7 @@
   const firstImg=c=>{const p=P.filter(x=>x.category===c).sort((a,b)=>Number(b.featured)-Number(a.featured))[0];return p?imgOf(p):''};
   const filImg=(ffVariants.find(v=>v.color==='Verde'&&v.image)||ffVariants.find(v=>v.image)||{}).image||'';
   $('heroCats').innerHTML=CATS.map(c=>{const n=P.filter(p=>p.category===c).length;return `<a class="cat" href="#catalogo" data-goto-cat="${esc(c)}"><img src="${esc(firstImg(c))}" alt="" loading="lazy"><span><b>${esc(c)}</b><small>${n} ${n===1?'produto':'produtos'}</small></span></a>`}).join('')
-    +`<a class="cat" href="#filamentos"><img src="${esc(filImg)}" alt="" loading="lazy"><span><b>Filamentos</b><small>PLA e PETG Basic</small></span></a>`
+    +`<a class="cat" href="#filamentos"><img src="${esc(filImg)}" alt="" loading="lazy"><span><b>Filamentos</b><small>Flashforge, Bambu Lab e mais</small></span></a>`
     +`<a class="cat" href="#sob-medida"><i class="cat-icon" aria-hidden="true">+</i><span><b>Sob medida</b><small>Sua ideia em 3D</small></span></a>`;
 
   /* ---------- vitrine de Natal ---------- */
@@ -35,12 +35,6 @@
   document.querySelectorAll('[data-rail]').forEach(b=>b.onclick=()=>rail.scrollBy({left:Number(b.dataset.rail)*rail.clientWidth*.8,behavior:reduce?'auto':'smooth'}));
   function bindCards(root){root.querySelectorAll('[data-detail]').forEach(b=>b.onclick=()=>openDetails(b.dataset.detail));root.querySelectorAll('[data-fav]').forEach(b=>b.onclick=e=>{e.stopPropagation();toggleFav(b.dataset.fav)})}
   bindCards(rail);bindCards($('natalBento'));
-
-  /* ---------- filamentos ---------- */
-  function openFilament(kind,color){activeFilKind=kind;selectedFilColor=color;$('filColorsTitle').textContent=`Flashforge ${kind} Basic`;$('filQty').value='1';renderColorSelector();openOverlay('filamentModal')}
-  window.openFilament=openFilament;
-  $('filList').innerHTML=['PLA','PETG'].map(k=>`<div class="fil-kind"><h3>${k} Basic</h3><div class="fil-grid">${ffVariants.filter(v=>v.kind===k).map(v=>`<button type="button" class="fil" data-kind="${k}" data-color="${esc(v.color)}"><span class="fil-pic" style="--c:${v.swatch}">${v.image?`<img src="${esc(v.image)}" alt="">`:''}</span><span class="fil-name"><i style="--c:${v.swatch}"></i>${esc(v.color)}</span></button>`).join('')}</div></div>`).join('');
-  document.querySelectorAll('.fil').forEach(b=>b.onclick=()=>openFilament(b.dataset.kind,b.dataset.color));
 
   /* ---------- favoritos no topo ---------- */
   $('favBtn').onclick=()=>{onlyFav=!onlyFav;if(onlyFav)currentFilter='Todos';updateFavUI();renderFilters();renderCatalog();$('catalogo').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})};

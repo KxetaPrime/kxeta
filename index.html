@@ -67,11 +67,8 @@
     </section>
 
     <section class="wrap block" id="filamentos" aria-labelledby="filTitle">
-      <div class="fil-panel">
-        <div class="fil-copy"><h2 id="filTitle">Filamentos Flashforge</h2><p>PLA e PETG Basic originais, em carretel de 1 kg. Toque numa cor para ver a foto e escolher a quantidade.</p>
-          <dl class="ladder"><div><dt>1 a 4 kg</dt><dd>R$ 85,00 <small>por kg</small></dd></div><div class="hot"><dt>5 kg ou mais</dt><dd>R$ 80,00 <small>por kg</small></dd></div></dl></div>
-        <div class="fil-colors" id="filList"></div>
-      </div>
+      <div class="head"><div><h2 id="filTitle">Filamentos das marcas que você confia</h2><p>Flashforge, Bambu Lab e Masterprint em carretel de 1 kg. Toque numa marca para ver as cores e escolher a sua.</p></div></div>
+      <div class="brands" id="filBrands"></div>
     </section>
 
     <section class="wrap block" id="sob-medida" aria-labelledby="smTitle">
@@ -103,10 +100,33 @@
   <div id="zoomOverlay" class="zoomOverlay" role="dialog" aria-modal="true" aria-label="Visualização ampliada da foto" hidden><button id="closeZoom" type="button" aria-label="Fechar zoom">✕</button><img id="zoomImg" alt="Imagem do produto ampliada"><span>Toque fora da imagem para fechar</span></div>
   <button id="floatContact" class="floatContact" type="button" aria-label="Escolher vendedor pelo WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4.9 19 3 22l.9-4.3A9 9 0 1 1 7 20.1L4.9 19Z"/><path d="M9 8c.7 2.1 2.3 3.8 4.7 4.7l1.6-1.3 2 1.4c-.5 2.5-2.2 3.1-4.9 2.2C9.3 13.9 7 11.7 6.4 8.8 6 6.9 7.8 6.1 9 8Z"/></svg><span>Falar com vendedor</span></button>
   <div class="modal serviceModal" id="serviceModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Escolher atendente"><div class="modalHead"><strong id="serviceModalHeading">Escolha quem vai te atender</strong><button class="xBtn" type="button" data-close aria-label="Fechar">×</button></div><div class="modalContent"><h2 class="modalTitle" id="serviceTitle">Como podemos ajudar?</h2><p class="modalText" id="serviceDescription">Selecione um atendente para começar a conversa.</p><div class="personList" id="personList"></div></div></div>
+  <div class="fpop" id="filPop" role="dialog" aria-modal="true" aria-labelledby="fpTitle" hidden>
+    <div class="fpop-backdrop" data-fp-close></div>
+    <div class="fpop-panel">
+      <button type="button" class="fpop-x" id="fpClose" data-fp-close aria-label="Fechar">×</button>
+      <div class="fpop-stage">
+        <div class="fp-stage-spool" id="fpStageSpool"></div>
+        <button type="button" class="fp-photo" id="fpPhoto" hidden aria-label="Ampliar a foto real desta cor"><img alt=""><span>Foto real</span></button>
+        <p class="fp-colorname"><span>Cor escolhida</span><strong id="fpColor"></strong></p>
+      </div>
+      <div class="fpop-info">
+        <div class="fp-brand"><img id="fpLogo" alt="" width="26" height="26"><span id="fpBrand"></span></div>
+        <h2 id="fpTitle"></h2>
+        <p class="fp-about" id="fpAbout"></p>
+        <div class="fp-lines" id="fpLines" role="tablist" aria-label="Linha"></div>
+        <div class="fp-sw-head"><strong>Cores</strong><span id="fpCount"></span></div>
+        <div class="fp-swatches" id="fpSwatches" role="radiogroup" aria-label="Cor do filamento"></div>
+        <div class="fp-buy" id="fpBuy"></div>
+        <p class="fp-note" id="fpNote"></p>
+      </div>
+    </div>
+  </div>
   <div class="snack" id="snack" role="status"></div>
   <script src="data/products.js"></script>
   <script src="js/app.js"></script>
   <script src="data/hero.js"></script>
   <script src="js/home.js"></script>
+  <script src="data/filaments.js"></script>
+  <script src="js/filaments.js"></script>
 </body>
 </html>
