@@ -67,7 +67,7 @@
     </section>
 
     <section class="wrap block" id="filamentos" aria-labelledby="filTitle">
-      <div class="head"><div><h2 id="filTitle">Filamentos das marcas que você confia</h2><p>Flashforge, Bambu Lab e Masterprint em carretel de 1 kg. Toque numa marca para ver as cores e escolher a sua.</p></div></div>
+      <div class="head"><div><h2 id="filTitle">Filamentos originais</h2><p>Flashforge e Bambu Lab em carretel de 1 kg. Toque numa marca para ver as cores com foto oficial. Acima de 5 carretéis o preço cai, e acima de 20 cai de novo.</p></div></div>
       <div class="brands" id="filBrands"></div>
     </section>
 
@@ -104,10 +104,10 @@
     <div class="fpop-backdrop" data-fp-close></div>
     <div class="fpop-panel">
       <button type="button" class="fpop-x" id="fpClose" data-fp-close aria-label="Fechar">×</button>
-      <div class="fpop-stage">
+      <div class="fpop-stage" id="fpStage">
         <div class="fp-stage-spool" id="fpStageSpool"></div>
-        <button type="button" class="fp-photo" id="fpPhoto" hidden aria-label="Ampliar a foto real desta cor"><img alt=""><span>Foto real</span></button>
-        <p class="fp-colorname"><span>Cor escolhida</span><strong id="fpColor"></strong></p>
+        <button type="button" class="fp-pics" id="fpPics" aria-label="Ampliar a foto"></button>
+        <p class="fp-colorname"><span id="fpOfficial">Foto oficial do fabricante</span><strong id="fpColor"></strong></p>
       </div>
       <div class="fpop-info">
         <div class="fp-brand"><img id="fpLogo" alt="" width="26" height="26"><span id="fpBrand"></span></div>
@@ -123,10 +123,10 @@
   </div>
   <div class="snack" id="snack" role="status"></div>
   <script src="data/products.js"></script>
+  <script src="data/filaments.js"></script>
   <script src="js/app.js"></script>
   <script src="data/hero.js"></script>
   <script src="js/home.js"></script>
-  <script src="data/filaments.js"></script>
   <script src="js/filaments.js"></script>
 </body>
 </html>
