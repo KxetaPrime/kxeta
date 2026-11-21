@@ -2,6 +2,8 @@
 """Pesquisa produtos na Shopee pela API de Afiliados (Brasil).
 
 Lê as chaves das variáveis de ambiente SHOPEE_AFF_APP_ID e SHOPEE_AFF_SECRET.
+Se elas não existirem, lê o arquivo ~/.config/shopee_afiliados.env, com as
+mesmas duas linhas (NOME=valor), que o setup script do ambiente pode criar.
 Nunca coloque as chaves neste arquivo.
 
 Uso:
@@ -66,6 +68,20 @@ def chamar(app_id, secret, consulta, variaveis):
         sys.exit(f"Erro HTTP {erro.code}: {erro.read().decode()[:500]}")
 
 
+ARQUIVO_CHAVES = os.path.expanduser("~/.config/shopee_afiliados.env")
+
+
+def ler_chaves():
+    chaves = {n: os.environ.get(n) for n in ("SHOPEE_AFF_APP_ID", "SHOPEE_AFF_SECRET")}
+    if not all(chaves.values()) and os.path.exists(ARQUIVO_CHAVES):
+        with open(ARQUIVO_CHAVES, encoding="utf-8") as arquivo:
+            for linha in arquivo:
+                nome, _, valor = linha.strip().removeprefix("export ").partition("=")
+                if nome in chaves and not chaves[nome]:
+                    chaves[nome] = valor.strip().strip("'\"")
+    return chaves["SHOPEE_AFF_APP_ID"], chaves["SHOPEE_AFF_SECRET"]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("palavra", help="termo de busca, como o comprador digitaria")
@@ -75,10 +91,10 @@ def main():
     parser.add_argument("--csv", help="salvar o resultado neste arquivo CSV")
     args = parser.parse_args()
 
-    app_id = os.environ.get("SHOPEE_AFF_APP_ID")
-    secret = os.environ.get("SHOPEE_AFF_SECRET")
+    app_id, secret = ler_chaves()
     if not app_id or not secret:
-        sys.exit("Defina SHOPEE_AFF_APP_ID e SHOPEE_AFF_SECRET nas variáveis do ambiente.")
+        sys.exit("Chaves não encontradas: defina SHOPEE_AFF_APP_ID e SHOPEE_AFF_SECRET "
+                 f"nas variáveis do ambiente ou no arquivo {ARQUIVO_CHAVES}.")
 
     dados = chamar(app_id, secret, CONSULTA, {
         "keyword": args.palavra,
