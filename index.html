@@ -122,12 +122,13 @@
     <div class="pm-gallery"><div class="pm-main"><img class="modalImg" id="detailImg" alt=""><span class="pm-badge" id="detailBadge" hidden></span></div><div class="thumbs" id="detailThumbs"></div></div>
     <div class="pm-info">
       <p class="pm-cat" id="detailCat"></p>
-      <h2 class="pm-title" id="detailTitle"></h2>
+      <h2 class="pm-title" id="detailTitle"></h2><button type="button" class="pm-rating" id="detailRating" hidden></button>
       <div class="pm-price"><strong id="detailPrice"></strong><span id="detailOldPrice"></span></div>
       <p class="pm-stock" id="detailStock"></p>
       <div id="variantPicker"></div>
       <select class="choiceSelect" id="variantSelect" hidden aria-hidden="true" tabindex="-1"></select>
       <div class="pm-buy"><div class="qtyBox" role="group" aria-label="Quantidade"><button id="qtyDec" type="button" aria-label="Diminuir quantidade">−</button><b id="qtyValue">1</b><button id="qtyInc" type="button" aria-label="Aumentar quantidade">+</button></div><button class="btnPrimary" type="button" id="detailAdd">Adicionar ao carrinho</button></div>
+      <details class="pm-desc pm-reviews" id="detailReviews" hidden><summary id="detailReviewsTitle">Avaliações</summary><div class="rv-list" id="detailReviewList"></div></details>
       <details class="pm-desc"><summary>Descrição do produto</summary><p class="modalText" id="detailDesc"></p><div class="otherActions" id="detailExternal"></div></details>
     </div>
   </div></div>
@@ -167,6 +168,7 @@
   <div class="snack" id="snack" role="status"></div>
   <script src="data/products.js"></script>
   <script src="data/promo.js"></script>
+  <script src="data/reviews.js"></script>
   <script src="data/filaments.js"></script>
   <script src="js/app.js"></script>
   <script src="data/hero.js"></script>

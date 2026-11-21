@@ -437,3 +437,16 @@ footer.wrap{background:transparent;border:0}
   .fp-tiers{display:none}.fp-stock{display:none}.fp-buy{gap:8px;padding-top:10px}.fp-price strong{font-size:24px}
   .fpop-stage{height:min(26vh,180px)}.fp-colorname strong{font-size:20px}.fp-about{display:none}
 }
+
+/* ---------- avaliações ---------- */
+.stars{--r:5;display:inline-block;font-size:16px;line-height:1;letter-spacing:1px;background:linear-gradient(90deg,#F5B301 calc(var(--r)/5*100%),#D9DDD9 0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stars::before{content:"★★★★★"}.stars.sm{font-size:13px}
+.card-rating{display:flex;align-items:center;gap:5px;margin:0 0 4px;font-size:12.5px}.card-rating b{font-weight:700}.card-rating span{color:var(--ink3)}
+.pm-rating{display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:0;margin:-4px 0 0;font:500 14px var(--text);color:var(--ink2);cursor:pointer;text-align:left}
+.pm-rating b{color:var(--ink);font-weight:700}.pm-rating span{text-decoration:underline;text-underline-offset:3px}
+.pm-reviews summary small{font-weight:500;color:var(--ink3);margin-left:6px}
+.rv-list{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.rv{padding:12px 14px;border-radius:14px;background:var(--bg)}
+.rv-head{display:flex;align-items:center;gap:8px;font-size:13px}.rv-head time{margin-left:auto;color:var(--ink3);font-size:12px}
+.rv-var{margin:4px 0 0;font-size:12px;color:var(--ink3)}.rv p:last-child{margin:6px 0 0;font-size:14px;line-height:1.5}
+.rv-more{font-size:13px;color:var(--ink2);text-decoration:underline;margin-top:2px}
