@@ -300,24 +300,34 @@ async function processar(file){
   ["baixar","abrir"].forEach(id=>$(id).disabled=true);
   const buf=new Uint8Array(await file.arrayBuffer());
   const doc=await pdfjsLib.getDocument({data:buf.slice()}).promise;
-  const out=await PDFLib.PDFDocument.load(buf);
+  const srcDoc=await PDFLib.PDFDocument.load(buf);
+  const out=await PDFLib.PDFDocument.create();
   const F={b:await out.embedFont(PDFLib.StandardFonts.HelveticaBold), m:await out.embedFont(PDFLib.StandardFonts.CourierBold)};
-  const src=out.getPages(); let feitos=0, extras=0, offset=0; const resumo=[];
+  const srcPages=srcDoc.getPages(); let feitos=0, extras=0; const resumo=[];
+  const MIN_ESCALA=0.72; // a parte da Shopee nunca fica menor que 72% (códigos de barras legíveis)
   for(let i=1;i<=doc.numPages;i++){
     const pg=await doc.getPage(i); const tc=await pg.getTextContent();
-    const info=parsePage(tc.items); if(!info||!info.items.length) continue;
-    const page=src[i-1]; const {width,height}=page.getSize();
-    const s=Math.max(0.8,Math.min(1.6,width/283));
-    const margin=Math.max(6,info.x0-2); const x=margin, w=Math.min(width-2*margin, Math.max(info.x1-info.x0+4, width-2*margin));
-    const y=Math.max(2, info.bottom-2), h=Math.max(30*s, info.top-y+1);
-    const mode=needH(info,s,"full")<=h?"full":(needH(info,s,"compact")<=h?"compact":"overflow");
-    const fits=mode!=="overflow";
-    page.drawRectangle({x:x-3,y:0,width:w+6,height:y+0.5,color:PDFLib.rgb(1,1,1)}); // apaga sobras do texto original abaixo do quadro
-    drawBox(page,F,{x,y,w,h},info,{scale:s,mode});
+    const info=parsePage(tc.items);
+    const sp=srcPages[i-1]; const {width,height}=sp.getSize();
+    if(!info||!info.items.length){ const [cp]=await out.copyPages(srcDoc,[i-1]); out.addPage(cp); continue; }
+    const regTop=Math.min(height,info.top+1);           // o que fica acima do rodapé antigo
+    const regH=height-regTop;
+    const sb=Math.max(1,Math.min(1.5,width/283*1.25)); // escala do quadro grande
+    const gap=4, mx=6;
+    let mode="full", need=needH(info,sb,"full");
+    let esc=Math.min(1,(height-need-gap-mx)/regH);
+    if(esc<MIN_ESCALA){ mode="compact"; need=needH(info,sb,"compact"); esc=Math.min(1,(height-need-gap-mx)/regH); }
+    let fits=esc>=MIN_ESCALA; if(!fits){ esc=MIN_ESCALA; mode="overflow"; need=Math.max(30*sb,height-regH*esc-gap-mx); }
+    const page=out.addPage([width,height]);
+    const emb=await out.embedPage(sp,{left:0,bottom:regTop,right:width,top:height});
+    const ew=width*esc, eh=regH*esc;
+    page.drawPage(emb,{x:(width-ew)/2,y:height-eh,width:ew,height:eh});
+    const boxH=Math.min(need,height-eh-gap-mx+ (mode==="full"||mode==="compact"?0:0));
+    drawBox(page,F,{x:mx,y:height-eh-gap-boxH,w:width-2*mx,h:boxH},info,{scale:sb,mode});
     feitos++;
     info.items.forEach(it=>resumo.push([i,info.pedido,it.qty,it.sku,it.nome,it.varl]));
     if(!fits){
-      const np=out.insertPage(i+offset,[width,height]); offset++; extras++;
+      const np=out.addPage([width,height]); extras++;
       const {rgb}=PDFLib; const K=rgb(0,0,0);
       const hs=Math.max(1,Math.min(2,width/200));
       np.drawText(fit(F.b,`PEDIDO ${info.pedido}`,11*hs,width-20),{x:10,y:height-22*hs,size:11*hs,font:F.b,color:K});
