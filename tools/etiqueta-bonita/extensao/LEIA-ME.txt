@@ -11,8 +11,8 @@ INSTALAR (uma vez só)
    Configurações adicionais de conteúdo > Documentos PDF > "Fazer o download de PDFs".
 
 USAR
-- No UpSeller, imprima as etiquetas normalmente. O PDF é baixado, a Etiqueta Bonita
-  abre sozinha, deixa o quadro de conferência e abre a janela de impressão.
+- No UpSeller, clique em imprimir. Quando o PDF abrir, aparece o aviso "Gerar etiqueta bonita":
+  clique e ela gera e abre a janela de impressão. (Ou clique no ícone da extensão na aba do PDF.)
 - Na janela de impressão: escolha a térmica, papel 100 x 150 mm, margens "Nenhuma",
   escala 100%. O Chrome lembra na próxima vez.
 - Também dá para clicar no ícone e arrastar um PDF.

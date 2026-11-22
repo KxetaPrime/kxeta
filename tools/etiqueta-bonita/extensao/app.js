@@ -214,14 +214,24 @@ function imprimir(){ if($("printArea").children.length) window.print(); }
 
 /* ---------- extensão: configurações e PDF baixado ---------- */
 const hasExt=!!(window.chrome&&chrome.storage&&chrome.storage.local);
-const DEF={auto:true,autoPrint:true,any:false};
-async function getCfg(){ if(!hasExt) return DEF; return Object.assign({},DEF,await chrome.storage.local.get(["auto","autoPrint","any"])); }
+const DEF={auto:true,autoPrint:true,any:false,direto:false};
+async function getCfg(){ if(!hasExt) return DEF; return Object.assign({},DEF,await chrome.storage.local.get(["auto","autoPrint","any","direto"])); }
 (async()=>{
   const c=await getCfg();
-  $("cfgAuto").checked=c.auto; $("cfgPrint").checked=c.autoPrint; $("cfgAny").checked=c.any;
-  [["cfgAuto","auto"],["cfgPrint","autoPrint"],["cfgAny","any"]].forEach(([id,k])=>$(id).addEventListener("change",()=>{ if(hasExt) chrome.storage.local.set({[k]:$(id).checked}); }));
+  $("cfgAuto").checked=c.auto; $("cfgPrint").checked=c.autoPrint; $("cfgAny").checked=c.any; $("cfgDireto").checked=c.direto;
+  [["cfgAuto","auto"],["cfgPrint","autoPrint"],["cfgAny","any"],["cfgDireto","direto"]].forEach(([id,k])=>$(id).addEventListener("change",()=>{ if(hasExt) chrome.storage.local.set({[k]:$(id).checked}); }));
   if(hasExt&&chrome.extension&&chrome.extension.isAllowedFileSchemeAccess){
     chrome.extension.isAllowedFileSchemeAccess(ok=>{ $("cfgFile").textContent= ok?"Acesso aos arquivos baixados: liberado.":"Para o modo automático funcionar, libere \"Permitir acesso a URLs de arquivo\" em chrome://extensions > Etiqueta Bonita > Detalhes."; });
+  }
+  const qurl=new URLSearchParams(location.search).get("url");
+  if(qurl){
+    try{ $("status").textContent="Baixando as etiquetas do UpSeller...";
+      const r=await fetch(qurl,{credentials:"include"}); if(!r.ok) throw new Error("HTTP "+r.status);
+      const blob=await r.blob(); const name=decodeURIComponent(qurl.split("?")[0].split("/").pop()||"etiquetas.pdf");
+      window.__autoPrint=c.autoPrint; lastName=name.replace(/\.pdf$/i,"");
+      await processar(new File([blob],name,{type:"application/pdf"}));
+    }catch(err){ $("status").className="status bad"; $("status").textContent="Não consegui buscar o PDF do UpSeller ("+err.message+"). Baixe o PDF e arraste aqui."; }
+    return;
   }
   const dl=new URLSearchParams(location.search).get("dl");
   if(dl&&hasExt&&chrome.downloads){

@@ -1,11 +1,12 @@
 {
   "manifest_version": 3,
   "name": "Etiqueta Bonita",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Deixa as etiquetas da Shopee (PDF do UpSeller) com um quadro de conferência: quantidade, SKU e variação em destaque.",
   "permissions": [
     "downloads",
-    "storage"
+    "storage",
+    "notifications"
   ],
   "background": {
     "service_worker": "background.js"
@@ -22,5 +23,9 @@
     "16": "icon16.png",
     "48": "icon48.png",
     "128": "icon128.png"
-  }
+  },
+  "host_permissions": [
+    "https://*.upseller.cn/*",
+    "https://*.upseller.com/*"
+  ]
 }
