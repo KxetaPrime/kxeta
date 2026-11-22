@@ -105,7 +105,7 @@ function drawBox(page,F,box,info,opts){
   if(mode==="overflow") return;
   const qW=d.qW*s, cW=d.cW*s;
   for(const it of info.items){
-    const rowH=rowHeight(it,s,mode); const ry=top-rowH; if(ry<y-0.5) break;
+    const base=rowHeight(it,s,mode); const rowH=base+(opts.extra||0); const pad=(rowH-base)/2; const ry=top-rowH; if(ry<y-0.5) break;
     page.drawLine({start:{x,y:top},end:{x:x+w,y:top},thickness:1.2*s,color:K});
     page.drawLine({start:{x:x+qW,y:ry},end:{x:x+qW,y:top},thickness:1.2*s,color:K});
     page.drawLine({start:{x:x+w-cW,y:ry},end:{x:x+w-cW,y:top},thickness:1.2*s,color:K});
@@ -118,13 +118,17 @@ function drawBox(page,F,box,info,opts){
       page.drawRectangle({x:tx+6.5*s,y:yy-size*0.22,width:vw+4*s,height:size*1.15,color:K});
       page.drawText(vt,{x:tx+8.5*s,y:yy,size,font:F.b,color:W}); };
     if(mode==="compact"){
-      const v=it.varl||it.nome; pill(v,6.6*s,top-8.4*s);
+      const v=it.varl||it.nome; pill(v,6.6*s,top-8.4*s-pad);
       const l2=(it.varl?[it.sku,it.nome]:[it.sku]).filter(Boolean).join("  ·  ");
-      page.drawText(fit(F.b,l2,5.4*s,tw),{x:tx,y:ry+2.6*s,size:5.4*s,font:F.b,color:K});
+      page.drawText(fit(F.b,l2,5.4*s,tw),{x:tx,y:ry+2.6*s+pad,size:5.4*s,font:F.b,color:K});
     } else {
-      let ty=top-3.5*s;
+      let ty=top-3.5*s-pad;
       if(it.sku){ ty-=7.5*s; page.drawText(fit(F.m,it.sku,7.5*s,tw),{x:tx,y:ty,size:7.5*s,font:F.m,color:K}); ty-=2*s; }
-      ty-=6.5*s; page.drawText(fit(F.b,it.nome,6.5*s,tw),{x:tx,y:ty,size:6.5*s,font:F.b,color:K});
+      if(it.varl){ ty-=6.5*s; page.drawText(fit(F.b,it.nome,6.5*s,tw),{x:tx,y:ty,size:6.5*s,font:F.b,color:K}); }
+      else { // sem variação: nome maior, em até 2 linhas
+        const fs=8*s; const words=safe(it.nome).split(" "); let l1=""; while(words.length&&F.b.widthOfTextAtSize((l1+" "+words[0]).trim(),fs)<=tw) l1=(l1+" "+words.shift()).trim();
+        ty-=fs; page.drawText(l1,{x:tx,y:ty,size:fs,font:F.b,color:K});
+        if(words.length){ ty-=fs*1.15; page.drawText(fit(F.b,words.join(" "),fs,tw),{x:tx,y:ty,size:fs,font:F.b,color:K}); } }
       if(it.varl){ ty-=3.2*s+7*s; pill(it.varl,7*s,ty); }
     }
     top=ry;
@@ -142,7 +146,7 @@ async function processar(file){
   const MIN_ESCALA=0.72; // a parte da Shopee nunca fica menor que 72% (códigos de barras legíveis)
   for(let i=1;i<=doc.numPages;i++){
     const pg=await doc.getPage(i); const tc=await pg.getTextContent();
-    const vp1=pg.getViewport({scale:1}); const width=vp1.width, height=vp1.height;
+    const vp1=pg.getViewport({scale:1}); let width=vp1.width, height=vp1.height;
     // coordenadas "em pé" (independe de rotação/origem da página): x da esquerda, y de baixo para cima
     const itens=tc.items.map(it=>{ const t=it.transform; const [vx,vy]=pdfjsLib.Util.applyTransform([t[4],t[5]],vp1.transform);
       return {str:it.str,width:it.width,transform:[1,0,0,Math.hypot(t[2],t[3])||8,vx,height-vy]}; });
@@ -150,24 +154,32 @@ async function processar(file){
     if(!info||!info.items.length){ const [cp]=await out.copyPages(srcDoc,[i-1]); out.addPage(cp); continue; }
     const regTop=Math.min(height,info.top+1);           // o que fica acima do rodapé antigo
     const regH=height-regTop;
-    const sb=Math.max(1,Math.min(1.5,width/283*1.25)); // escala do quadro grande
-    const gap=4, mx=6;
-    let mode="full", need=needH(info,sb,"full");
-    let esc=Math.min(1,(height-need-gap-mx)/regH);
-    if(esc<MIN_ESCALA){ mode="compact"; need=needH(info,sb,"compact"); esc=Math.min(1,(height-need-gap-mx)/regH); }
-    let fits=esc>=MIN_ESCALA; if(!fits){ esc=MIN_ESCALA; mode="overflow"; need=Math.max(30*sb,height-regH*esc-gap-mx); }
-    const page=out.addPage([width,height]);
+    // renderiza a parte da Shopee e corta as sobras brancas
     const SC=4; const vp=pg.getViewport({scale:SC});
     const cv=document.createElement("canvas"); cv.width=Math.round(vp.width); cv.height=Math.round(vp.height);
     const cx=cv.getContext("2d"); cx.fillStyle="#fff"; cx.fillRect(0,0,cv.width,cv.height);
     await pg.render({canvasContext:cx,viewport:vp}).promise;
-    const ch=Math.max(1,Math.round(regH*SC)); const cut=document.createElement("canvas"); cut.width=cv.width; cut.height=ch;
-    cut.getContext("2d").drawImage(cv,0,0,cv.width,ch,0,0,cv.width,ch);
+    const rh=Math.max(1,Math.min(cv.height,Math.round(regH*SC)));
+    const px=cx.getImageData(0,0,cv.width,rh).data; let x0=cv.width,x1=-1,y0=rh,y1=-1;
+    for(let yy=0;yy<rh;yy+=2){ const row=yy*cv.width*4; for(let xx=0;xx<cv.width;xx+=2){ const k=row+xx*4; if(px[k]<190||px[k+1]<190||px[k+2]<190){ if(xx<x0)x0=xx; if(xx>x1)x1=xx; if(yy<y0)y0=yy; if(yy>y1)y1=yy; } } }
+    if(x1<0){x0=0;x1=cv.width-1;y0=0;y1=rh-1;}
+    x0=Math.max(0,x0-4); y0=Math.max(0,y0-4); x1=Math.min(cv.width-1,x1+4); y1=Math.min(rh-1,y1+4);
+    const bw=x1-x0+1, bh=y1-y0+1; const cut=document.createElement("canvas"); cut.width=bw; cut.height=bh;
+    cut.getContext("2d").drawImage(cv,x0,y0,bw,bh,0,0,bw,bh);
+    const cW=bw/SC, cH=bh/SC;                           // tamanho do recorte em pontos (tamanho original)
+    // etiqueta final sempre 100 x 150 mm
+    const PW=283.46, PH=425.2, m=5, gap=4; width=PW; height=PH;
+    const sb=1.25; let mode=null, need=0, esc=0;
+    for(const md of ["full","compact"]){ const nd=needH(info,sb,md); const e=Math.min((PW-2*m)/cW,(PH-2*m-gap-nd)/cH);
+      if(e>=MIN_ESCALA){ mode=md; need=nd; esc=e; break; } }
+    let fits=!!mode; if(!fits){ mode="overflow"; esc=Math.max(MIN_ESCALA,Math.min((PW-2*m)/cW,(PH-2*m-gap-40)/cH)); }
+    const page=out.addPage([PW,PH]);
     const img=await out.embedPng(cut.toDataURL("image/png"));
-    const ew=width*esc, eh=regH*esc;
-    page.drawImage(img,{x:(width-ew)/2,y:height-eh,width:ew,height:eh});
-    const boxH=Math.min(need,height-eh-gap-mx+ (mode==="full"||mode==="compact"?0:0));
-    drawBox(page,F,{x:mx,y:height-eh-gap-boxH,w:width-2*mx,h:boxH},info,{scale:sb,mode});
+    const ew=cW*esc, eh=cH*esc;
+    page.drawImage(img,{x:(PW-ew)/2,y:PH-m-eh,width:ew,height:eh});
+    const boxH=PH-m-eh-gap-m;                           // o quadro vai até o fim da etiqueta
+    const rows=info.items.length; const extra=mode==="overflow"?0:Math.max(0,(boxH-need)/rows);
+    drawBox(page,F,{x:m,y:m,w:PW-2*m,h:boxH},info,{scale:sb,mode,extra});
     feitos++;
     info.items.forEach(it=>resumo.push([i,info.pedido,it.qty,it.sku,it.nome,it.varl]));
     if(!fits){
