@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Etiqueta Bonita</title>
+<style>
+/* Bancada de expedição: faixa preta de "conferir", fundo papel de etiqueta, acento amarelo-fita */
+:root{
+  --bg:#f3f2ee; --card:#ffffff; --fg:#17171a; --muted:#5d5d66; --line:#d9d7cf;
+  --ink:#111111; --tape:#f5c400; --ok:#1d7a46; --bad:#b3261e;
+  --display:"Arial Black","Helvetica Neue",Arial,sans-serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"Courier New",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141416; --card:#1d1d21; --fg:#ececef; --muted:#a3a3ad; --line:#34343b;
+  --ink:#f5c400; --ok:#5fcf8d; --bad:#ff7b72; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141416; --card:#1d1d21; --fg:#ececef; --muted:#a3a3ad; --line:#34343b;
+  --ink:#f5c400; --ok:#5fcf8d; --bad:#ff7b72; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body);
+  padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header h1{font:900 30px/1.1 var(--display);margin:0;letter-spacing:.5px}
+header h1 span{background:var(--tape);color:#111;padding:0 8px}
+header p{margin:6px 0 0;color:var(--muted);max-width:65ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px}
+.drop{border:3px dashed var(--line);border-radius:10px;padding:34px 18px;text-align:center;cursor:pointer}
+.drop.over{border-color:var(--tape);background:rgba(245,196,0,.08)}
+.drop strong{font:900 20px/1.2 var(--display);display:block}
+.drop small{color:var(--muted)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+button,.btn{font:700 15px var(--body);padding:10px 16px;border-radius:8px;border:2px solid var(--fg);background:var(--fg);color:var(--bg);cursor:pointer;text-decoration:none;display:inline-block}
+button.sec,.btn.sec{background:transparent;color:var(--fg)}
+button:disabled{opacity:.4;cursor:default}
+button:focus-visible,.btn:focus-visible,.drop:focus-visible,textarea:focus-visible{outline:3px solid var(--tape);outline-offset:2px}
+.status{font-weight:700}
+.status.ok{color:var(--ok)} .status.bad{color:var(--bad)}
+.pages{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.pages figure{margin:0;display:flex;flex-direction:column;gap:6px}
+.pages canvas{width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:4px}
+.pages figcaption{font-size:13px;color:var(--muted)}
+details summary{cursor:pointer;font-weight:700}
+textarea{width:100%;min-height:120px;font:13px/1.4 var(--mono);background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px}
+.tbl{overflow-x:auto} table{border-collapse:collapse;font-size:13px;min-width:520px}
+td,th{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.sku{font:700 13px var(--mono)}
+ol.steps{margin:0;padding-left:20px} ol.steps li{margin:4px 0}
+#printArea{display:none}
+@media print{ @page{size:100mm 150mm;margin:0} body{padding:0!important;background:#fff} main{display:none!important}
+  #printArea{display:block} #printArea img{width:100mm;height:150mm;display:block;page-break-after:always;break-after:page} }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1><span>ETIQUETA</span> BONITA</h1>
+  <p>Baixe o PDF de etiquetas no UpSeller (ou arraste aqui). A parte de baixo de cada etiqueta vira um quadro de conferência: quantidade grande, SKU, produto e variação em destaque. Tudo roda neste computador, nenhum dado sai daqui.</p>
+</header>
+
+<section class="card">
+  <div id="drop" class="drop" tabindex="0" role="button" aria-label="Escolher PDF de etiquetas">
+    <strong>Solte aqui o PDF das etiquetas</strong>
+    <small>ou clique para escolher o arquivo (PDF baixado do UpSeller, tamanho 10x15)</small>
+    <input id="file" type="file" accept="application/pdf" hidden>
+  </div>
+  <div class="row" style="margin-top:14px">
+    <span id="status" class="status">Nenhum arquivo ainda.</span>
+  </div>
+  <div class="row" style="margin-top:12px">
+    <button id="baixar" disabled>Baixar PDF pronto</button>
+    <button id="abrir" class="sec" disabled>Imprimir agora</button>
+  </div>
+</section>
+
+<section class="card" id="previewCard" hidden>
+  <div class="row" style="justify-content:space-between"><strong>Prévia</strong><small id="previewInfo"></small></div>
+  <div id="pages" class="pages" style="margin-top:12px"></div>
+</section>
+
+<section class="card" id="resumoCard" hidden>
+  <strong>O que foi lido de cada etiqueta</strong>
+  <div class="tbl" style="margin-top:10px"><table><thead><tr><th>Pág.</th><th>Pedido</th><th>Qtd</th><th>SKU</th><th>Produto</th><th>Variação</th></tr></thead><tbody id="resumo"></tbody></table></div>
+</section>
+
+<section class="card">
+  <strong>Automático</strong>
+  <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+    <label><input type="checkbox" id="cfgAuto"> Quando um PDF de etiquetas do UpSeller for baixado, deixar bonito sozinho</label>
+    <label><input type="checkbox" id="cfgPrint"> Abrir a janela de impressão automaticamente</label>
+    <label><input type="checkbox" id="cfgAny"> Considerar qualquer PDF baixado que tenha a lista "SKU: ...; Total Items" (não só do UpSeller)</label>
+    <small id="cfgFile" style="color:var(--muted)"></small>
+  </div>
+</section>
+<section class="card">
+  <details>
+    <summary>Nomes curtos (opcional)</summary>
+    <p style="color:var(--muted);margin:8px 0">Uma regra por linha: <code>palavra do título = NOME CURTO</code>. Vale antes das regras automáticas. Fica salvo neste navegador.</p>
+    <textarea id="regras" placeholder="porta lata = PORTA LATA 473ML&#10;sagrada = SAGRADA FAMÍLIA"></textarea>
+  </details>
+</section>
+
+<section class="card">
+  <strong>Como usar no dia a dia</strong>
+  <ol class="steps">
+    <li>No UpSeller, gere as etiquetas dos pedidos do dia e baixe o <b>PDF</b>.</li>
+    <li>Arraste o PDF para esta página.</li>
+    <li>Confira a prévia e clique em <b>Baixar PDF pronto</b> (ou <b>Abrir para imprimir</b>).</li>
+    <li>Imprima na térmica em <b>100 x 150 mm</b>, escala 100% (sem "ajustar à página").</li>
+    <li>Pedido com muitos itens ganha uma <b>etiqueta extra de lista</b> logo depois da etiqueta de envio.</li>
+  </ol>
+</section>
+</main>
+<div id="printArea" aria-hidden="true"></div>
+
+<script src="pdf.min.js"></script>
+<script src="pdf-lib.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

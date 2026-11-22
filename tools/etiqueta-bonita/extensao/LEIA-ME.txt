@@ -1,0 +1,18 @@
+ETIQUETA BONITA - extensão do Chrome
+
+INSTALAR (uma vez só)
+1. Descompacte esta pasta em um lugar fixo (ex.: Documentos\EtiquetaBonita). Não apague depois.
+2. No Chrome, abra:  chrome://extensions
+3. Ligue "Modo do desenvolvedor" (canto superior direito).
+4. Clique em "Carregar sem compactação" e escolha a pasta.
+5. Clique em "Detalhes" da Etiqueta Bonita e ligue "Permitir acesso a URLs de arquivo".
+6. Fixe o ícone (peça de quebra-cabeça > alfinete).
+7. No Chrome: Configurações > Privacidade e segurança > Configurações do site >
+   Configurações adicionais de conteúdo > Documentos PDF > "Fazer o download de PDFs".
+
+USAR
+- No UpSeller, imprima as etiquetas normalmente. O PDF é baixado, a Etiqueta Bonita
+  abre sozinha, deixa o quadro de conferência e abre a janela de impressão.
+- Na janela de impressão: escolha a térmica, papel 100 x 150 mm, margens "Nenhuma",
+  escala 100%. O Chrome lembra na próxima vez.
+- Também dá para clicar no ícone e arrastar um PDF.
