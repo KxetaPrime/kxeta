@@ -142,8 +142,11 @@ async function processar(file){
   const MIN_ESCALA=0.72; // a parte da Shopee nunca fica menor que 72% (códigos de barras legíveis)
   for(let i=1;i<=doc.numPages;i++){
     const pg=await doc.getPage(i); const tc=await pg.getTextContent();
-    const info=parsePage(tc.items);
-    const sp=srcPages[i-1]; const {width,height}=sp.getSize();
+    const vp1=pg.getViewport({scale:1}); const width=vp1.width, height=vp1.height;
+    // coordenadas "em pé" (independe de rotação/origem da página): x da esquerda, y de baixo para cima
+    const itens=tc.items.map(it=>{ const t=it.transform; const [vx,vy]=pdfjsLib.Util.applyTransform([t[4],t[5]],vp1.transform);
+      return {str:it.str,width:it.width,transform:[1,0,0,Math.hypot(t[2],t[3])||8,vx,height-vy]}; });
+    const info=parsePage(itens);
     if(!info||!info.items.length){ const [cp]=await out.copyPages(srcDoc,[i-1]); out.addPage(cp); continue; }
     const regTop=Math.min(height,info.top+1);           // o que fica acima do rodapé antigo
     const regH=height-regTop;
@@ -154,9 +157,15 @@ async function processar(file){
     if(esc<MIN_ESCALA){ mode="compact"; need=needH(info,sb,"compact"); esc=Math.min(1,(height-need-gap-mx)/regH); }
     let fits=esc>=MIN_ESCALA; if(!fits){ esc=MIN_ESCALA; mode="overflow"; need=Math.max(30*sb,height-regH*esc-gap-mx); }
     const page=out.addPage([width,height]);
-    const emb=await out.embedPage(sp,{left:0,bottom:regTop,right:width,top:height});
+    const SC=4; const vp=pg.getViewport({scale:SC});
+    const cv=document.createElement("canvas"); cv.width=Math.round(vp.width); cv.height=Math.round(vp.height);
+    const cx=cv.getContext("2d"); cx.fillStyle="#fff"; cx.fillRect(0,0,cv.width,cv.height);
+    await pg.render({canvasContext:cx,viewport:vp}).promise;
+    const ch=Math.max(1,Math.round(regH*SC)); const cut=document.createElement("canvas"); cut.width=cv.width; cut.height=ch;
+    cut.getContext("2d").drawImage(cv,0,0,cv.width,ch,0,0,cv.width,ch);
+    const img=await out.embedPng(cut.toDataURL("image/png"));
     const ew=width*esc, eh=regH*esc;
-    page.drawPage(emb,{x:(width-ew)/2,y:height-eh,width:ew,height:eh});
+    page.drawImage(img,{x:(width-ew)/2,y:height-eh,width:ew,height:eh});
     const boxH=Math.min(need,height-eh-gap-mx+ (mode==="full"||mode==="compact"?0:0));
     drawBox(page,F,{x:mx,y:height-eh-gap-boxH,w:width-2*mx,h:boxH},info,{scale:sb,mode});
     feitos++;
