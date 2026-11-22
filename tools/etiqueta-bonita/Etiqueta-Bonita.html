@@ -171,53 +171,19 @@ let outBytes=null, outUrl=null;
 
 /* ---------- regras de produto (nome curto, SKU, variação) ---------- */
 const noAcc=s=>(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
-const COR={"azul cristal":["AC","AZUL CRISTAL"],"azul":["AZ","AZUL"],"rosa":["RS","ROSA"],"verde":["VD","VERDE"],"branc":["BR","BRANCO"],"preto":["PT","PRETO"],"dourad":["DO","DOURADO"],"lilas":["LI","LILÁS"],"sortid":["ST","SORTIDO"],"amarel":["AM","AMARELO"]};
-function cor(v){const n=noAcc(v);for(const k of Object.keys(COR)) if(n.includes(k)) return COR[k];return null;}
-const num=(v,re)=>{const m=noAcc(v).match(re);return m?parseInt(m[1],10):null;};
-const pad2=n=>String(n).padStart(2,"0");
-const RULES=[
- {k:/tric/, nome:"ÁRVORE TRICÔ COM RENAS", f:v=>{const n=noAcc(v);
-   if(/renas/.test(n)&&/arvore/.test(n)) return ["TRI-KIT","KIT ÁRVORE + 3 RENAS"];
-   if(/renas/.test(n)) return ["TRI-RENAS3","KIT 3 RENAS (SEM ÁRVORE)"];
-   return ["TRI-ARV","SÓ A ÁRVORE"];}},
- {k:/articulad/, nome:"ÁRVORE ARTICULADA 7CM", f:v=>{const n=noAcc(v);
-   if(/kit|trio/.test(n)) return ["ART-KIT3","KIT 3 MODELOS"];
-   if(/classic/.test(n)) return ["ART-CLAS","CLÁSSICA"];
-   if(/decorad/.test(n)) return ["ART-DEC","DECORADA"];
-   if(/ondulad/.test(n)) return ["ART-OND","ONDULADA"];return ["",v];}},
- {k:/letreiro|feliz natal/, nome:"LETREIRO FELIZ NATAL 20CM", f:v=>{const n=noAcc(v);
-   if(/kit/.test(n)) return ["KIT-NATAL-01","KIT 1 FELIZ NATAL"];
-   if(/verd/.test(n)) return ["NATAL-20CM-VERD","VERDE"];
-   return ["NATAL-20CM-VERM","VERMELHO"];}},
- {k:/casinha/, nome:"CASINHA DE NATAL 7CM", f:v=>["CASA-7",v]},
- {k:/arvore de natal|arvore moderna/, nome:"ÁRVORE DE NATAL MODERNA", f:v=>{const n=noAcc(v);
-   if(/10\s*cm/.test(n)) return ["Árvore-10cm","10 CM"];
-   if(/15\s*cm/.test(n)) return ["Árvore-15cm","15 CM"];return ["",v];}},
- {k:/chaveiro|nossa senhora/, nome:"CHAVEIRO N. SRA. APARECIDA", f:v=>{const c=cor(v),q=num(v,/(\d+)\s*unid/);
-   return [c&&q?`NSA-${c[0]}-${pad2(q)}`:"", [c?c[1]:"",q?`${q} UNID.`:""].filter(Boolean).join(" · ")||v];}},
- {k:/ampola/, nome:"PORTA AMPOLAS 4 FRASCOS", f:v=>{const map={RS:"ROS",PT:"PTO",BR:"BRC",LI:"LIL",DO:"DOU"};const c=cor(v);
-   return [c&&map[c[0]]?`NP3D-PA4-${map[c[0]]}-01`:"", c?c[1]:v];}},
- {k:/algodao|cotonete/, nome:"PORTA ALGODÃO E COTONETE", f:v=>{const c=cor(v),n=noAcc(v);const q=/kit\s*3/.test(n)?"K3":/kit\s*2/.test(n)?"K2":"1";
-   return [c?`ALG-${c[0]}-${q}`:"", [c?c[1]:"", q==="1"?"1 UNID.":`KIT ${q.slice(1)}`].filter(Boolean).join(" · ")];}},
- {k:/raquete/, nome:"SUPORTE RAQUETE PAREDE", f:v=>{const c=cor(v),q=num(v,/(\d+)\s*unid/)||1;
-   return [c?`RAQ-${c[0]}-${q}`:"", [c?c[1]:"",`${q} UNID.`].filter(Boolean).join(" · ")];}},
- {k:/bone/, nome:"SUPORTE DE BONÉS", f:v=>{const c=cor(v),q=num(v,/(\d+)\s*bon/);
-   return [c&&q?`BONE-${c[0]}-${pad2(q)}`:"", [c?c[1]:"",q?`${q} BONÉS`:""].filter(Boolean).join(" · ")||v];}},
- {k:/tampa/, nome:"SUPORTE TAMPA PANELA (KIT 4)", f:v=>{const c=cor(v);return [c?`TAMPA-${c[0]}`:"", c?c[1]:v];}},
- {k:/dreno/, nome:"DRENO PLACA SOLAR", f:v=>{const n=noAcc(v);const mm=/32[,.]5/.test(n)?"325":(n.match(/(30|35|40)\s*mm/)||[])[1];const q=num(v,/(\d+)\s*un/);
-   return [mm&&q?`DRN-${mm}-${q}`:"", [mm?(mm==="325"?"32,5MM":mm+"MM"):"", q?`${q} UN`:""].filter(Boolean).join(" · ")||v];}},
- {k:/porta.?lata|caneca|lata/, nome:"PORTA LATA (CANECA)", f:v=>{const c=cor(v);return [c?`LATA-${c[0]}`:"", c?c[1]:v];}},
- {k:/starlink/, nome:"CONVERSOR STARLINK MINI", f:v=>{const n=noAcc(v);
-   if(/com/.test(n)) return ["STAR-CC","COM CASE"]; if(/sem/.test(n)) return ["STAR-SC","SEM CASE"]; return ["",v];}},
- {k:/sagrada/, nome:"SAGRADA FAMÍLIA 22CM", f:v=>["SAGRADA-22",v]},
-];
 function userRules(){const out=[];($("regras").value||"").split("\n").forEach(l=>{const i=l.indexOf("=");if(i>0){const a=noAcc(l.slice(0,i).trim()),b=l.slice(i+1).trim();if(a&&b) out.push([a,b.toUpperCase()]);}});return out;}
-function classify(title,variation){
-  const t=noAcc(title); let nome=null,sku="",varl=(variation||"").toUpperCase();
-  for(const r of RULES){ if(r.k.test(t)){ nome=r.nome; const res=r.f(variation||""); sku=res[0]||""; varl=(res[1]||variation||"").toUpperCase(); break; } }
+const STOP=new Set(["de","da","do","das","dos","com","para","e","em","a","o","as","os","kit","p/","c/"]);
+function nomeCurto(title){
+  let s=(title||"").split(/\s[|–—-]\s|\s\|\s?/)[0];           // corta no primeiro separador " | " ou " - "
+  const w=s.replace(/[()]/g,"").split(/\s+/).filter(Boolean);
+  const out=[]; for(const x of w){ out.push(x); if(out.filter(y=>!STOP.has(noAcc(y))).length>=5) break; }
+  while(out.length&&STOP.has(noAcc(out[out.length-1]))) out.pop();
+  return out.join(" ").toUpperCase();
+}
+function classify(title,variation,sku){
+  const t=noAcc(title); let nome=nomeCurto(title);
   for(const [a,b] of userRules()){ if(t.includes(a)){ nome=b; break; } }
-  if(!nome){ nome=(title||"").replace(/[|]/g," ").split(/\s+/).slice(0,5).join(" ").toUpperCase(); }
-  return {nome,sku,varl};
+  return {nome, sku:sku||"", varl:(variation||"").replace(/\s*,\s*/g," · ").toUpperCase()};
 }
 
 /* ---------- leitura do texto da etiqueta ---------- */
@@ -254,10 +220,14 @@ function parsePage(textItems){
       cur.txt=(cur.txt+" "+t).replace(/\s+/g," ").trim();
     }
   }
-  const items=its.map(it=>{
+  const skuTxt=((H.match(/SKU\s*:\s*([^;]*)/i)||[])[1]||"").trim();
+  let skus=skuTxt.split(/\s*,\s*/).filter(x=>x&&!/^\d{1,2}$/.test(x)); // "1" = sem SKU no UpSeller
+  if(skus.length!==its.length) skus=its.length===1&&skus.length===1?skus:[];
+  let k=-1;
+  const items=its.map(it=>{ k++;
     let v="",title=it.txt; const m=it.txt.match(/^\((.*?)\)\s*\/\s*(.*)$/);
     if(m){v=m[1].trim(); title=m[2].trim();}
-    const c=classify(title,v);
+    const c=classify(title,v,skus[k]);
     return {qty:it.qty||1,title,variation:v,...c};
   });
   let minY=Math.min(L[hi].y, ...below.map(l=>l.y));
