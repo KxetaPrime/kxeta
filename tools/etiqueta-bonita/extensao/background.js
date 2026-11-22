@@ -5,17 +5,20 @@ const vistos=new Set();
 const cfg=async()=>Object.assign({},DEF,await chrome.storage.local.get(["auto","any","direto"]));
 const abrir=(q)=>chrome.tabs.create({url:chrome.runtime.getURL("app.html"+(q||""))});
 
-async function oferecer(url){
+async function oferecer(url,tabId){
   if(vistos.has(url)) return; vistos.add(url);
   const c=await cfg(); if(!c.auto) return;
+  if(tabId!=null){ chrome.action.setBadgeText({tabId,text:"!"}); chrome.action.setBadgeBackgroundColor({tabId,color:"#f5c400"}); }
   if(c.direto){ abrir("?url="+encodeURIComponent(url)); return; }
-  chrome.notifications.create("eb|"+url,{type:"basic",iconUrl:"icon128.png",title:"Etiquetas do UpSeller abertas",
-    message:"Clique para gerar as etiquetas com o quadro de conferência.",buttons:[{title:"Gerar etiqueta bonita"}],requireInteraction:true,priority:2});
+  // janelinha no canto superior direito da janela do Chrome
+  let left, top=80; const W=360, H=210;
+  try{ const win=await chrome.windows.getLastFocused(); left=Math.max(0,(win.left||0)+(win.width||1200)-W-24); top=(win.top||0)+80; }catch(e){}
+  const base={url:chrome.runtime.getURL("aviso.html?url="+encodeURIComponent(url)),type:"popup",width:W,height:H,focused:true};
+  try{ await chrome.windows.create(Object.assign({},base,left!=null?{left:Math.round(left),top:Math.round(top)}:{})); }
+  catch(e){ await chrome.windows.create(base); } // se a posição falhar, abre no lugar padrão
 }
-chrome.tabs.onUpdated.addListener((id,info,tab)=>{ const u=info.url||(info.status==="complete"&&tab.url); if(u&&RE_PDF.test(u)) oferecer(u); });
-const clique=(nid)=>{ if(nid.startsWith("eb|")){ abrir("?url="+encodeURIComponent(nid.slice(3))); chrome.notifications.clear(nid);} };
-chrome.notifications.onClicked.addListener(clique);
-chrome.notifications.onButtonClicked.addListener((nid)=>clique(nid));
+chrome.tabs.onUpdated.addListener((id,info,tab)=>{ const u=info.url||(info.status==="complete"&&tab.url); if(u&&RE_PDF.test(u)) oferecer(u,id); });
+chrome.runtime.onMessage.addListener((msg,sender)=>{ if(msg&&msg.gerar){ abrir("?url="+encodeURIComponent(msg.gerar)); if(sender.tab) chrome.windows.remove(sender.tab.windowId); } });
 
 chrome.action.onClicked.addListener(async(tab)=>{
   if(tab&&tab.url&&RE_PDF.test(tab.url)) abrir("?url="+encodeURIComponent(tab.url)); else abrir("");
